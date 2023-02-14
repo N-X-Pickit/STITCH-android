@@ -28,4 +28,46 @@
     <color name="error_pressed">#B3261E</color>
 
     <color name="success">#00B576</color>
+
+    <!-- Gray Scale -->
+    <color name="gray_15">#171717</color>
+    <color name="gray_14">#242424</color>
+    <color name="gray_13">#333</color>
+    <color name="gray_12">#3D3D3D</color>
+    <color name="gray_11">#555</color>
+    <color name="gray_10">#6F6F6F</color>
+    <color name="gray_09">#8B8B8B</color>
+    <color name="gray_08">#A5A5A5</color>
+    <color name="gray_07">#C1C1C1</color>
+    <color name="gray_06">#DFDFDF</color>
+    <color name="gray_05">#ECECEC</color>
+    <color name="gray_04">#EFEFEF</color>
+    <color name="gray_03">#F5F4F3</color>
+    <color name="gray_02">#F7F7F7</color>
+    <color name="gray_01">#FBFBFB</color>
+
+    <!-- Blue Scale -->
+    <color name="blue_10">#0000BD</color>
+    <color name="blue_09">#000DD7</color>
+    <color name="blue_08">#0021E1</color>
+    <color name="blue_07">#002EEE</color>
+    <color name="blue_06">#0038FA</color>
+    <color name="blue_05">#3D5AFE</color>
+    <color name="blue_04">#6A7AFF</color>
+    <color name="blue_03">#9AA0FE</color>
+    <color name="blue_02">#C4C5FE</color>
+    <color name="blue_01">#E8E8FF</color>
+
+    <!-- Error Scale -->
+    <color name="red_10">#000000</color>
+    <color name="red_09">#410E0B</color>
+    <color name="red_08">#601410</color>
+    <color name="red_07">#8C1D18</color>
+    <color name="red_06">#B3261E</color>
+    <color name="red_05">#DC362E</color>
+    <color name="red_04">#E46962</color>
+    <color name="red_03">#EC928E</color>
+    <color name="red_02">#F2B8B5</color>
+    <color name="red_01">#F9DEDC</color>
+
 </resources>
