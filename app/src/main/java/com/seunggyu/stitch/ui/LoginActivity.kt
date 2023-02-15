@@ -1,24 +1,19 @@
-package com.example.stitch.ui
+package com.seunggyu.stitch.ui
 
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.toSpannable
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
-import com.example.stitch.R
-import com.example.stitch.databinding.ActivityLoginBinding
+import com.seunggyu.stitch.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
