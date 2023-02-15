@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">STITCH</string>
-    <string name="loginPrivacyAgree">가입을 진행할 경우, 서비스 약관 및 개인정보 처리방침에\n동의한 것으로 간주합니다.</string>
+    <string name="login_privacy_agree">가입을 진행할 경우, 서비스 약관 및 개인정보 처리방침에\n동의한 것으로 간주합니다.</string>
     <string name="login_guide">ㅇㅇㅇ을 통해 매일 새롭게 열리는\n오프라인 커뮤니티와 함께 새로운 일상을 시작해보세요!</string>
+    <string name="login_kakao_text">카카오 로그인</string>
+    <string name="login_google_text">구글로 시작하기</string>
+    <string name="descriptor_back_button">뒤로가기 버튼</string>
+    <string name="signup_frag1_top">안녕하세요!\n닉네임을 알려주세요</string>
+    <string name="signup_frag2_top">나를 잘 나타내는\n프로필 사진을 등록해 주세요</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.example.stitch.ui
 
+import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -9,8 +11,10 @@ import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.toSpannable
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.stitch.R
@@ -25,6 +29,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         uiInit()
+        init()
     }
 
     private fun uiInit() {
@@ -36,8 +41,12 @@ class LoginActivity : AppCompatActivity() {
 
         this.window?.apply {
             this.statusBarColor = Color.TRANSPARENT
-            decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            WindowInsetsControllerCompat(this, this.decorView).isAppearanceLightStatusBars = false
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                setDecorFitsSystemWindows(false)
+            } else {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            }
         }
 
         binding.tvPrivacyAgree.text.toSpannable().setSpan(object : ClickableSpan() {
@@ -53,5 +62,20 @@ class LoginActivity : AppCompatActivity() {
         }, textPrivacyStartPoint, textPrivacyEndPoint, Spanned.SPAN_EXCLUSIVE_INCLUSIVE)
         binding.tvPrivacyAgree.movementMethod = LinkMovementMethod.getInstance()
 
+    }
+
+    private fun init() {
+        with(binding) {
+            btnKakaoLogin.setOnClickListener {
+                /* TODO : 카카오 로그인 기능 구현 */
+                Toast.makeText(applicationContext, "카카오 로그인 버튼 클릭",Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@LoginActivity, SignupActivity::class.java)
+                startActivity(intent)
+            }
+            btnGoogleLogin.setOnClickListener {
+                /* TODO : 구글 로그인 기능 구현 */
+                Toast.makeText(applicationContext, "구글 로그인 버튼 클릭",Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }
