@@ -1,4 +1,4 @@
-package com.example.stitch
+package com.seunggyu.stitch
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
