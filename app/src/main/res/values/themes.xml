@@ -21,4 +21,13 @@
         <item name="android:textColorLink">@color/gray_06</item>
 
     </style>
+
+    <!-- Splash Theme -->
+    <style name="Theme.SPLASH" parent="Theme.STITCH">
+        <item name="windowActionBar">false</item>
+        <item name="android:windowLightStatusBar" >false</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+    </style>
 </resources>
