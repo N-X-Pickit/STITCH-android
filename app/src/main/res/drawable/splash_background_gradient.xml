@@ -8,35 +8,43 @@
 
     <group>
 
-        <clip-path android:pathData="M0 0H100V100H0V0Z" />
+        <clip-path
+            android:pathData="M0 0H216V108H0V0Z"
+            />
 
         <group
-            android:pivotX="50"
-            android:pivotY="50"
-            android:rotation="-43.223"
+            android:translateX="-0.47"
+            android:translateY="-1"
+            android:pivotX="108"
+            android:pivotY="54"
             android:scaleX="2.745"
             android:scaleY="8.218"
-            android:translateX="-0.47"
-            android:translateY="-1">
+            android:rotation="-43.223"
+            >
 
-            <path android:pathData="M0 0V100H100V0">
+            <path
+                android:pathData="M0 0V108H216V0"
+                >
 
                 <aapt:attr name="android:fillColor">
 
                     <gradient
-                        android:endX="75"
-                        android:endY="50"
-                        android:startX="25"
-                        android:startY="50"
-                        android:type="linear">
+                        android:type="linear"
+                        android:startX="54"
+                        android:startY="54"
+                        android:endX="162"
+                        android:endY="54"
+                        >
 
                         <item
-                            android:color="#3D5AFE"
-                            android:offset="0" />
+                            android:color="#FFFF00"
+                            android:offset="0"
+                            />
 
                         <item
-                            android:color="#0021E1"
-                            android:offset="1" />
+                            android:color="#FFC700"
+                            android:offset="1"
+                            />
 
                     </gradient>
 

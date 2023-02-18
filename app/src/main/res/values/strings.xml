@@ -1,10 +1,26 @@
 <resources>
     <string name="app_name">STITCH</string>
     <string name="login_privacy_agree">가입을 진행할 경우, 서비스 약관 및 개인정보 처리방침에\n동의한 것으로 간주합니다.</string>
-    <string name="login_guide">ㅇㅇㅇ을 통해 매일 새롭게 열리는\n오프라인 커뮤니티와 함께 새로운 일상을 시작해보세요!</string>
+    <string name="login_guide">STITCH를 통해 일상속에서 함께하는\n운동의 즐거움을 새롭게 경험해보세요.</string>
     <string name="login_kakao_text">카카오 로그인</string>
     <string name="login_google_text">구글로 시작하기</string>
     <string name="descriptor_back_button">뒤로가기 버튼</string>
     <string name="signup_frag1_top">안녕하세요!\n닉네임을 알려주세요</string>
     <string name="signup_frag2_top">나를 잘 나타내는\n프로필 사진을 등록해 주세요</string>
+    <string name="signup_frag3_top">현재 살고있는\n지역을 설정해주세요</string>
+    <string name="signup">회원가입</string>
+    <string name="address_input">주소입력</string>
+    <string name="address_input_hint">동명(읍, 면)으로 검색 (ex. 서초동)</string>
+    <string name="address_gps">현재위치로 찾기</string>
+    <string name="address_tip">검색 TIP</string>
+    <string name="address_tip_1">•  도로명 + 건물기호</string>
+    <string name="address_tip_1_ex">(예: 강남대로 570)</string>
+    <string name="address_tip_2">•  동/읍/면/리 + 번지</string>
+    <string name="address_tip_2_ex">(예: 신천동 7–30)</string>
+    <string name="address_tip_3">•  건물명, 아파트명</string>
+    <string name="address_tip_3_ex">(예: 광교경남아너스빌)</string>
+    <string name="address_gps_result">현재위치 결과</string>
+    <string name="address_result_null">검색 결과가 없어요.\n주소 내용을 다시 확인해주세요!</string>
+    <string name="address_result_research">주소 다시 검색하기</string>
+    <string name="signup_button_next">다음</string>
 </resources>
