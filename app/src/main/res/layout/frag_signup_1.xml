@@ -17,7 +17,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/signup_frag1_top"
             android:textAppearance="@style/Headline"
-            android:textColor="@color/gray_14"
+            android:textColor="@color/white"
             android:layout_marginHorizontal="16dp"/>
         
         <EditText
@@ -28,7 +28,7 @@
             android:layout_marginTop="39.5dp"
             app:layout_constraintStart_toStartOf="@id/divider_signup_nickname"
             app:layout_constraintEnd_toEndOf="@id/divider_signup_nickname"
-            android:backgroundTint="@color/gray_09"
+            android:backgroundTint="@color/gray_14"
             app:layout_constraintTop_toBottomOf="@id/tv_signup_top"
             android:hint="10글자 내로 입력해주세요"
             android:textColor="@color/gray_02"

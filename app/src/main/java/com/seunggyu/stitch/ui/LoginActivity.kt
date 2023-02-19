@@ -60,16 +60,15 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun init() {
+
         with(binding) {
             btnKakaoLogin.setOnClickListener {
                 /* TODO : 카카오 로그인 기능 구현 */
-                Toast.makeText(applicationContext, "카카오 로그인 버튼 클릭",Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@LoginActivity, SignupActivity::class.java)
                 startActivity(intent)
             }
             btnGoogleLogin.setOnClickListener {
                 /* TODO : 구글 로그인 기능 구현 */
-                Toast.makeText(applicationContext, "구글 로그인 버튼 클릭",Toast.LENGTH_SHORT).show()
             }
         }
     }
