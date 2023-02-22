@@ -51,11 +51,18 @@
     <color name="gray_transparent_04">#B3000000</color>
     <!-- 50% -->
     <color name="gray_transparent_03">#80000000</color>
-    <!-- 30% -->
-    <color name="gray_transparent_02">#4D000000</color>
-    <!-- 10% -->
-    <color name="gray_transparent_01">#1A000000</color>
 
+    <!-- White Transparent Scale -->
+    <!-- 10% -->
+    <color name="white_transparent_01">#1AFFFFFF</color>
+
+    <!-- Black Transparent Scale -->
+    <!-- 92% -->
+    <color name="black_transparent_03">#EB1A1A1A</color>
+    <!-- 80% -->
+    <color name="black_transparent_02">#CC2D2D2D</color>
+    <!-- 60% -->
+    <color name="black_transparent_01">#992D2D2D</color>
 
     <!-- Yellow Scale -->
     <color name="yellow_09">#FF8A00</color>

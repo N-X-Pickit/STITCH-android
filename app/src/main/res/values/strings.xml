@@ -8,6 +8,10 @@
     <string name="signup_frag1_top">안녕하세요!\n닉네임을 알려주세요</string>
     <string name="signup_frag2_top">나를 잘 나타내는\n프로필 사진을 등록해 주세요</string>
     <string name="signup_frag3_top">현재 살고있는\n지역을 설정해주세요</string>
+    <string name="signup_frag4_top">관심있는 운동 종목을\n3개 이상 선택하세요</string>
+    <string name="signup_success_top">가입이 완료되었습니다!\nSTITCH를 통해 새로운 사람들과\n매칭을 즐겨보세요</string>
+    <string name="signup_button_next">다음</string>
+
     <string name="signup">회원가입</string>
     <string name="address_input">주소입력</string>
     <string name="address_input_hint">동명(읍, 면)으로 검색 (ex. 서초동)</string>
@@ -22,5 +26,15 @@
     <string name="address_gps_result">현재위치 결과</string>
     <string name="address_result_null">검색 결과가 없어요.\n주소 내용을 다시 확인해주세요!</string>
     <string name="address_result_research">주소 다시 검색하기</string>
-    <string name="signup_button_next">다음</string>
+    <string name="sport_badminton">배드민턴</string>
+    <string name="sport_tennis">테니스</string>
+    <string name="sport_pingpong">탁구</string>
+    <string name="sport_running">런닝</string>
+    <string name="sport_mountain">등산</string>
+    <string name="sport_basketball">농구</string>
+    <string name="sport_soccer">축구</string>
+    <string name="sport_health">헬스</string>
+    <string name="sport_baseball">야구</string>
+    <string name="sport_golf">골프</string>
+    <string name="sport_etc">기타</string>
 </resources>

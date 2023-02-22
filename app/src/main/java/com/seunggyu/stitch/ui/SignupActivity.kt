@@ -8,10 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.seunggyu.stitch.adapter.SignupProfileListAdapter
 import com.seunggyu.stitch.databinding.ActivitySignupBinding
-import com.seunggyu.stitch.ui.fragment.SignupAddressFragment
-import com.seunggyu.stitch.ui.fragment.SignupNameFragment
-import com.seunggyu.stitch.ui.fragment.SignupProfileFragment
+import com.seunggyu.stitch.ui.fragment.*
 import com.seunggyu.stitch.viewModel.SignupViewModel
 import kotlinx.coroutines.*
 
@@ -34,7 +33,7 @@ class SignupActivity : FragmentActivity() {
         val pagerAdapter = SignupViewPagerAdapter(this)
         viewPager.adapter = pagerAdapter
         // 뷰페이저 스와이프 막기 -> 다음, 이전 버튼으로만 이동 가능
-        viewPager.isUserInputEnabled = false
+//        viewPager.isUserInputEnabled = false
     }
 
     private fun uiInit() {
@@ -47,10 +46,9 @@ class SignupActivity : FragmentActivity() {
             viewPager = vpSignup
             // 다음버튼 클릭시 progressbar 25씩 증가
             btnSignupNext.setOnClickListener {
-                Toast.makeText(this@SignupActivity, "다음 버튼 클릭", Toast.LENGTH_SHORT).show()
                 if (progressSignup.progress <= 100) {
                     CoroutineScope(Dispatchers.Main).launch {
-                        repeat(25) {
+                        repeat(20) {
                             progressSignup.progress += 1
 
                             delay(10)
@@ -62,11 +60,11 @@ class SignupActivity : FragmentActivity() {
 
             // 뒤로가기 버튼 클릭시 progressbar 25씩 감소
             btnSignupBack.setOnClickListener {
-                if (progressSignup.progress <= 25) {
+                if (progressSignup.progress <= 20) {
                     finish()
                 }
                 CoroutineScope(Dispatchers.Main).launch {
-                    repeat(25) {
+                    repeat(20) {
                         progressSignup.progress -= 1
 
                         delay(10)
@@ -74,6 +72,7 @@ class SignupActivity : FragmentActivity() {
                     }
                 }
             }
+//            btnSignupNext.background = getDrawable()
         }
     }
 
@@ -90,7 +89,7 @@ class SignupActivity : FragmentActivity() {
 
     private inner class SignupViewPagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
         // 1. ViewPager2에 연결할 Fragment 들을 생성
-        val fragmentList = listOf<Fragment>(SignupNameFragment(), SignupProfileFragment(), SignupAddressFragment())
+        val fragmentList = listOf<Fragment>(SignupNameFragment(), SignupProfileFragment(), SignupAddressFragment(), SignupCategoryFragment(), SignupSuccessFragment())
 
         // 2. ViesPager2에서 노출시킬 Fragment 의 갯수 설정
         override fun getItemCount(): Int {
