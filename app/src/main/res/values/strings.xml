@@ -37,4 +37,5 @@
     <string name="sport_baseball">야구</string>
     <string name="sport_golf">골프</string>
     <string name="sport_etc">기타</string>
+    <string name="signup_button_success">시작하기</string>
 </resources>

@@ -1,20 +1,27 @@
 package com.seunggyu.stitch.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
+import android.view.MotionEvent
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.seunggyu.stitch.R
 import com.seunggyu.stitch.adapter.SignupProfileListAdapter
 import com.seunggyu.stitch.databinding.ActivitySignupBinding
 import com.seunggyu.stitch.ui.fragment.*
 import com.seunggyu.stitch.viewModel.SignupViewModel
 import kotlinx.coroutines.*
 
-private const val NUM_PAGES = 3
+
 class SignupActivity : FragmentActivity() {
     private lateinit var binding: ActivitySignupBinding
     private lateinit var viewPager: ViewPager2
@@ -24,8 +31,7 @@ class SignupActivity : FragmentActivity() {
     private val viewModel: SignupViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignupBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_signup)
 
         uiInit()
         init()
@@ -33,63 +39,108 @@ class SignupActivity : FragmentActivity() {
         val pagerAdapter = SignupViewPagerAdapter(this)
         viewPager.adapter = pagerAdapter
         // 뷰페이저 스와이프 막기 -> 다음, 이전 버튼으로만 이동 가능
-//        viewPager.isUserInputEnabled = false
+        viewPager.isUserInputEnabled = false
+
     }
 
     private fun uiInit() {
         signupPageIndicator = 1
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun init() {
 
         with(binding) {
             viewPager = vpSignup
             // 다음버튼 클릭시 progressbar 25씩 증가
             btnSignupNext.setOnClickListener {
-                if (progressSignup.progress <= 100) {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        repeat(20) {
-                            progressSignup.progress += 1
+                if ((viewModel.currentPage.value ?: 1) == 5) finish()
+                else viewModel.nextPage()
 
-                            delay(10)
-
-                        }
-                    }
+                val currentItem = viewPager.currentItem
+                if (currentItem < 5) {
+                    viewPager.currentItem = currentItem + 1
                 }
             }
 
             // 뒤로가기 버튼 클릭시 progressbar 25씩 감소
             btnSignupBack.setOnClickListener {
-                if (progressSignup.progress <= 20) {
-                    finish()
+                if ((viewModel.currentPage.value ?: 1) == 1) finish()
+                else viewModel.prevPage()
+
+                val currentItem = viewPager.currentItem
+                if (currentItem > 0) {
+                    viewPager.currentItem = currentItem +- 1
                 }
-                CoroutineScope(Dispatchers.Main).launch {
-                    repeat(20) {
-                        progressSignup.progress -= 1
+            }
 
-                        delay(10)
+            // 마지막 시작하기 버튼 터치 리스너
+            btnSignupSuccess.setOnTouchListener { view, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        // 버튼을 터치하면 drawable 변경
+                        view.isPressed = true
+                        true
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        // 버튼을 떼면 drawable 변경하고 기능 실행
+                        view.isPressed = false
+                        Toast.makeText(this@SignupActivity, "터치 떼짐", Toast.LENGTH_SHORT).show()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }
 
+        with(viewModel) {
+            // 프로그레스바 상태
+            progress.observe(this@SignupActivity) {
+                it?.let {
+                    binding.progress = it
+                }
+            }
+
+            currentPage.observe(this@SignupActivity) {
+                it?.let {
+                    when(it) {
+                        5 -> {
+                            binding.btnSignupNext.visibility = View.GONE
+                            binding.btnSignupSuccess.visibility = View.VISIBLE
+                            binding.btnSignupBack.visibility = View.GONE
+                        }
+                        else -> {
+                            binding.btnSignupNext.visibility = View.VISIBLE
+                            binding.btnSignupSuccess.visibility = View.GONE
+                        }
                     }
                 }
             }
-//            btnSignupNext.background = getDrawable()
         }
+
     }
 
     override fun onBackPressed() {
-        if (viewPager.currentItem == 0) {
-            // If the user is currently looking at the first step, allow the system to handle the
-            // Back button. This calls finish() on this activity and pops the back stack.
+        if (viewPager.currentItem == 0 || viewPager.currentItem == 4) {
             super.onBackPressed()
+            // 첫번째 (닉네임 입력 화면) 이거나 마지막 (회원가입 완료 화면) 일 경우 activity 종료
+            finish()
         } else {
-            // Otherwise, select the previous step.
+            // 다른 경우 viewPager 이전 페이지로 이동
             viewPager.currentItem = viewPager.currentItem - 1
+            viewModel.prevPage()
         }
     }
 
     private inner class SignupViewPagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
         // 1. ViewPager2에 연결할 Fragment 들을 생성
-        val fragmentList = listOf<Fragment>(SignupNameFragment(), SignupProfileFragment(), SignupAddressFragment(), SignupCategoryFragment(), SignupSuccessFragment())
+        val fragmentList = listOf<Fragment>(
+            SignupNameFragment(),
+            SignupProfileFragment(),
+            SignupAddressFragment(),
+            SignupCategoryFragment(),
+            SignupSuccessFragment()
+        )
 
         // 2. ViesPager2에서 노출시킬 Fragment 의 갯수 설정
         override fun getItemCount(): Int {

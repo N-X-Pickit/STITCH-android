@@ -3,12 +3,21 @@ package com.seunggyu.stitch.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SignupViewModel : ViewModel() {
     private val _currentPage = MutableLiveData<Int>()
+    private val _progress = MutableLiveData<Int>(20)
 
     val currentPage: LiveData<Int>
         get() = _currentPage
+
+    val progress: LiveData<Int>
+        get() = _progress
 
     val items = listOf(
         "삶과 운동의 균형이 중요하다 생각해요",
@@ -25,9 +34,30 @@ class SignupViewModel : ViewModel() {
 
     init {
         _currentPage.value = 1
+        _progress.value = 20
     }
 
     fun nextPage() {
-        
+        if ((progress.value ?: 0) in 20..80 ) {
+            viewModelScope.launch {
+                repeat(20) {
+                    _progress.value = (_progress.value ?: 0) + 1
+                    delay(10)
+                }
+                _currentPage.value = (_currentPage.value ?: 0) + 1
+            }
+        }
+    }
+
+    fun prevPage() {
+        if ((progress.value ?: 0) in 40..100 ) {
+            viewModelScope.launch {
+                repeat(20) {
+                    _progress.value = (_progress.value ?: 0) - 1
+                    delay(10)
+                }
+                _currentPage.value = (_currentPage.value ?: 0) - 1
+            }
+        }
     }
 }
