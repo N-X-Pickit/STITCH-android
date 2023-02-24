@@ -12,12 +12,24 @@ import kotlinx.coroutines.launch
 class SignupViewModel : ViewModel() {
     private val _currentPage = MutableLiveData<Int>()
     private val _progress = MutableLiveData<Int>(20)
+    private val _nextButtonAvailable = MutableLiveData<Boolean>()
+    private var _inputName = ""
+    private var _inputHome = MutableLiveData<String>()
 
     val currentPage: LiveData<Int>
         get() = _currentPage
 
     val progress: LiveData<Int>
         get() = _progress
+
+    val nextButtonAvailable: LiveData<Boolean>
+        get() = _nextButtonAvailable
+
+    val inputName: String
+        get() = _inputName
+
+    val inputHome: LiveData<String>
+        get() = _inputHome
 
     val items = listOf(
         "삶과 운동의 균형이 중요하다 생각해요",
@@ -35,6 +47,8 @@ class SignupViewModel : ViewModel() {
     init {
         _currentPage.value = 1
         _progress.value = 20
+        _nextButtonAvailable.value = false
+        _inputHome.value = ""
     }
 
     fun nextPage() {
@@ -60,4 +74,21 @@ class SignupViewModel : ViewModel() {
             }
         }
     }
+
+    fun ableButton() {
+        _nextButtonAvailable.value = true
+    }
+
+    fun disableButton() {
+        _nextButtonAvailable.value = false
+    }
+
+    fun setInputName(inputName: String) {
+        _inputName = inputName
+    }
+
+    fun setInputHome(inputHome: String) {
+        _inputHome.value = inputHome
+    }
+
 }

@@ -64,6 +64,7 @@
             android:textAppearance="@style/Body_1"/>
 
         <ImageView
+            android:id="@+id/iv_signup_home_close"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_close"

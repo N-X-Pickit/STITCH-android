@@ -29,6 +29,9 @@
             android:name=".MainActivity"
             android:exported="true" />
         <activity
+            android:name=".ui.AddressSearchActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.SignupActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" />

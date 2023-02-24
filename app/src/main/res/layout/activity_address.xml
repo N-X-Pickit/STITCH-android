@@ -29,7 +29,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
-                android:id="@+id/btn_signup_back"
+                android:id="@+id/btn_address_back"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:contentDescription="@string/descriptor_back_button"
@@ -73,7 +73,7 @@
             app:layout_constraintBottom_toBottomOf="@id/iv_address_search"
             android:backgroundTint="@color/gray_14"
             android:textColorHint="@color/gray_09"
-            android:textColor="@color/gray_09"
+            android:textColor="@color/gray_02"
             android:hint="@string/address_input_hint"
             android:textAppearance="@style/Body_1"/>
 

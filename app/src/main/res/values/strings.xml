@@ -13,6 +13,7 @@
     <string name="signup_button_next">다음</string>
 
     <string name="signup">회원가입</string>
+    <string name="signup_success">회원가입 완료</string>
     <string name="address_input">주소입력</string>
     <string name="address_input_hint">동명(읍, 면)으로 검색 (ex. 서초동)</string>
     <string name="address_gps">현재위치로 찾기</string>
@@ -23,7 +24,7 @@
     <string name="address_tip_2_ex">(예: 신천동 7–30)</string>
     <string name="address_tip_3">•  건물명, 아파트명</string>
     <string name="address_tip_3_ex">(예: 광교경남아너스빌)</string>
-    <string name="address_gps_result">현재위치 결과</string>
+    <string name="address_gps_result">근처 동네</string>
     <string name="address_result_null">검색 결과가 없어요.\n주소 내용을 다시 확인해주세요!</string>
     <string name="address_result_research">주소 다시 검색하기</string>
     <string name="sport_badminton">배드민턴</string>

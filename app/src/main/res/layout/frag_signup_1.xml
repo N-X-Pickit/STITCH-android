@@ -7,86 +7,91 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/gray_14">
+
         <TextView
             android:id="@+id/tv_signup_top"
             android:layout_width="0dp"
             android:layout_height="56dp"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginTop="24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:text="@string/signup_frag1_top"
             android:textAppearance="@style/Headline"
             android:textColor="@color/white"
-            android:layout_marginHorizontal="16dp"/>
-        
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <EditText
             android:id="@+id/et_signup_nickname"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="39.5dp"
-            app:layout_constraintStart_toStartOf="@id/divider_signup_nickname"
-            app:layout_constraintEnd_toEndOf="@id/divider_signup_nickname"
             android:backgroundTint="@color/gray_14"
-            app:layout_constraintTop_toBottomOf="@id/tv_signup_top"
             android:hint="10글자 내로 입력해주세요"
+            android:textAppearance="@style/Body_1"
             android:textColor="@color/gray_02"
             android:textColorHint="@color/gray_09"
-            android:textAppearance="@style/Body_1"/>
+            app:layout_constraintEnd_toEndOf="@id/divider_signup_nickname"
+            app:layout_constraintStart_toStartOf="@id/divider_signup_nickname"
+            app:layout_constraintTop_toBottomOf="@id/tv_signup_top" />
+
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/divider_signup_nickname"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginHorizontal="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:background="@color/gray_07"
-            app:layout_constraintTop_toBottomOf="@id/et_signup_nickname"/>
-        
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_signup_nickname" />
+
         <TextView
+            android:id="@+id/tv_signup_1_text_lenght"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/divider_signup_nickname"
-            app:layout_constraintEnd_toEndOf="@id/divider_signup_nickname"
-            android:textAppearance="@style/Caption"
-            android:textColor="@color/gray_04"
-            android:layout_marginEnd="8dp"
             android:layout_marginTop="2dp"
-            tools:text="0 / 10"/>
+            android:layout_marginEnd="8dp"
+            android:text="0 / 10"
+            android:textAppearance="@style/Caption"
+            android:textColor="@color/gray_09"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/divider_signup_nickname"
+            app:layout_constraintTop_toBottomOf="@id/divider_signup_nickname" />
 
         <TextView
             android:id="@+id/tv_signup_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/divider_signup_nickname"
-            app:layout_constraintTop_toBottomOf="@id/divider_signup_nickname"
-            android:layout_marginTop="2dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
             android:textAppearance="@style/Caption"
             android:textColor="@color/error"
-            tools:text="이미 등록된 닉네임입니다"
             android:visibility="gone"
-            tools:visibility="visible"/>
+            app:layout_constraintStart_toStartOf="@id/divider_signup_nickname"
+            app:layout_constraintTop_toBottomOf="@id/divider_signup_nickname"
+            tools:text="이미 등록된 닉네임입니다"
+            tools:visibility="visible" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="19dp"
+            app:layout_constraintBottom_toBottomOf="@id/et_signup_nickname"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/et_signup_nickname"
-            app:layout_constraintBottom_toBottomOf="@id/et_signup_nickname">
+            app:layout_constraintTop_toTopOf="@id/et_signup_nickname">
+
             <ImageView
                 android:id="@+id/iv_signup_nickname_error"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_error_alert"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="gone"
                 android:layout_marginEnd="14dp"
-                tools:visibility="visible"
+                android:src="@drawable/ic_error_alert"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                tools:visibility="visible" />
 
             <ImageView
                 android:id="@+id/iv_signup_nickname_close"
@@ -94,14 +99,12 @@
                 android:layout_height="48dp"
                 android:scaleType="center"
                 android:src="@drawable/ic_close"
-                app:layout_constraintEnd_toStartOf="@id/iv_signup_nickname_error"
                 android:visibility="gone"
-                tools:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_signup_nickname_error"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                tools:visibility="visible" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

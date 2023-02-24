@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.MediatorLiveData
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.seunggyu.stitch.R
@@ -52,13 +53,16 @@ class SignupActivity : FragmentActivity() {
 
         with(binding) {
             viewPager = vpSignup
-            // 다음버튼 클릭시 progressbar 25씩 증가
             btnSignupNext.setOnClickListener {
-                if ((viewModel.currentPage.value ?: 1) == 5) finish()
-                else viewModel.nextPage()
-
+                viewModel.nextPage()
                 val currentItem = viewPager.currentItem
+                when (currentItem) {
+                    0 -> {
+                        Log.e("Viewmodel's InputName", viewModel.inputName)
+                    }
+                }
                 if (currentItem < 5) {
+                    checkButtonAvailable(currentItem)
                     viewPager.currentItem = currentItem + 1
                 }
             }
@@ -70,7 +74,7 @@ class SignupActivity : FragmentActivity() {
 
                 val currentItem = viewPager.currentItem
                 if (currentItem > 0) {
-                    viewPager.currentItem = currentItem +- 1
+                    viewPager.currentItem = currentItem + -1
                 }
             }
 
@@ -103,21 +107,111 @@ class SignupActivity : FragmentActivity() {
 
             currentPage.observe(this@SignupActivity) {
                 it?.let {
-                    when(it) {
+                    binding.btnSignupNext.visibility = View.VISIBLE
+                    binding.btnSignupSuccess.visibility = View.GONE
+                    when (it) {
                         5 -> {
+                            binding.topText = getString(R.string.signup_success)
+
                             binding.btnSignupNext.visibility = View.GONE
                             binding.btnSignupSuccess.visibility = View.VISIBLE
                             binding.btnSignupBack.visibility = View.GONE
+                            binding.topText = getString(R.string.signup)
+                        }
+                        1 -> {
+                            Log.e("ViewModel's currentPage", it.toString())
+                            binding.topText = getString(R.string.signup)
+                        }
+                        2 -> {
+                            Log.e("ViewModel's currentPage", it.toString())
+                        }
+                        3 -> {
+                            Log.e("ViewModel's currentPage", it.toString())
+                            Log.e("ViewModel's inputHome", inputHome.value.toString())
+
+                            // currentPage가 3일 때만 inputHome LiveData를 observe
+                            val mediatorLiveData = MediatorLiveData<String>()
+                            mediatorLiveData.addSource(viewModel.inputHome) {
+                                // inputHome LiveData의 값이 변경될 때마다 실행되는 코드
+                                if (inputHome.value == "") disableButton()
+                                else ableButton()
+                            }
+                            mediatorLiveData.observe(this@SignupActivity) { /* NO-OP */ }
+                        }
+                        4 -> {
+                            Log.e("ViewModel's currentPage", it.toString())
+                            binding.topText = getString(R.string.signup)
+                            checkButtonAvailable(4)
+
+                        }
+                    }
+                }
+            }
+
+            nextButtonAvailable.observe(this@SignupActivity) {
+                it?.let {
+                    when (it) {
+                        true -> {
+                            binding.btnSignupNext.background = ContextCompat.getDrawable(
+                                this@SignupActivity,
+                                R.drawable.button_round
+                            )
+                            binding.btnSignupNext.setTextColor(
+                                ContextCompat.getColor(
+                                    this@SignupActivity,
+                                    R.color.gray_12
+                                )
+                            )
+                            binding.btnSignupNext.isEnabled = true
                         }
                         else -> {
-                            binding.btnSignupNext.visibility = View.VISIBLE
-                            binding.btnSignupSuccess.visibility = View.GONE
+                            binding.btnSignupNext.background = ContextCompat.getDrawable(
+                                this@SignupActivity,
+                                R.drawable.button_round_disabled
+                            )
+                            binding.btnSignupNext.setTextColor(
+                                ContextCompat.getColor(
+                                    this@SignupActivity,
+                                    R.color.gray_07
+                                )
+                            )
+                            binding.btnSignupNext.isEnabled = false
                         }
                     }
                 }
             }
         }
 
+    }
+
+    fun checkButtonAvailable(page: Int) {
+        with(viewModel) {
+            when (page) {
+                0 -> {
+                    if(inputName.length in 1..10) {
+                        ableButton()
+                        return
+                    }
+                }
+
+                1 -> {
+                    // TODO: 프로필 페이지 버튼 유효성 검사 실시
+                    ableButton()
+                    return
+                }
+
+                2 -> {
+                    if(inputHome.value?.length!! > 0) {
+                        ableButton()
+                        return
+                    }
+                }
+                3 -> {
+                    // TODO: 관심종목 페이지 버튼 유효성 검사 실시
+                }
+            }
+            disableButton()
+        }
     }
 
     override fun onBackPressed() {
