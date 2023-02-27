@@ -1,50 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
-    android:width="100dp"
-    android:height="100dp"
-    android:viewportWidth="100"
-    android:viewportHeight="100">
+    android:width="360dp"
+    android:height="640dp"
+    android:viewportWidth="360"
+    android:viewportHeight="640">
 
     <group>
 
-        <clip-path
-            android:pathData="M0 0H216V108H0V0Z"
-            />
+        <clip-path android:pathData="M0 0H360V640H0V0Z" />
 
         <group
-            android:translateX="-0.47"
-            android:translateY="-1"
-            android:pivotX="108"
-            android:pivotY="54"
+            android:pivotX="180"
+            android:pivotY="320"
+            android:rotation="-43.223"
             android:scaleX="2.745"
             android:scaleY="8.218"
-            android:rotation="-43.223"
-            >
+            android:translateX="-0.47"
+            android:translateY="-1">
 
-            <path
-                android:pathData="M0 0V108H216V0"
-                >
+            <path android:pathData="M0 0V640H360V0">
 
                 <aapt:attr name="android:fillColor">
 
                     <gradient
-                        android:type="linear"
-                        android:startX="54"
-                        android:startY="54"
-                        android:endX="162"
-                        android:endY="54"
-                        >
+                        android:endX="270"
+                        android:endY="320"
+                        android:startX="90"
+                        android:startY="320"
+                        android:type="linear">
 
                         <item
                             android:color="#FFFF00"
-                            android:offset="0"
-                            />
+                            android:offset="0" />
 
                         <item
                             android:color="#FFC700"
-                            android:offset="1"
-                            />
+                            android:offset="1" />
 
                     </gradient>
 
