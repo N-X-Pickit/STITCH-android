@@ -17,7 +17,7 @@
                 android:layout_width="0dp"
                 android:layout_height="56dp"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="28dp"
                 android:text="@string/signup_frag4_top"
                 android:textAppearance="@style/Headline"
                 android:textColor="@color/white"
@@ -25,7 +25,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_badminton"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
@@ -73,9 +73,9 @@
                     android:src="@drawable/ic_lovely"
                     android:visibility="gone"
                     tools:visibility="visible" />
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_tennis"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
@@ -124,9 +124,9 @@
                     android:src="@drawable/ic_lovely"
                     android:visibility="gone"
                     tools:visibility="visible" />
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_pingpong"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
@@ -174,10 +174,10 @@
                     android:src="@drawable/ic_lovely"
                     android:visibility="gone"
                     tools:visibility="visible" />
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_running"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
@@ -225,9 +225,9 @@
                     android:src="@drawable/ic_lovely"
                     android:visibility="gone"
                     tools:visibility="visible" />
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_soccer"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
@@ -276,9 +276,10 @@
                     android:src="@drawable/ic_lovely"
                     android:visibility="gone"
                     tools:visibility="visible" />
-            </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_mountain"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
@@ -326,10 +327,10 @@
                     android:src="@drawable/ic_lovely"
                     android:visibility="gone"
                     tools:visibility="visible" />
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_basketball"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
@@ -377,9 +378,9 @@
                     android:src="@drawable/ic_lovely"
                     android:visibility="gone"
                     tools:visibility="visible" />
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_health"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
@@ -428,9 +429,9 @@
                     android:src="@drawable/ic_lovely"
                     android:visibility="gone"
                     tools:visibility="visible" />
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_baseball"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
@@ -478,9 +479,9 @@
                     android:src="@drawable/ic_lovely"
                     android:visibility="gone"
                     tools:visibility="visible" />
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_golf"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
@@ -530,9 +531,9 @@
                     android:src="@drawable/ic_lovely"
                     android:visibility="gone"
                     tools:visibility="visible" />
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_etc"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
@@ -581,7 +582,7 @@
                     android:src="@drawable/ic_lovely"
                     android:visibility="gone"
                     tools:visibility="visible" />
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

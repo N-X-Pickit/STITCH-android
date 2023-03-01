@@ -7,16 +7,13 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.MediatorLiveData
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.seunggyu.stitch.R
-import com.seunggyu.stitch.adapter.SignupProfileListAdapter
 import com.seunggyu.stitch.databinding.ActivitySignupBinding
 import com.seunggyu.stitch.ui.fragment.*
 import com.seunggyu.stitch.viewModel.SignupViewModel
@@ -54,27 +51,25 @@ class SignupActivity : FragmentActivity() {
         with(binding) {
             viewPager = vpSignup
             btnSignupNext.setOnClickListener {
-                viewModel.nextPage()
+//                viewModel.nextPage()
+                viewModel.disableButton()
                 val currentItem = viewPager.currentItem
-                when (currentItem) {
-                    0 -> {
-                        Log.e("Viewmodel's InputName", viewModel.inputName)
-                    }
-                }
-                if (currentItem < 5) {
-                    checkButtonAvailable(currentItem)
+                if (currentItem < 2) {
                     viewPager.currentItem = currentItem + 1
+                    viewModel.nextPage()
+//                    viewModel.currentPage.value?.plus(1)
                 }
             }
 
-            // 뒤로가기 버튼 클릭시 progressbar 25씩 감소
+            // 뒤로가기 버튼 클릭
             btnSignupBack.setOnClickListener {
-                if ((viewModel.currentPage.value ?: 1) == 1) finish()
-                else viewModel.prevPage()
+                if ((viewModel.currentPage.value ?: 1) == 1 || (viewModel.currentPage.value ?: 3) == 3) finish()
+                else viewModel.currentPage.value?.minus(1)
 
                 val currentItem = viewPager.currentItem
                 if (currentItem > 0) {
-                    viewPager.currentItem = currentItem + -1
+                    viewPager.currentItem = currentItem - 1
+                    viewModel.prevPage()
                 }
             }
 
@@ -99,18 +94,29 @@ class SignupActivity : FragmentActivity() {
 
         with(viewModel) {
             // 프로그레스바 상태
-            progress.observe(this@SignupActivity) {
-                it?.let {
-                    binding.progress = it
-                }
-            }
+//            progress.observe(this@SignupActivity) {
+//                it?.let {
+//                    binding.progress = it
+//                }
+//            }
+
+//            profileSelectedItem.observe(this@SignupActivity) {
+//                Log.e("adasdasdasdasd","##############")
+//                it?.let {
+//                    Log.e("adasdasdasdasd","##############")
+//                    if(it != -1) {
+//                        checkButtonAvailable(1)
+//                    }
+//                }
+//            }
 
             currentPage.observe(this@SignupActivity) {
                 it?.let {
                     binding.btnSignupNext.visibility = View.VISIBLE
                     binding.btnSignupSuccess.visibility = View.GONE
+                    checkButtonAvailable(it-1) // page = currentPage -1
                     when (it) {
-                        5 -> {
+                        3 -> {
                             binding.topText = getString(R.string.signup_success)
 
                             binding.btnSignupNext.visibility = View.GONE
@@ -125,26 +131,33 @@ class SignupActivity : FragmentActivity() {
                         2 -> {
                             Log.e("ViewModel's currentPage", it.toString())
                         }
-                        3 -> {
-                            Log.e("ViewModel's currentPage", it.toString())
-                            Log.e("ViewModel's inputHome", inputHome.value.toString())
-
-                            // currentPage가 3일 때만 inputHome LiveData를 observe
-                            val mediatorLiveData = MediatorLiveData<String>()
-                            mediatorLiveData.addSource(viewModel.inputHome) {
-                                // inputHome LiveData의 값이 변경될 때마다 실행되는 코드
-                                if (inputHome.value == "") disableButton()
-                                else ableButton()
-                            }
-                            mediatorLiveData.observe(this@SignupActivity) { /* NO-OP */ }
-                        }
-                        4 -> {
-                            Log.e("ViewModel's currentPage", it.toString())
-                            binding.topText = getString(R.string.signup)
-                            checkButtonAvailable(4)
-
-                        }
+//                        3 -> {
+//                            Log.e("ViewModel's currentPage", it.toString())
+//                            Log.e("ViewModel's inputHome", inputHome.value.toString())
+//
+//                            // currentPage가 3일 때만 inputHome LiveData를 observe
+//                            val mediatorLiveData = MediatorLiveData<String>()
+//                            mediatorLiveData.addSource(viewModel.inputHome) {
+//                                // inputHome LiveData의 값이 변경될 때마다 실행되는 코드
+//                                if (inputHome.value == "") disableButton()
+//                                else ableButton()
+//                            }
+//                            mediatorLiveData.observe(this@SignupActivity) { /* NO-OP */ }
+//                        }
+//                        4 -> {
+//                            Log.e("ViewModel's currentPage", it.toString())
+//                            binding.topText = getString(R.string.signup)
+//                            checkButtonAvailable(4)
+//
+//                        }
                     }
+                }
+            }
+
+            interestingSelectedItem.observe(this@SignupActivity) {
+                it?.let {
+                    checkButtonAvailable(0)
+                    Log.e("interestingSelectedItem","observed")
                 }
             }
 
@@ -188,26 +201,18 @@ class SignupActivity : FragmentActivity() {
         with(viewModel) {
             when (page) {
                 0 -> {
-                    if(inputName.length in 1..10) {
+                    if(interestingSelectedItem.value?.size!! >= 3) {
+                        Log.e("interestingSelectedItem.value?.size!!", interestingSelectedItem.value?.size!!.toString())
                         ableButton()
                         return
                     }
                 }
 
                 1 -> {
-                    // TODO: 프로필 페이지 버튼 유효성 검사 실시
-                    ableButton()
-                    return
-                }
-
-                2 -> {
                     if(inputHome.value?.length!! > 0) {
                         ableButton()
                         return
                     }
-                }
-                3 -> {
-                    // TODO: 관심종목 페이지 버튼 유효성 검사 실시
                 }
             }
             disableButton()
@@ -215,24 +220,21 @@ class SignupActivity : FragmentActivity() {
     }
 
     override fun onBackPressed() {
-        if (viewPager.currentItem == 0 || viewPager.currentItem == 4) {
+        if (viewPager.currentItem == 0 || viewPager.currentItem == 2) {
             super.onBackPressed()
             // 첫번째 (닉네임 입력 화면) 이거나 마지막 (회원가입 완료 화면) 일 경우 activity 종료
             finish()
         } else {
             // 다른 경우 viewPager 이전 페이지로 이동
             viewPager.currentItem = viewPager.currentItem - 1
-            viewModel.prevPage()
         }
     }
 
     private inner class SignupViewPagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
         // 1. ViewPager2에 연결할 Fragment 들을 생성
         val fragmentList = listOf<Fragment>(
-            SignupNameFragment(),
-            SignupProfileFragment(),
+            SignupInterestFragment(),
             SignupAddressFragment(),
-            SignupCategoryFragment(),
             SignupSuccessFragment()
         )
 

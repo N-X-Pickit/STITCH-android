@@ -14,11 +14,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.seunggyu.stitch.R
-import com.seunggyu.stitch.databinding.FragSignup1Binding
+import com.seunggyu.stitch.databinding.FragNicknameBinding
 import com.seunggyu.stitch.viewModel.SignupViewModel
 
 class SignupNameFragment : Fragment() {
-    private var _binding: FragSignup1Binding? = null
+    private var _binding: FragNicknameBinding? = null
     private val binding get() = _binding!!
     private val viewModel by activityViewModels<SignupViewModel>()
     private var duplicationFlag = false
@@ -30,7 +30,7 @@ class SignupNameFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragSignup1Binding.inflate(inflater, container, false)
+        _binding = FragNicknameBinding.inflate(inflater, container, false)
         init()
         return binding.root
     }

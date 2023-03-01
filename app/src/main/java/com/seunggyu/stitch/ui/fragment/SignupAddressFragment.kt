@@ -12,13 +12,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.seunggyu.stitch.R
-import com.seunggyu.stitch.databinding.FragSignup3Binding
+import com.seunggyu.stitch.databinding.FragAddressBinding
 import com.seunggyu.stitch.ui.AddressSearchActivity
-import com.seunggyu.stitch.ui.SignupActivity
 import com.seunggyu.stitch.viewModel.SignupViewModel
 
 class SignupAddressFragment : Fragment() {
-    private var _binding: FragSignup3Binding? = null
+    private var _binding: FragAddressBinding? = null
     private val binding get() = _binding!!
     private val viewModel by activityViewModels<SignupViewModel>()
     private var availableFlag = false
@@ -28,7 +27,7 @@ class SignupAddressFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragSignup3Binding.inflate(inflater, container, false)
+        _binding = FragAddressBinding.inflate(inflater, container, false)
         init()
         return binding.root
     }
