@@ -32,6 +32,7 @@
                 android:layout_marginTop="40dp"
                 app:cardBackgroundColor="@color/gray_12"
                 app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_signup_2_top"
@@ -63,17 +64,28 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/iv_badminton" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <ImageView
-                    android:id="@+id/iv_lovely_badminton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_lovely"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    <View
+                        android:id="@+id/view_transparent_badminton"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white_transparent_01"
+                        android:visibility="gone" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <ImageView
+                android:id="@+id/iv_lovely_badminton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:src="@drawable/ic_lovely"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/cv_badminton"
+                app:layout_constraintEnd_toEndOf="@id/cv_badminton"
+                app:layout_constraintStart_toStartOf="@id/cv_badminton"
+                app:layout_constraintTop_toTopOf="@id/cv_badminton"
+                tools:visibility="visible" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_tennis"
@@ -82,6 +94,7 @@
                 android:layout_marginEnd="16dp"
                 app:cardBackgroundColor="@color/gray_12"
                 app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="@id/cv_badminton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/cv_badminton"
@@ -90,6 +103,7 @@
                 app:strokeWidth="1dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_blurable_tennis"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -114,17 +128,28 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/iv_tennis" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <ImageView
-                    android:id="@+id/iv_lovely_tennis"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_lovely"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    <View
+                        android:id="@+id/view_transparent_tennis"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white_transparent_01"
+                        android:visibility="gone" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <ImageView
+                android:id="@+id/iv_lovely_tennis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:src="@drawable/ic_lovely"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/cv_tennis"
+                app:layout_constraintEnd_toEndOf="@id/cv_tennis"
+                app:layout_constraintStart_toStartOf="@id/cv_tennis"
+                app:layout_constraintTop_toTopOf="@id/cv_tennis"
+                tools:visibility="visible" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_pingpong"
@@ -133,6 +158,7 @@
                 android:layout_marginStart="16dp"
                 app:cardBackgroundColor="@color/gray_12"
                 app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="@id/cv_badminton"
                 app:layout_constraintStart_toEndOf="@id/cv_badminton"
                 app:layout_constraintTop_toTopOf="@id/cv_badminton"
@@ -164,18 +190,28 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/iv_pingpong" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <ImageView
-                    android:id="@+id/iv_lovely_pingpong"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_lovely"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    <View
+                        android:id="@+id/view_transparent_pingpong"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white_transparent_01"
+                        android:visibility="gone" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <ImageView
+                android:id="@+id/iv_lovely_pingpong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:src="@drawable/ic_lovely"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/cv_pingpong"
+                app:layout_constraintEnd_toEndOf="@id/cv_pingpong"
+                app:layout_constraintStart_toStartOf="@id/cv_pingpong"
+                app:layout_constraintTop_toTopOf="@id/cv_pingpong"
+                tools:visibility="visible" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_running"
@@ -184,6 +220,7 @@
                 android:layout_marginTop="16dp"
                 app:cardBackgroundColor="@color/gray_12"
                 app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cv_badminton"
@@ -215,17 +252,28 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/iv_running" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <ImageView
-                    android:id="@+id/iv_lovely_running"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_lovely"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    <View
+                        android:id="@+id/view_transparent_running"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white_transparent_01"
+                        android:visibility="gone" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <ImageView
+                android:id="@+id/iv_lovely_running"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:src="@drawable/ic_lovely"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/cv_running"
+                app:layout_constraintEnd_toEndOf="@id/cv_running"
+                app:layout_constraintStart_toStartOf="@id/cv_running"
+                app:layout_constraintTop_toTopOf="@id/cv_running"
+                tools:visibility="visible" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_soccer"
@@ -234,6 +282,7 @@
                 android:layout_marginEnd="16dp"
                 app:cardBackgroundColor="@color/gray_12"
                 app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="@id/cv_running"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/cv_running"
@@ -266,18 +315,28 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/iv_soccer" />
+
+                    <View
+                        android:id="@+id/view_transparent_soccer"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white_transparent_01"
+                        android:visibility="gone" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <ImageView
-                    android:id="@+id/iv_lovely_soccer"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_lovely"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
-
             </com.google.android.material.card.MaterialCardView>
+
+            <ImageView
+                android:id="@+id/iv_lovely_soccer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:src="@drawable/ic_lovely"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/cv_soccer"
+                app:layout_constraintEnd_toEndOf="@id/cv_soccer"
+                app:layout_constraintStart_toStartOf="@id/cv_soccer"
+                app:layout_constraintTop_toTopOf="@id/cv_soccer"
+                tools:visibility="visible" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_mountain"
@@ -286,6 +345,7 @@
                 android:layout_marginStart="16dp"
                 app:cardBackgroundColor="@color/gray_12"
                 app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="@id/cv_running"
                 app:layout_constraintStart_toEndOf="@id/cv_running"
                 app:layout_constraintTop_toTopOf="@id/cv_running"
@@ -317,17 +377,28 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/iv_mountain" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <ImageView
-                    android:id="@+id/iv_lovely_mountain"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_lovely"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    <View
+                        android:id="@+id/view_transparent_mountain"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white_transparent_01"
+                        android:visibility="gone" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <ImageView
+                android:id="@+id/iv_lovely_mountain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:src="@drawable/ic_lovely"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/cv_mountain"
+                app:layout_constraintEnd_toEndOf="@id/cv_mountain"
+                app:layout_constraintStart_toStartOf="@id/cv_mountain"
+                app:layout_constraintTop_toTopOf="@id/cv_mountain"
+                tools:visibility="visible" />
 
 
             <com.google.android.material.card.MaterialCardView
@@ -337,6 +408,7 @@
                 android:layout_marginTop="16dp"
                 app:cardBackgroundColor="@color/gray_12"
                 app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cv_running"
@@ -368,17 +440,28 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/iv_baketball" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <ImageView
-                    android:id="@+id/iv_lovely_basketball"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_lovely"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    <View
+                        android:id="@+id/view_transparent_basketball"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white_transparent_01"
+                        android:visibility="gone" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <ImageView
+                android:id="@+id/iv_lovely_basketball"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:src="@drawable/ic_lovely"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/cv_basketball"
+                app:layout_constraintEnd_toEndOf="@id/cv_basketball"
+                app:layout_constraintStart_toStartOf="@id/cv_basketball"
+                app:layout_constraintTop_toTopOf="@id/cv_basketball"
+                tools:visibility="visible" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_health"
@@ -387,6 +470,7 @@
                 android:layout_marginEnd="16dp"
                 app:cardBackgroundColor="@color/gray_12"
                 app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="@id/cv_basketball"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/cv_basketball"
@@ -419,17 +503,28 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/iv_health" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <ImageView
-                    android:id="@+id/iv_lovely_health"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_lovely"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    <View
+                        android:id="@+id/view_transparent_health"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white_transparent_01"
+                        android:visibility="gone" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <ImageView
+                android:id="@+id/iv_lovely_health"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:src="@drawable/ic_lovely"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/cv_health"
+                app:layout_constraintEnd_toEndOf="@id/cv_health"
+                app:layout_constraintStart_toStartOf="@id/cv_health"
+                app:layout_constraintTop_toTopOf="@id/cv_health"
+                tools:visibility="visible" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_baseball"
@@ -438,6 +533,7 @@
                 android:layout_marginStart="16dp"
                 app:cardBackgroundColor="@color/gray_12"
                 app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="@id/cv_basketball"
                 app:layout_constraintStart_toEndOf="@id/cv_basketball"
                 app:layout_constraintTop_toTopOf="@id/cv_basketball"
@@ -469,31 +565,43 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/iv_baseball" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <ImageView
-                    android:id="@+id/iv_lovely_baseball"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_lovely"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    <View
+                        android:id="@+id/view_transparent_baseball"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white_transparent_01"
+                        android:visibility="gone" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <ImageView
+                android:id="@+id/iv_lovely_baseball"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:src="@drawable/ic_lovely"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/cv_baseball"
+                app:layout_constraintEnd_toEndOf="@id/cv_baseball"
+                app:layout_constraintStart_toStartOf="@id/cv_baseball"
+                app:layout_constraintTop_toTopOf="@id/cv_baseball"
+                tools:visibility="visible" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_golf"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
                 app:cardBackgroundColor="@color/gray_12"
                 app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toStartOf="@id/cv_etc"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cv_basketball"
-                app:layout_constraintEnd_toStartOf="@id/cv_etc"
-                android:layout_marginTop="16dp"
                 app:strokeColor="@color/gray_12"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                android:layout_marginEnd="8dp"
                 app:strokeWidth="1dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -521,30 +629,42 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/iv_golf" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <ImageView
-                    android:id="@+id/iv_lovely_golf"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_lovely"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    <View
+                        android:id="@+id/view_transparent_golf"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white_transparent_01"
+                        android:visibility="gone" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <ImageView
+                android:id="@+id/iv_lovely_golf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:src="@drawable/ic_lovely"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/cv_golf"
+                app:layout_constraintEnd_toEndOf="@id/cv_golf"
+                app:layout_constraintStart_toStartOf="@id/cv_golf"
+                app:layout_constraintTop_toTopOf="@id/cv_golf"
+                tools:visibility="visible" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_etc"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
+                android:layout_marginStart="8dp"
                 app:cardBackgroundColor="@color/gray_12"
                 app:cardCornerRadius="12dp"
-                app:layout_constraintStart_toEndOf="@id/cv_golf"
-                app:layout_constraintTop_toTopOf="@id/cv_golf"
+                app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="@id/cv_golf"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/cv_golf"
+                app:layout_constraintTop_toTopOf="@id/cv_golf"
                 app:strokeColor="@color/gray_12"
-                android:layout_marginStart="8dp"
                 app:strokeWidth="1dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -572,17 +692,28 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/iv_etc" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <ImageView
-                    android:id="@+id/iv_lovely_etc"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_lovely"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    <View
+                        android:id="@+id/view_transparent_etc"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white_transparent_01"
+                        android:visibility="gone" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <ImageView
+                android:id="@+id/iv_lovely_etc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:src="@drawable/ic_lovely"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/cv_etc"
+                app:layout_constraintEnd_toEndOf="@id/cv_etc"
+                app:layout_constraintStart_toStartOf="@id/cv_etc"
+                app:layout_constraintTop_toTopOf="@id/cv_etc"
+                tools:visibility="visible" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
