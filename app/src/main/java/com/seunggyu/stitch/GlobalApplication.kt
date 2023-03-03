@@ -2,10 +2,9 @@ package com.seunggyu.stitch
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import com.kakao.sdk.common.KakaoSdk
 
-class SocketApplication : Application() {
+class GlobalApplication : Application() {
     companion object {
         var appContext : Context? = null
     }
