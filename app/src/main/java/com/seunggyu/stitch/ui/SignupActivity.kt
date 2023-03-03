@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.seunggyu.stitch.BasicActivity
 import com.seunggyu.stitch.R
 import com.seunggyu.stitch.databinding.ActivitySignupBinding
 import com.seunggyu.stitch.ui.fragment.*
@@ -20,7 +21,7 @@ import com.seunggyu.stitch.viewModel.SignupViewModel
 import kotlinx.coroutines.*
 
 
-class SignupActivity : FragmentActivity() {
+class SignupActivity : BasicActivity() {
     private lateinit var binding: ActivitySignupBinding
     private lateinit var viewPager: ViewPager2
 
