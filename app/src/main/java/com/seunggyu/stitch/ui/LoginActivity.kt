@@ -13,6 +13,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.toSpannable
 import androidx.core.view.WindowInsetsControllerCompat
+import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.user.UserApiClient
 import com.seunggyu.stitch.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -63,13 +65,25 @@ class LoginActivity : AppCompatActivity() {
 
         with(binding) {
             btnKakaoLogin.setOnClickListener {
-                /* TODO : 카카오 로그인 기능 구현 */
-                val intent = Intent(this@LoginActivity, SignupActivity::class.java)
-                startActivity(intent)
+                if (UserApiClient.instance.isKakaoTalkLoginAvailable(this@LoginActivity)) {
+                    UserApiClient.instance.loginWithKakaoTalk(this@LoginActivity, callback = kakaoCallback)
+                } else {
+                    UserApiClient.instance.loginWithKakaoAccount(this@LoginActivity, callback = kakaoCallback)
+                }
             }
             btnGoogleLogin.setOnClickListener {
                 /* TODO : 구글 로그인 기능 구현 */
             }
+        }
+    }
+    internal val kakaoCallback : (OAuthToken?, Throwable?) -> Unit = { token, error ->
+        if (error != null) {
+            Log.e("kakao result","로그인 실패- $error")
+        } else if (token != null) {
+            Log.e("kakao result","로그인성공 - 토큰 ${token.accessToken} id토큰 ${token.idToken}")
+
+            val intent = Intent(this@LoginActivity, SignupActivity::class.java)
+            startActivity(intent)
         }
     }
 }
