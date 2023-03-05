@@ -16,6 +16,10 @@ class LoginViewModel : ViewModel() {
     private var _googleTokenAuth = MutableLiveData<String>()
     private var _googleNickName = MutableLiveData<String>()
     private var _googlePhotoUrl = MutableLiveData<String>()
+    private var _googleId = MutableLiveData<String>()
+    private var _kakaoId = MutableLiveData<String>()
+    private var _kakaoNickName = MutableLiveData<String>()
+    private var _kakaoPhotoUrl = MutableLiveData<String>()
 
     val googleEmail: LiveData<String>
         get() = _googleEmail
@@ -32,12 +36,28 @@ class LoginViewModel : ViewModel() {
     val googlePhotoUrl: LiveData<String>
         get() = _googlePhotoUrl
 
+    val googleId: LiveData<String>
+        get() = _googleId
+
+    val kakaoId: LiveData<String>
+        get() = _kakaoId
+
+    val kakaoNickName: LiveData<String>
+        get() = _kakaoNickName
+
+    val kakaoPhotoUrl: LiveData<String>
+        get() = _kakaoPhotoUrl
+
     init {
         _googleEmail.value = ""
         _googleToken.value = ""
         _googleTokenAuth.value = ""
         _googleNickName.value = ""
         _googlePhotoUrl.value = ""
+        _googleId.value = ""
+        _kakaoId.value = ""
+        _kakaoNickName.value = ""
+        _kakaoPhotoUrl.value = ""
     }
 
     fun setGoogleEmail(email: String) {
@@ -78,5 +98,36 @@ class LoginViewModel : ViewModel() {
 
     fun getGooglePhotoUrl() : String {
         return _googlePhotoUrl.value.toString()
+    }
+
+    fun setGoogleId(id: String) {
+        _googleId.value = id
+    }
+
+    fun getGoogleId() : String {
+        return _googleId.value.toString()
+    }
+    fun setKakaoId(email: String) {
+        _kakaoId.value = email
+    }
+
+    fun getKakaoId() : String {
+        return _kakaoId.value.toString()
+    }
+
+    fun setKakaoNickName(name: String) {
+        _kakaoNickName.value = name
+    }
+
+    fun getKakaoNickName() : String {
+        return _kakaoNickName.value.toString()
+    }
+
+    fun setKakaoPhotoUrl(photoUrl: String) {
+        _kakaoPhotoUrl.value = photoUrl
+    }
+
+    fun getKakaoPhotoUrl() : String {
+        return _kakaoPhotoUrl.value.toString()
     }
 }

@@ -1,5 +1,6 @@
 package com.seunggyu.stitch.ui
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -23,7 +24,13 @@ import com.google.android.gms.tasks.Task
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import com.seunggyu.stitch.databinding.ActivityLoginBinding
+import com.seunggyu.stitch.data.RetrofitApi
+import com.seunggyu.stitch.data.model.request.SignupRequest
 import com.seunggyu.stitch.viewModel.LoginViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class LoginActivity : AppCompatActivity() {
@@ -114,12 +121,14 @@ class LoginActivity : AppCompatActivity() {
             viewModel.setGoogleTokenAuth(account?.serverAuthCode.toString())
             viewModel.setGoogleNickName(account?.displayName.toString())
             viewModel.setGooglePhotoUrl(account?.photoUrl.toString())
+            viewModel.setGoogleId(account?.id.toString())
 
             Log.e("Google account Email",viewModel.getGoogleEmail())
             Log.e("Google account Token",viewModel.getGoogleToken())
             Log.e("Google account TokenAuth", viewModel.getGoogleTokenAuth())
             Log.e("Google account NickName", viewModel.getGoogleNickName())
             Log.e("Google account PhotoUrl", viewModel.getGooglePhotoUrl())
+            Log.e("Google account Id", viewModel.getGoogleId())
         } catch (e: ApiException){
             Log.e("Google account","signInResult:failed Code = " + e.statusCode)
         }
@@ -129,10 +138,48 @@ class LoginActivity : AppCompatActivity() {
         if (error != null) {
             Log.e("kakao result", "로그인 실패- $error")
         } else if (token != null) {
-            Log.e("kakao result", "로그인성공 - 토큰 ${token.accessToken} id토큰 ${token.idToken}")
+            Log.e("kakao result", "로그인성공 - 토큰 ${token.accessToken} id토큰 ${token.idToken} ")
+            UserApiClient.instance.me { user, mError ->
+                if (mError != null) {
+                    Log.e(TAG, "사용자 정보 요청 실패 $error")
+                } else if (user != null) {
+                    Log.e(TAG, "사용자 정보 요청 성공 : $user")
+                    viewModel.setKakaoNickName(user.kakaoAccount?.profile?.nickname.toString())
+                    viewModel.setKakaoId(user.id.toString())
+                    viewModel.setKakaoPhotoUrl(user.kakaoAccount?.profile?.profileImageUrl.toString())
 
+                    retrofitWork()
+                    Log.e("kakaoId", viewModel.getKakaoId())
+                    Log.e("kakaoNickName", viewModel.getKakaoNickName())
+                    Log.e("kakaoPhotoUrl", viewModel.getKakaoPhotoUrl())
+                }
+            }
             val intent = Intent(this@LoginActivity, SignupActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun retrofitWork() {
+        val service = RetrofitApi.retrofitService
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.signup(SignupRequest(id = "1121127211", type = "member", location = "서울시 대한구 민국동", imageUrl = "www.abcd.com", name = "홍길동", sports = listOf("야구", "축구", "등산")))
+
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    result?.let {
+                        Log.e("result id", result.id.toString())
+                        Log.e("result type", result.type.toString())
+                        Log.e("result location", result.location.toString())
+                        Log.e("result imageUrl", result.imageUrl.toString())
+                        Log.e("result name", result.name.toString())
+                        Log.e("result sports", result.sports.toString())
+                    }
+                } else {
+                    Log.e("TAG", response.code().toString())
+                }
+            }
         }
     }
 }
