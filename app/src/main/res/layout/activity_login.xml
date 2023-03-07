@@ -8,16 +8,6 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/login_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -30,22 +20,22 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
-            android:id="@+id/iv_login_top"
             android:layout_width="0dp"
-            android:layout_height="142dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="80dp"
-            android:background="#D9D9D9"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/login_background_overlay"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_login_top" />
 
         <TextView
             android:id="@+id/tv_privacy_agree"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="60dp"
             android:bufferType="spannable"
             android:text="@string/login_privacy_agree"
             android:textAlignment="center"
@@ -138,17 +128,36 @@
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
-
+        <ImageView
+            android:id="@+id/iv_stitch_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/stitch_logo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="72dp"
+            android:layout_marginStart="16dp"/>
+        <ImageView
+            android:layout_width="124dp"
+            android:layout_height="26dp"
+            android:src="@drawable/stitch_text_logo"
+            app:layout_constraintTop_toTopOf="@id/iv_stitch_logo"
+            app:layout_constraintBottom_toBottomOf="@id/iv_stitch_logo"
+            app:layout_constraintStart_toEndOf="@id/iv_stitch_logo"
+            android:layout_marginStart="12dp"/>
         <TextView
+            android:id="@+id/tv_login_top"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
             android:text="@string/login_guide"
-            android:textAlignment="center"
             android:textAppearance="@style/Body_2_long"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toTopOf="@id/btn_kakao_login"
+            android:textSize="20sp"
+            android:textColor="@color/gray_04"
+            android:layout_marginHorizontal="16dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_stitch_logo"
+            android:layout_marginTop="24dp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

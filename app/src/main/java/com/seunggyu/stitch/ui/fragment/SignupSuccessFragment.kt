@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.seunggyu.stitch.R
 import com.seunggyu.stitch.adapter.SignupProfileListAdapter
 import com.seunggyu.stitch.databinding.FragSignupSuccessBinding
@@ -53,5 +54,9 @@ class SignupSuccessFragment : Fragment() {
 
         // TextView에 SpannableString을 설정합니다.
         binding.tvSignupSuccessTop.text = spannableString
+
+        Glide.with(this)
+            .load(R.drawable.fireworks)
+            .into(binding.ivFireworks)
     }
 }
