@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
 import com.seunggyu.stitch.MainActivity
+import com.seunggyu.stitch.R
+import com.seunggyu.stitch.Util.SnackBarCustom
 import com.seunggyu.stitch.databinding.ActivitySplashBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -25,6 +27,7 @@ class SplashActivity: AppCompatActivity() {
         setContentView(binding.root)
 
         init()
+
     }
 
     private fun init() {

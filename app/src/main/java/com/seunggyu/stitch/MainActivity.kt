@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
+import com.seunggyu.stitch.Util.SnackBarCustom
 import com.seunggyu.stitch.databinding.ActivityMainBinding
 import com.seunggyu.stitch.ui.fragment.category.CategoryFragment
 import com.seunggyu.stitch.ui.fragment.home.HomeFragment
@@ -85,23 +86,6 @@ class MainActivity : BasicActivity() {
                     true
                 }
                 selectedItemId = R.id.action_home
-            }
-        }
-    }
-
-    // background 영역을 statusbar까지 확장
-    fun expandWindowInset(boolean: Boolean) {
-        this.window?.apply {
-            if (boolean) this.statusBarColor = Color.TRANSPARENT
-            else this.statusBarColor = ContextCompat.getColor(context, R.color.gray_14)
-            WindowInsetsControllerCompat(this, this.decorView).isAppearanceLightStatusBars =
-                !boolean
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                setDecorFitsSystemWindows(!boolean)
-            } else {
-                window.decorView.systemUiVisibility =
-                    if (boolean) View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    else View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
             }
         }
     }

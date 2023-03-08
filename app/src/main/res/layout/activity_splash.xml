@@ -4,6 +4,7 @@
     android:theme="@style/Theme.SPLASH">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_tmp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/splash_background_gradient">

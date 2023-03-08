@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.seunggyu.stitch.GlobalApplication
 
 import com.seunggyu.stitch.R
+import com.seunggyu.stitch.Util.SnackBarCustom
 import com.seunggyu.stitch.databinding.FragMainHomeBinding
 
 class HomeFragment : Fragment() {
