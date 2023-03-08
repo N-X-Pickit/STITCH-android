@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">STITCH</string>
+    <string name="navi_home">홈</string>
+    <string name="navi_category">카테고리</string>
+    <string name="navi_mymatch">마이매치</string>
+    <string name="navi_mymenu">마이메뉴</string>
+
     <string name="login_privacy_agree">가입을 진행할 경우, 서비스 약관 및 개인정보 처리방침에\n동의한 것으로 간주합니다.</string>
     <string name="login_guide">일상속에서 함께하는\n운동의 즐거움을 새롭게 경험해보세요.</string>
     <string name="login_kakao_text">카카오 로그인</string>
@@ -39,4 +44,7 @@
     <string name="sport_golf">골프</string>
     <string name="sport_etc">기타</string>
     <string name="signup_button_success">시작하기</string>
+    <string name="chip_event">이벤트</string>
+
+    <string name="main_null">현재 개설된 매치가 없어요\n매치를 새로 만들어 사람들과 즐겨보세요</string>
 </resources>

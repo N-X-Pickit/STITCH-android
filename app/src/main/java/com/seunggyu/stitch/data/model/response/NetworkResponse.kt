@@ -1,4 +1,4 @@
-package com.seunggyu.stitch.data.model
+package com.seunggyu.stitch.data.model.response
 
 import com.squareup.moshi.Json
 

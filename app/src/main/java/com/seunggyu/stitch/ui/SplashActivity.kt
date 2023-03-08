@@ -9,6 +9,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.lifecycleScope
+import com.seunggyu.stitch.MainActivity
 import com.seunggyu.stitch.databinding.ActivitySplashBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -41,7 +42,7 @@ class SplashActivity: AppCompatActivity() {
 
         lifecycleScope.launch(Dispatchers.Main) {
             delay(2000)
-            val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+            val intent = Intent(this@SplashActivity, MainActivity::class.java)
             startActivity(intent)
 
             finish()
