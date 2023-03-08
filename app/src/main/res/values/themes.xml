@@ -21,6 +21,8 @@
         <item name="android:textColorLink">@color/gray_06</item>
         <!-- EditText의 커서 색상 지정 -->
         <item name="android:textCursorDrawable">@drawable/cursor_drawable</item>
+        <!-- progressbar 색상 지정 -->
+        <item name="android:indeterminateTint">@color/primary</item>
     </style>
 
     <!-- Splash Theme -->
