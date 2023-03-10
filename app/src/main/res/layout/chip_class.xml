@@ -16,7 +16,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginHorizontal="8dp"
-            android:text="@string/sport_tennis"
+            android:text="@string/chip_class"
             android:textAppearance="@style/Caption_2"
             android:textColor="@color/gray_12"
             android:layout_marginVertical="2dp"/>
