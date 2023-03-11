@@ -31,7 +31,7 @@
         android:layout_marginTop="1dp"
         android:visibility="gone"
         app:layout_constraintStart_toEndOf="@id/cv_match_image"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cv_match_image"
         tools:visibility="visible" />
 
     <include
@@ -157,7 +157,7 @@
         android:textColor="@color/gray_02"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/cv_match_image"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/cv_match_image" />
 
     <TextView
         android:id="@+id/tv_match_location"
@@ -205,15 +205,16 @@
 
     <ImageView
         android:id="@+id/iv_members"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="6dp"
         android:src="@drawable/ic_members"
         app:layout_constraintStart_toStartOf="@id/tv_match_title"
         app:layout_constraintTop_toBottomOf="@id/tv_match_location" />
 
     <TextView
+        android:id="@+id/tv_participant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"

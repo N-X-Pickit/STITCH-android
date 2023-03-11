@@ -53,4 +53,7 @@
     <string name="main_null">현재 개설된 매치가 없어요\n매치를 새로 만들어 사람들과 즐겨보세요</string>
     <string name="main_contents_recommend">추천하는 Teach 매치</string>
     <string name="main_contents_newmatch">새롭게 열린 매치</string>
+
+    <string name="participant">%1$s/%2$s명</string> <!-- ex: 3/4명 , 참여인원/최대인원 표시할 때 사용됨 -->
+
 </resources>

@@ -1,6 +1,7 @@
 package com.seunggyu.stitch.ui.fragment.home
 
 import android.content.res.Resources
+import android.graphics.Rect
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -10,25 +11,45 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.seunggyu.stitch.GlobalApplication
 import com.seunggyu.stitch.R
 import com.seunggyu.stitch.Util.SnackBarCustom
 import com.seunggyu.stitch.adapter.BannerPagerAdapter
+import com.seunggyu.stitch.adapter.MyRecyclerViewAdapter
+import com.seunggyu.stitch.data.model.response.NetworkResponse
 import com.seunggyu.stitch.databinding.FragMainHomeBinding
+import com.seunggyu.stitch.viewModel.MainViewModel
 import java.util.*
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragMainHomeBinding
 
     private lateinit var adapter: BannerPagerAdapter
+
+    private val viewModel by activityViewModels<MainViewModel>()
+
     private var currentPage = Int.MAX_VALUE / 2
     private var timer: Timer? = null
     private val DELAY_MS: Long = 5000 // (초기 웨이팅 타임) ex) 앱 로딩 후 5초 뒤 플립됨.
     private val PERIOD_MS: Long = 5000 // 5초 주기로 배너 이동
+
+
+    private val recommendRecyclerViewAdapter: MyRecyclerViewAdapter by lazy {
+        MyRecyclerViewAdapter(binding.rvMainContentsRecommend)
+    }
+
+    private val matchRecyclerViewAdapter: MyRecyclerViewAdapter by lazy {
+        MyRecyclerViewAdapter(binding.rvMainContentsNewmatch)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,30 +57,41 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.frag_main_home, container, false)
         initClickListener()
-        initObserver()
         initData()
+        initRecyclerView()
         initBannerViewPager()
+        initObserver()
 
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val toolbar = binding.toolbar
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+    }
+    private fun initRecyclerView() {
+
+        binding.rvMainContentsRecommend.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            addItemDecoration(SpaceItemDecoration(16))
+            adapter = recommendRecyclerViewAdapter
+        }
+
+        binding.rvMainContentsNewmatch.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            addItemDecoration(SpaceItemDecoration(verticalSpaceHeight = 22))
+            adapter = matchRecyclerViewAdapter
+        }
+
+    }
+
     private fun initBannerViewPager() {
-
-    }
-
-    private fun initObserver() {
-
-    }
-
-    private fun initClickListener() {
-
-    }
-
-    private fun initData() {
         // 배너 관련 데이터
         GlobalApplication.bannerData.let {
             if (it != null) {
-                for(index in it.indices) {
+                for (index in it.indices) {
                     Log.e("imageurl", it[index].imageUrl.toString())
                     Log.e("title", it[index].title.toString())
                 }
@@ -104,10 +136,35 @@ class HomeFragment : Fragment() {
 //                binding.dotsIndicator.attachTo(binding.vpBanner)
 
             } else {
-                SnackBarCustom.make(binding.clHomeview, getString(R.string.snackbar_banner_error)).show()
+                SnackBarCustom.make(binding.clHomeview, getString(R.string.snackbar_banner_error))
+                    .show()
             }
 
         }
+    }
+
+    private fun initObserver() {
+        with(viewModel) {
+            recommendMatchDataSet.observe(requireActivity()) {
+                it?.let {
+                    recommendRecyclerViewAdapter.submitList(it)
+                }
+            }
+
+            newMatchDataSet.observe(requireActivity()) {
+                it?.let {
+                    matchRecyclerViewAdapter.submitList(it)
+                }
+            }
+        }
+    }
+
+    private fun initClickListener() {
+
+    }
+
+    private fun initData() {
+
     }
 
     // viewpager의 indicator를 업데이트 하는 함수
@@ -119,7 +176,12 @@ class HomeFragment : Fragment() {
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
 
-            if(i != size-1) layoutParams.setMargins(0, 0, 16.dpToPx(), 0) // 각 ImageView 사이의 간격을 설정(가장 우측 제외)
+            if (i != size - 1) layoutParams.setMargins(
+                0,
+                0,
+                16.dpToPx(),
+                0
+            ) // 각 ImageView 사이의 간격을 설정(가장 우측 제외)
             imageView.layoutParams = layoutParams
 
             if (i == currentPosition) { // 현재 페이지에 해당하는 ImageView를 선택된 이미지로 설정합니다.
@@ -132,6 +194,38 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun initAppBar() {
+
+        binding.nsvMain.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            // 스크롤 뷰의 스크롤 위치를 기반으로 alpha 값을 계산
+            val alpha = if (scrollY > 0) {
+                val maxAlphaOffset = binding.toolbar.height
+                (scrollY / maxAlphaOffset.toFloat()).coerceAtMost(1.0f)
+            } else {
+                0.0f
+            }
+
+            // 계산된 alpha 값으로 툴바의 알파값 설정
+            binding.toolbar.alpha = alpha
+        }
+//        binding.nsvMain.setOnScrollChangeListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+//            val topPadding = 300f.dpToPx(this)
+//            val realAlphaScrollHeight = appBarLayout.measuredHeight - appBarLayout.totalScrollRange
+//            val abstractOffset = Math.abs(verticalOffset)
+//
+//            val realAlphaVerticalOffset =
+//                if (abstractOffset - topPadding < 0) 0f else abstractOffset - topPadding
+//
+//            if (abstractOffset < topPadding) {
+//                binding.toolbarBackgroundView.alpha = 0f
+//                return@OnOffsetChangedListener
+//            }
+//            val percentage = realAlphaVerticalOffset / realAlphaScrollHeight
+//            binding.toolbarBackgroundView.alpha =
+//                1 - (if (1 - percentage * 2 < 0) 0f else 1 - percentage * 2)
+//        })
+//        initActionBar()
+    }
 
     private fun timerStart() {
         // Adapter 세팅 후 타이머 실행
@@ -169,5 +263,28 @@ class HomeFragment : Fragment() {
             TypedValue.COMPLEX_UNIT_DIP, this.toFloat(),
             Resources.getSystem().displayMetrics
         ).toInt()
+    }
+
+
+    inner class SpaceItemDecoration(
+        private val horizontalSpaceWidth: Int = 0,
+        private val verticalSpaceHeight: Int = 0
+    ) :
+        RecyclerView.ItemDecoration() {
+
+        override fun getItemOffsets(
+            outRect: Rect, view: View, parent: RecyclerView,
+            state: RecyclerView.State
+        ) {
+            if (horizontalSpaceWidth == 0) {
+                // 세로 스크롤 리사이클러뷰
+                outRect.bottom = verticalSpaceHeight.dpToPx()
+            } else {
+                // 가로 스크롤 리사이클러뷰
+                val position = parent.getChildAdapterPosition(view)
+                if(position == 0) outRect.left = horizontalSpaceWidth.dpToPx() // 첫번째 아이템에도 시작 마진을 준다.
+                outRect.right = horizontalSpaceWidth.dpToPx()
+            }
+        }
     }
 }
