@@ -12,6 +12,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.seunggyu.stitch.BasicActivity
 import com.seunggyu.stitch.GlobalApplication
 import com.seunggyu.stitch.R
 import com.seunggyu.stitch.Util.SnackBarCustom
@@ -29,6 +32,7 @@ import com.seunggyu.stitch.data.model.response.NetworkResponse
 import com.seunggyu.stitch.databinding.FragMainHomeBinding
 import com.seunggyu.stitch.viewModel.MainViewModel
 import java.util.*
+import kotlin.math.abs
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragMainHomeBinding
@@ -56,10 +60,13 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.frag_main_home, container, false)
+
         initClickListener()
+        initInsetMargin()
         initData()
         initRecyclerView()
         initBannerViewPager()
+        initAppBar()
         initObserver()
 
         return binding.root
@@ -69,7 +76,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val toolbar = binding.toolbar
-        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        (activity as BasicActivity).setSupportActionBar(toolbar)
     }
     private fun initRecyclerView() {
 
@@ -77,6 +84,7 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             addItemDecoration(SpaceItemDecoration(16))
             adapter = recommendRecyclerViewAdapter
+            isNestedScrollingEnabled = false
         }
 
         binding.rvMainContentsNewmatch.apply {
@@ -196,35 +204,51 @@ class HomeFragment : Fragment() {
 
     private fun initAppBar() {
 
-        binding.nsvMain.setOnScrollChangeListener { _, _, scrollY, _, _ ->
-            // 스크롤 뷰의 스크롤 위치를 기반으로 alpha 값을 계산
-            val alpha = if (scrollY > 0) {
-                val maxAlphaOffset = binding.toolbar.height
-                (scrollY / maxAlphaOffset.toFloat()).coerceAtMost(1.0f)
-            } else {
-                0.0f
-            }
+        binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            val topPadding = binding.toolbarBackgroundView.height.toFloat() * 3
+            val realAlphaScrollHeight = appBarLayout.measuredHeight - appBarLayout.totalScrollRange
+            val abstractOffset = abs(verticalOffset)
 
-            // 계산된 alpha 값으로 툴바의 알파값 설정
-            binding.toolbar.alpha = alpha
+            val realAlphaVerticalOffset =
+                if (abstractOffset - topPadding < 0) 0f else abstractOffset - topPadding
+            if (abstractOffset < topPadding) {
+                binding.toolbarBackgroundView.alpha = 0f
+                return@OnOffsetChangedListener
+            }
+            val percentage = realAlphaVerticalOffset / realAlphaScrollHeight
+            binding.toolbarBackgroundView.alpha =
+                1 - (if (1 - percentage * 2 < 0) 0f else 1 - percentage * 2)
+
+        })
+        initActionBar()
+    }
+
+    private fun initActionBar() = with(binding) {
+        toolbar.navigationIcon = null
+        toolbar.setContentInsetsAbsolute(0, 0)
+        (activity as BasicActivity).setSupportActionBar(toolbar)
+        (activity as BasicActivity).supportActionBar?.let {
+            it.setHomeButtonEnabled(false)
+            it.setDisplayHomeAsUpEnabled(false)
+            it.setDisplayShowHomeEnabled(false)
         }
-//        binding.nsvMain.setOnScrollChangeListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-//            val topPadding = 300f.dpToPx(this)
-//            val realAlphaScrollHeight = appBarLayout.measuredHeight - appBarLayout.totalScrollRange
-//            val abstractOffset = Math.abs(verticalOffset)
-//
-//            val realAlphaVerticalOffset =
-//                if (abstractOffset - topPadding < 0) 0f else abstractOffset - topPadding
-//
-//            if (abstractOffset < topPadding) {
-//                binding.toolbarBackgroundView.alpha = 0f
-//                return@OnOffsetChangedListener
-//            }
-//            val percentage = realAlphaVerticalOffset / realAlphaScrollHeight
-//            binding.toolbarBackgroundView.alpha =
-//                1 - (if (1 - percentage * 2 < 0) 0f else 1 - percentage * 2)
-//        })
-//        initActionBar()
+    }
+
+    private fun initInsetMargin() = with(binding) {
+        ViewCompat.setOnApplyWindowInsetsListener(coordinator) { v: View, insets: WindowInsetsCompat ->
+            val params = v.layoutParams as ViewGroup.MarginLayoutParams
+            params.bottomMargin = insets.systemWindowInsetBottom
+            toolbarContainer.layoutParams =
+                (toolbarContainer.layoutParams as ViewGroup.MarginLayoutParams).apply {
+                    setMargins(16.dpToPx(), insets.systemWindowInsetTop, 16.dpToPx(), 0)
+                }
+            collapsingToolbarContainer.layoutParams =
+                (collapsingToolbarContainer.layoutParams as ViewGroup.MarginLayoutParams).apply {
+                    setMargins(0, 0, 0, 0)
+                }
+
+            insets.consumeSystemWindowInsets()
+        }
     }
 
     private fun timerStart() {

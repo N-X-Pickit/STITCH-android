@@ -1,5 +1,7 @@
 package com.seunggyu.stitch
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +16,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import com.seunggyu.stitch.Util.SnackBarCustom
 import com.seunggyu.stitch.databinding.ActivityMainBinding
+import com.seunggyu.stitch.ui.CreateNewMatch
 import com.seunggyu.stitch.ui.fragment.category.CategoryFragment
 import com.seunggyu.stitch.ui.fragment.home.HomeFragment
 import com.seunggyu.stitch.ui.fragment.mymatch.MymatchFragment
@@ -31,18 +34,13 @@ class MainActivity : BasicActivity() {
     }
 
     fun init() {
-        val originDecorView = window.decorView.systemUiVisibility
         with(binding) {
             navigationView.run {
                 setOnItemSelectedListener {
                     when (it.itemId) {
                         R.id.action_home -> {
-                            window.apply {
-                                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                                statusBarColor = Color.TRANSPARENT
-                            }
+                            makeStatusBarTransParent()
+
                             supportFragmentManager
                                 .beginTransaction()
                                 .replace(binding.frameLayout.id, HomeFragment())
@@ -50,10 +48,8 @@ class MainActivity : BasicActivity() {
                             Log.e("NaviFrag", "actionHome")
                         }
                         R.id.action_category -> {
-                            window.apply {
-                                decorView.systemUiVisibility = originDecorView
-                                clearFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                            }
+                            clearStatusBarTransParent()
+
                             supportFragmentManager
                                 .beginTransaction()
                                 .replace(binding.frameLayout.id, CategoryFragment())
@@ -61,10 +57,8 @@ class MainActivity : BasicActivity() {
                             Log.e("NaviFrag", "actionCategory")
                         }
                         R.id.action_mymatch -> {
-                            window.apply {
-                                decorView.systemUiVisibility = originDecorView
-                                clearFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                            }
+                            clearStatusBarTransParent()
+
                             supportFragmentManager
                                 .beginTransaction()
                                 .replace(binding.frameLayout.id, MymatchFragment())
@@ -72,10 +66,8 @@ class MainActivity : BasicActivity() {
                             Log.e("NaviFrag", "actionMymatch")
                         }
                         R.id.action_mymenu -> {
-                            window.apply {
-                                decorView.systemUiVisibility = originDecorView
-                                clearFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                            }
+                            clearStatusBarTransParent()
+
                             supportFragmentManager
                                 .beginTransaction()
                                 .replace(binding.frameLayout.id, MymenuFragment())
@@ -87,6 +79,31 @@ class MainActivity : BasicActivity() {
                 }
                 selectedItemId = R.id.action_home
             }
+
+            floatingButton.setOnClickListener {
+                startActivity(Intent(this@MainActivity, CreateNewMatch::class.java))
+            }
         }
     }
+
+    fun Activity.makeStatusBarTransParent() {
+        window.apply {
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            statusBarColor = Color.TRANSPARENT
+        }
+    }
+
+    fun Activity.clearStatusBarTransParent() {
+        val originDecorView = window.decorView.systemUiVisibility
+
+        window.apply {
+            decorView.systemUiVisibility = originDecorView
+            clearFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+
+            statusBarColor = ContextCompat.getColor(context, R.color.gray_14)
+        }
+    }
+
 }
