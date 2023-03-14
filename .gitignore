@@ -9,7 +9,8 @@
 /.idea/assetWizardSettings.xml
 .DS_Store
 /build
-/captures
+/captures/app/src/main/res/values/api_secret_key.xml
 .externalNativeBuild
 .cxx
 local.properties
+/app/src/main/res/values/api_secret_key.xml

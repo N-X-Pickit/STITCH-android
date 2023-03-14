@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="description"
+            type="String" />
+
+        <variable
+            name="negativeText"
+            type="String" />
+
+        <variable
+            name="positiveText"
+            type="String" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        app:cardBackgroundColor="@color/gray_12"
+        app:cardCornerRadius="16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/tv_alert_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{title}"
+                android:textAppearance="@style/Headline"
+                android:textColor="@color/gray_02"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/alert_newmatch_clear_title" />
+
+            <TextView
+                android:id="@+id/tv_alert_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@{description}"
+                android:textAppearance="@style/Body_2_long"
+                android:textColor="@color/gray_02"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_alert_title"
+                tools:text="@string/alert_newmatch_clear_description" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_alert_negative"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_round_100_stroke_75_gray12"
+                android:paddingHorizontal="40dp"
+                android:paddingVertical="12dp"
+                app:layout_constraintVertical_chainStyle="spread"
+                android:text="@{negativeText}"
+                android:textAppearance="@style/Body_1"
+                android:layout_marginEnd="4dp"
+                android:textColor="@color/gray_07"
+                app:layout_constraintEnd_toStartOf="@id/btn_alert_positive"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_alert_description"
+                tools:text="계속하기" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_alert_positive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_round_100_stroke_75_primary"
+                android:paddingHorizontal="40dp"
+                android:paddingVertical="12dp"
+                android:text="@{positiveText}"
+                android:textAppearance="@style/Body_1"
+                android:textColor="@color/gray_12"
+                android:layout_marginStart="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_alert_negative"
+                app:layout_constraintTop_toTopOf="@id/btn_alert_negative"
+                tools:text="그만두기" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

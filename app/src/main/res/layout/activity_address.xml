@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_14">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_address_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="12dp"
+                android:text="@string/address_input"
+                android:textAppearance="@style/Subhead"
+                android:textColor="@color/gray_02"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btn_address_back"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="@string/descriptor_back_button"
+                android:src="@drawable/ic_arrow_left"
+                android:scaleType="center"
+                android:background="@color/gray_14"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider_address"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:dividerColor="@color/gray_09"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_address_top"
+            android:layout_marginTop="55dp"
+            android:layout_marginHorizontal="16dp"/>
+        <ImageView
+            android:id="@+id/iv_address_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/divider_address"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_search"
+            app:layout_constraintBottom_toTopOf="@id/divider_address"
+            android:layout_marginBottom="15.5dp"/>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/divider_address"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintStart_toEndOf="@id/iv_address_search"
+            android:layout_marginStart="12dp"
+            app:layout_constraintTop_toTopOf="@id/iv_address_search"
+            app:layout_constraintBottom_toBottomOf="@id/iv_address_search"
+            android:backgroundTint="@color/gray_14"
+            android:textColorHint="@color/gray_09"
+            android:textColor="@color/gray_02"
+            android:hint="@string/address_input_hint"
+            android:textAppearance="@style/Body_1"/>
+
+        <ImageView
+            android:id="@+id/iv_signup_nickname_close"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_close"
+            android:scaleType="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="25dp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:layout_constraintTop_toTopOf="@id/iv_address_search"
+            app:layout_constraintBottom_toBottomOf="@id/iv_address_search"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_gps"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/divider_address"
+            android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/gps_button_round">
+
+            <ImageView
+                android:id="@+id/iv_address_gps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_address_gps"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                android:src="@drawable/ic_gps"
+                android:layout_marginEnd="6dp"/>
+
+            <TextView
+                android:id="@+id/tv_address_gps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/Body_1"
+                android:textSize="16sp"
+                android:layout_marginVertical="7dp"
+                android:switchTextAppearance="@style/Caption"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/gray_12"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_address_gps"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/address_gps" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_address_tip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_gps"
+            android:visibility="gone"
+            android:layout_marginTop="24dp">
+        
+            <TextView
+                android:id="@+id/tv_address_tip_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/address_tip"
+                android:textAppearance="@style/Subhead"
+                android:textColor="@color/gray_02"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_address_tip_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/address_tip_1"
+                app:layout_constraintStart_toStartOf="@id/tv_address_tip_top"
+                app:layout_constraintTop_toBottomOf="@id/tv_address_tip_top"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:textAppearance="@style/Subhead"
+                android:textColor="@color/gray_02"/>
+
+            <TextView
+                android:id="@+id/tv_address_tip_1_ex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/tv_address_tip_1"
+                app:layout_constraintTop_toBottomOf="@id/tv_address_tip_1"
+                android:layout_marginStart="24dp"
+                android:textAppearance="@style/Body_2_long"
+                android:text="@string/address_tip_1_ex"
+                android:textColor="@color/gray_09"/>
+
+            <TextView
+                android:id="@+id/tv_address_tip_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/address_tip_2"
+                app:layout_constraintStart_toStartOf="@id/tv_address_tip_1"
+                app:layout_constraintTop_toBottomOf="@id/tv_address_tip_1_ex"
+                android:layout_marginTop="12dp"
+                android:textAppearance="@style/Subhead"
+                android:textColor="@color/gray_02"/>
+
+            <TextView
+                android:id="@+id/tv_address_tip_2_ex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/tv_address_tip_2"
+                app:layout_constraintTop_toBottomOf="@id/tv_address_tip_2"
+                android:layout_marginStart="24dp"
+                android:textAppearance="@style/Body_2_long"
+                android:text="@string/address_tip_2_ex"
+                android:textColor="@color/gray_09"/>
+
+            <TextView
+                android:id="@+id/tv_address_tip_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/address_tip_3"
+                app:layout_constraintStart_toStartOf="@id/tv_address_tip_2"
+                app:layout_constraintTop_toBottomOf="@id/tv_address_tip_2_ex"
+                android:layout_marginTop="12dp"
+                android:textAppearance="@style/Subhead"
+                android:textColor="@color/gray_02"/>
+
+            <TextView
+                android:id="@+id/tv_address_tip_3_ex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/tv_address_tip_3"
+                app:layout_constraintTop_toBottomOf="@id/tv_address_tip_3"
+                android:layout_marginStart="24dp"
+                android:textAppearance="@style/Body_2_long"
+                android:text="@string/address_tip_3_ex"
+                android:textColor="@color/gray_09"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_address_result"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_gps"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/tv_address_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/address_gps_result"
+                android:textAppearance="@style/Subhead"
+                android:textColor="@color/gray_02"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/rv_gps_result"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_address_result"
+                android:layout_marginTop="22dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_address_null"
+            android:layout_width="0dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_gps">
+
+            <TextView
+                android:id="@+id/tv_address_null"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/address_result_null"
+                android:textAlignment="center"
+                android:textColor="@color/gray_02"
+                android:textAppearance="@style/Body_1"/>
+
+            <TextView
+                android:id="@+id/btn_address_research"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_address_null"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp"
+                android:text="@string/address_result_research"
+                android:textColor="@color/primary"
+                android:textAppearance="@style/Subhead"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

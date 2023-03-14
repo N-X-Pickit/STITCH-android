@@ -7,4 +7,85 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Custom -->
+    <color name="background">#1A1A1A</color>
+    <color name="on_background">#555555</color>
+    <color name="surface">#3A3A3A</color>
+    <color name="on_surface">#242424</color>
+
+    <color name="primary">#FFFF00</color>
+    <color name="primary_pressed">#FFEB00</color>
+    <color name="on_primary">#FCFDC0</color>
+    <color name="primary_con">#F5F662</color>
+    <color name="on_primary_con">#FFB700</color>
+
+    <color name="secondary">#5A5AFF</color>
+    <color name="on_secondary">#E9E9FF</color>
+
+    <color name="error">#CF6679</color>
+    <color name="on_error">#601410</color>
+    <color name="error_pressed">#E57287</color>
+
+    <color name="success">#00B576</color>
+
+    <!-- Gray Scale -->
+    <color name="gray_15">#171717</color>
+    <color name="gray_14">#1A1A1A</color>
+    <color name="gray_13">#333</color>
+    <color name="gray_12">#2D2D2D</color>
+    <color name="gray_11">#3C3C3C</color>
+    <color name="gray_10">#595959</color>
+    <color name="gray_09">#949494</color>
+    <color name="gray_08">#A5A5A5</color>
+    <color name="gray_07">#B4B4B4</color>
+    <color name="gray_06">#D8D8D8</color>
+    <color name="gray_05">#E8E8E8</color>
+    <color name="gray_04">#EFEFEF</color>
+    <color name="gray_03">#F5F4F3</color>
+    <color name="gray_02">#F9F9F9</color>
+    <color name="gray_01">#FBFBFB</color>
+
+    <!-- Gray Transparent Scale -->
+    <!-- 70% -->
+    <color name="gray_transparent_04">#B3000000</color>
+    <!-- 50% -->
+    <color name="gray_transparent_03">#80000000</color>
+
+    <!-- White Transparent Scale -->
+    <!-- 10% -->
+    <color name="white_transparent_01">#1AFFFFFF</color>
+
+    <!-- Black Transparent Scale -->
+    <!-- 92% -->
+    <color name="black_transparent_03">#EB1A1A1A</color>
+    <!-- 80% -->
+    <color name="black_transparent_02">#CC2D2D2D</color>
+    <!-- 60% -->
+    <color name="black_transparent_01">#992D2D2D</color>
+
+    <!-- Yellow Scale -->
+    <color name="yellow_09">#FF8A00</color>
+    <color name="yellow_08">#FFB700</color>
+    <color name="yellow_07">#FFD100</color>
+    <color name="yellow_06">#FFEB00</color>
+    <color name="yellow_05">#FFFF00</color>
+    <color name="yellow_04">#F0F234</color>
+    <color name="yellow_03">#F5F662</color>
+    <color name="yellow_02">#F9FA93</color>
+    <color name="yellow_01">#FCFDC0</color>
+    <color name="yellow_0">#FFFFE6</color>
+
+    <!-- Error Scale -->
+    <color name="red_10">#000000</color>
+    <color name="red_09">#410E0B</color>
+    <color name="red_08">#601410</color>
+    <color name="red_07">#8C1D18</color>
+    <color name="red_06">#B3261E</color>
+    <color name="red_05">#DC362E</color>
+    <color name="red_04">#E46962</color>
+    <color name="red_03">#EC928E</color>
+    <color name="red_02">#F2B8B5</color>
+    <color name="red_01">#F9DEDC</color>
+
 </resources>

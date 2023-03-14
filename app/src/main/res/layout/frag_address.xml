@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_14">
+
+        <TextView
+            android:id="@+id/tv_signup_2_top"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/signup_frag3_top"
+            android:textAppearance="@style/Headline"
+            android:textColor="@color/white"
+            android:layout_marginHorizontal="16dp"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_signup_3_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_signup_2_top"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="17dp">
+            <ImageView
+                android:id="@+id/iv_signup_3_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/ic_home"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/iv_signup_3_home"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="집"
+                android:textColor="@color/gray_02"
+                android:layout_marginStart="9dp"
+                android:textAppearance="@style/Subhead"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_signup_3_input_home"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/cl_signup_3_home"
+            android:layout_marginStart="42dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="15.5dp"
+            android:layout_marginEnd="24dp"
+            android:hint="필수 입력"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColorHint="@color/gray_09"
+            android:textAppearance="@style/Body_1"/>
+
+        <ImageView
+            android:id="@+id/iv_signup_home_close"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_close"
+            app:layout_constraintEnd_toEndOf="@id/divider_signup_address"
+            app:layout_constraintTop_toTopOf="@id/tv_signup_3_input_home"
+            app:layout_constraintBottom_toBottomOf="@id/tv_signup_3_input_home"
+            android:scaleType="center"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider_signup_address"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_signup_3_input_home"
+            android:layout_marginTop="15.5dp"
+            android:layout_marginStart="34dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:dividerColor="@color/gray_09"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
