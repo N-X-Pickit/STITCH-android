@@ -54,6 +54,49 @@
     <string name="main_contents_recommend">추천하는 Teach 매치</string>
     <string name="main_contents_newmatch">새롭게 열린 매치</string>
 
-    <string name="participant">%1$s/%2$s명</string> <!-- ex: 3/4명 , 참여인원/최대인원 표시할 때 사용됨 -->
+    <string name="newmatch_toptext_1">매치 개설하기</string>
+    <string name="newmatch_toptext_2">운동종목 선택</string>
+    <string name="newmatch_complete">완료</string>
+
+    <string name="newmatch_type_top">원하시는 매치를 선택해주세요</string>
+    <string name="newmatch_type_regular">일반 매치개설</string>
+    <string name="newmatch_type_regular_description">누구나 참여할 수 있는 매치를 열어보세요</string>
+    <string name="newmatch_type_teach">티치 매치개설</string>
+    <string name="newmatch_type_teach_description">전문적인 수강을 위한 매치를 열어보세요</string>
+
+    <string name="newmatch_sport_top">번개 매치를 위한\n운동종목을 선택해주세요</string>
+
+    <string name="newmatch_detail_top">즐거운 매치를 위한\n상세 설명을 등록해볼까요?</string>
+    <string name="newmatch_detail_gallery">사진 추가(선택)</string>
+    <string name="newmatch_detail_name">매치 제목</string>
+    <string name="newmatch_detail_name_hint">매치 제목을 설정해주세요 (30자 이내)</string>
+    <string name="newmatch_detail_input_length">%1$s / %2$s</string>
+    <string name="newmatch_detail_name_length_error">제한된 글자 수를 초과했습니다.</string>
+    <string name="newmatch_detail_description">상세 내용</string>
+    <string name="newmatch_detail_description_hint">매치 소개글을 입력해 주세요(선택)</string>
+    <string name="newmatch_detail_starttime">매치 날짜/시간</string>
+    <string name="newmatch_detail_starttime_hint">날짜와 시간을 설정해주세요</string>
+    <string name="newmatch_detail_starttime_alert">모임 3시간 전, 자동으로 신청이 마감됩니다.</string>
+    <string name="newmatch_detail_duration">소요 시간</string>
+    <string name="newmatch_detail_duration_hint">플레이 시간 설정</string>
+    <string name="newmatch_detail_duration_value">%1$s분</string>
+    <string name="newmatch_detail_location">매치 장소</string>
+    <string name="newmatch_detail_location_hint">매치 장소를 선택하세요</string>
+    <string name="newmatch_detail_Participant">참가인원</string>
+    <string name="newmatch_detail_Participant_2">(본인을 포함한 총 참여 인원수)</string>
+    <string name="newmatch_detail_Participant_hint">인원수 설정</string>
+    <string name="newmatch_detail_Participant_value">%1$s명</string>
+    <string name="newmatch_detail_fee">참가비가 있나요?</string>
+    <string name="newmatch_detail_fee_hint">개인 거래로 문제가 발생하는 것을 예방하기 위해 매치 진행에 필요한 모든 금액을 참가비로 설정해 주세요.</string>
+    <string name="newmatch_detail_fee_yes">있음</string>
+    <string name="newmatch_detail_fee_no">없음</string>
+
+    <!-- ex: 3/4명 , 참여인원/최대인원 표시할 때 사용됨 -->
+    <string name="participant">%1$s/%2$s명</string>
+
+    <string name="alert_continue">계속하기</string>
+    <string name="alert_quit">그만두기</string>
+    <string name="alert_newmatch_clear_title">매치 개설을 그만 두시겠어요?</string>
+    <string name="alert_newmatch_clear_description">입력한 정보는 저장되지 않습니다.</string>
 
 </resources>

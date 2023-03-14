@@ -1,4 +1,4 @@
-package com.seunggyu.stitch.ui.fragment
+package com.seunggyu.stitch.ui.fragment.signup
 
 import android.os.Bundle
 import android.text.Spannable
@@ -10,12 +10,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.seunggyu.stitch.R
-import com.seunggyu.stitch.adapter.SignupProfileListAdapter
 import com.seunggyu.stitch.databinding.FragSignupSuccessBinding
 import com.seunggyu.stitch.viewModel.SignupViewModel
 

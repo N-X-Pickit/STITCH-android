@@ -1,4 +1,4 @@
-package com.seunggyu.stitch.ui.fragment
+package com.seunggyu.stitch.ui.fragment.signup
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.seunggyu.stitch.adapter.SignupProfileListAdapter
 import com.seunggyu.stitch.databinding.FragProfileBinding

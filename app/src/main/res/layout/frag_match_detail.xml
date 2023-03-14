@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.seunggyu.stitch.viewModel.CreateNewMatchViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/gray_14">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:scaleType="fitEnd"
+                android:src="@drawable/new_match_shining_background"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_newmatch_type_top"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="28dp"
+                android:text="@string/newmatch_detail_top"
+                android:textAppearance="@style/Headline"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_match_image"
+                android:layout_width="match_parent"
+                android:layout_height="96dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="32dp"
+                app:cardBackgroundColor="@color/gray_12"
+                app:cardCornerRadius="24dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_newmatch_type_top"
+                app:strokeColor="@color/gray_11"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/iv_match_detail_gallery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/ic_gallery"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_match_detail_gallery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:text="@string/newmatch_detail_gallery"
+                        android:textAppearance="@style/Body_2"
+                        android:textColor="@color/gray_09"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tv_match_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="32dp"
+                android:text="@string/newmatch_detail_name"
+                android:textAppearance="@style/Subhead"
+                android:textColor="@color/gray_02"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cv_match_image" />
+
+            <EditText
+                android:id="@+id/et_match_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="15.5dp"
+                android:backgroundTint="@color/gray_14"
+                android:hint="@string/newmatch_detail_name_hint"
+                android:textAppearance="@style/Body_1"
+                android:textColor="@color/gray_02"
+                android:textColorHint="@color/gray_09"
+                app:layout_constraintEnd_toEndOf="@id/divider_match_name"
+                app:layout_constraintStart_toStartOf="@id/divider_match_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_match_name" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider_match_name"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="16dp"
+                android:background="@color/gray_07"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_match_name" />
+
+            <TextView
+                android:id="@+id/tv_match_name_lenght"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/newmatch_detail_input_length"
+                android:textAppearance="@style/Caption"
+                android:textColor="@color/gray_09"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/divider_match_name"
+                app:layout_constraintTop_toBottomOf="@id/divider_match_name" />
+
+            <TextView
+                android:id="@+id/tv_match_name_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="2dp"
+                android:text="@string/newmatch_detail_name_length_error"
+                android:textAppearance="@style/Caption"
+                android:textColor="@color/error"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@id/divider_match_name"
+                app:layout_constraintTop_toBottomOf="@id/divider_match_name"
+                tools:visibility="visible" />
+
+
+            <TextView
+                android:id="@+id/tv_match_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="44dp"
+                android:text="@string/newmatch_detail_description"
+                android:textAppearance="@style/Subhead"
+                android:textColor="@color/gray_02"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider_match_name" />
+
+            <EditText
+                android:id="@+id/et_match_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="15.5dp"
+                android:backgroundTint="@color/gray_14"
+                android:gravity="top"
+                android:hint="@string/newmatch_detail_description_hint"
+                android:minHeight="162dp"
+                android:textAppearance="@style/Body_1"
+                android:textColor="@color/gray_02"
+                android:textColorHint="@color/gray_09"
+                app:layout_constraintEnd_toEndOf="@id/divider_match_description"
+                app:layout_constraintStart_toStartOf="@id/divider_match_description"
+                app:layout_constraintTop_toBottomOf="@id/tv_match_description" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider_match_description"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="16dp"
+                android:background="@color/gray_07"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_match_description" />
+
+            <TextView
+                android:id="@+id/tv_match_starttime_length"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/newmatch_detail_input_length"
+                android:textAppearance="@style/Caption"
+                android:textColor="@color/gray_09"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/divider_match_description"
+                app:layout_constraintTop_toBottomOf="@id/divider_match_description" />
+
+            <TextView
+                android:id="@+id/tv_match_description_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="2dp"
+                android:text="@string/newmatch_detail_name_length_error"
+                android:textAppearance="@style/Caption"
+                android:textColor="@color/error"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@id/divider_match_description"
+                app:layout_constraintTop_toBottomOf="@id/divider_match_description"
+                tools:visibility="visible" />
+
+
+            <TextView
+                android:id="@+id/tv_match_starttime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="44dp"
+                android:text="@string/newmatch_detail_starttime"
+                android:textAppearance="@style/Subhead"
+                android:textColor="@color/gray_02"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider_match_description" />
+
+            <EditText
+                android:id="@+id/et_match_starttime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="15.5dp"
+                android:backgroundTint="@color/gray_14"
+                android:hint="@string/newmatch_detail_starttime_hint"
+                android:textAppearance="@style/Body_1"
+                android:textColor="@color/gray_02"
+                android:textColorHint="@color/gray_09"
+                app:layout_constraintEnd_toEndOf="@id/divider_match_name"
+                app:layout_constraintStart_toStartOf="@id/divider_match_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_match_starttime" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider_match_starttime"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="16dp"
+                android:background="@color/gray_07"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_match_starttime" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_match_starttime_alert"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider_match_starttime"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="12dp">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/gray_12"
+                    app:cardCornerRadius="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="13dp">
+                        <ImageView
+                            android:id="@+id/iv_match_starttime_alert"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_info"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_match_starttime_alert"
+                            android:text="@string/newmatch_detail_starttime_alert"
+                            android:layout_marginStart="6.83dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:textColor="@color/gray_02"
+                            android:textAppearance="@style/Caption"
+                            app:layout_constraintStart_toEndOf="@id/iv_match_starttime_alert"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <TextView
+                android:id="@+id/tv_match_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="44dp"
+                android:text="@string/newmatch_detail_duration"
+                android:textAppearance="@style/Subhead"
+                android:textColor="@color/gray_02"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_match_starttime_alert" />
+
+            <TextView
+                android:id="@+id/tv_match_duration_hint"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="15.5dp"
+                android:backgroundTint="@color/gray_14"
+                android:text="@string/newmatch_detail_duration_hint"
+                android:textAppearance="@style/Body_1"
+                android:textColor="@color/gray_02"
+                android:textColorHint="@color/gray_09"
+                app:layout_constraintEnd_toEndOf="@id/divider_match_name"
+                app:layout_constraintStart_toStartOf="@id/divider_match_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_match_duration" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider_match_duration"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="15.5dp"
+                android:background="@color/gray_07"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_match_duration_hint" />
+
+            <ImageView
+                android:id="@+id/btn_detail_duration_plus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:padding="8dp"
+                android:onClick="@{() -> viewModel.addDuration}"
+                android:src="@drawable/ic_plus_circle"
+                app:layout_constraintBottom_toBottomOf="@id/tv_match_duration_hint"
+                app:layout_constraintEnd_toEndOf="@id/divider_match_duration"
+                app:layout_constraintTop_toTopOf="@id/tv_match_duration_hint" />
+
+            <TextView
+                android:id="@+id/tv_match_duration_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/newmatch_detail_duration_value"
+                android:textColor="@color/gray_02"
+                android:layout_marginEnd="2dp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_match_duration_hint"
+                app:layout_constraintEnd_toStartOf="@id/btn_detail_duration_plus"
+                app:layout_constraintTop_toTopOf="@id/tv_match_duration_hint" />
+
+            <ImageView
+                android:id="@+id/btn_detail_duration_minus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="2dp"
+                android:padding="8dp"
+                android:onClick="@{() -> viewModel.removeDuration()}"
+                android:src="@drawable/ic_minus_circle"
+                app:layout_constraintBottom_toBottomOf="@id/tv_match_duration_hint"
+                app:layout_constraintEnd_toStartOf="@id/tv_match_duration_value"
+                app:layout_constraintTop_toTopOf="@id/tv_match_duration_hint" />
+
+
+            <TextView
+                android:id="@+id/tv_match_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="44dp"
+                android:text="@string/newmatch_detail_location"
+                android:textAppearance="@style/Subhead"
+                android:textColor="@color/gray_02"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider_match_duration" />
+
+            <TextView
+                android:id="@+id/tv_match_location_hint"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="15.5dp"
+                android:backgroundTint="@color/gray_14"
+                android:hint="@string/newmatch_detail_location_hint"
+                android:textAppearance="@style/Body_1"
+                android:textColor="@color/gray_02"
+                android:textColorHint="@color/gray_09"
+                app:layout_constraintEnd_toEndOf="@id/divider_match_name"
+                app:layout_constraintStart_toStartOf="@id/divider_match_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_match_location" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider_match_location"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="15.5dp"
+                android:background="@color/gray_07"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_match_location_hint" />
+
+            <ImageView
+                android:id="@+id/btn_detail_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:src="@drawable/ic_arrow_right"
+                app:layout_constraintEnd_toEndOf="@id/divider_match_location"
+                app:layout_constraintTop_toTopOf="@id/tv_match_location_hint"
+                app:layout_constraintBottom_toBottomOf="@id/tv_match_location_hint"
+                android:layout_marginEnd="16dp"/>
+
+
+            <TextView
+                android:id="@+id/tv_match_participant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="44dp"
+                android:text="@string/newmatch_detail_Participant"
+                android:textAppearance="@style/Subhead"
+                android:textColor="@color/gray_02"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider_match_location" />
+
+            <TextView
+                android:id="@+id/tv_match_participant_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="44dp"
+                android:text="@string/newmatch_detail_Participant_2"
+                android:textAppearance="@style/Body_2"
+                android:textColor="@color/gray_06"
+                android:layout_marginStart="2dp"
+                app:layout_constraintStart_toEndOf="@id/tv_match_participant"
+                app:layout_constraintTop_toBottomOf="@id/divider_match_location" />
+
+            <TextView
+                android:id="@+id/tv_match_participant_hint"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="15.5dp"
+                android:backgroundTint="@color/gray_14"
+                android:text="@string/newmatch_detail_Participant_hint"
+                android:textAppearance="@style/Body_1"
+                android:textColor="@color/gray_02"
+                android:textColorHint="@color/gray_09"
+                app:layout_constraintEnd_toEndOf="@id/divider_match_name"
+                app:layout_constraintStart_toStartOf="@id/divider_match_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_match_participant" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider_match_participant"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="15.5dp"
+                android:background="@color/gray_07"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_match_participant_hint" />
+
+            <ImageView
+                android:id="@+id/btn_detail_participant_plus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:padding="8dp"
+                android:onClick="@{() -> viewModel.addParticipant}"
+                android:src="@drawable/ic_plus_circle"
+                app:layout_constraintBottom_toBottomOf="@id/tv_match_participant_hint"
+                app:layout_constraintEnd_toEndOf="@id/divider_match_participant"
+                app:layout_constraintTop_toTopOf="@id/tv_match_participant_hint" />
+
+            <TextView
+                android:id="@+id/tv_match_participant_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/newmatch_detail_Participant_value"
+                android:textColor="@color/gray_02"
+                android:layout_marginEnd="2dp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_match_participant_hint"
+                app:layout_constraintEnd_toStartOf="@id/btn_detail_participant_plus"
+                app:layout_constraintTop_toTopOf="@id/tv_match_participant_hint" />
+
+            <ImageView
+                android:id="@+id/btn_detail_participant_minus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="2dp"
+                android:padding="8dp"
+                android:onClick="@{() -> viewModel.removeParticipant()}"
+                android:src="@drawable/ic_minus_circle"
+                app:layout_constraintBottom_toBottomOf="@id/tv_match_participant_hint"
+                app:layout_constraintEnd_toStartOf="@id/tv_match_participant_value"
+                app:layout_constraintTop_toTopOf="@id/tv_match_participant_hint" />
+
+            <TextView
+                android:id="@+id/tv_match_fee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="44dp"
+                android:text="@string/newmatch_detail_fee"
+                android:textAppearance="@style/Subhead"
+                android:textColor="@color/gray_02"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider_match_participant" />
+
+            <TextView
+                android:id="@+id/tv_match_fee_hint"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="2dp"
+                android:text="@string/newmatch_detail_fee_hint"
+                android:textAppearance="@style/Caption"
+                android:textColor="@color/gray_06"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_match_fee" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_match_fee_hint"
+                android:paddingBottom="16dp"
+                android:layout_marginTop="16dp">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_match_fee_no"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/button_round"
+                    android:text="@string/newmatch_detail_fee_no"
+                    android:textAppearance="@style/Caption"
+                    android:textColor="@color/gray_12"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btn_match_fee_yes"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_match_fee_yes"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/button_round_disabled"
+                    android:text="@string/newmatch_detail_fee_yes"
+                    android:textAppearance="@style/Caption"
+                    android:textColor="@color/gray_07"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/btn_match_fee_no" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

@@ -17,6 +17,9 @@ import com.seunggyu.stitch.BasicActivity
 import com.seunggyu.stitch.R
 import com.seunggyu.stitch.databinding.ActivitySignupBinding
 import com.seunggyu.stitch.ui.fragment.*
+import com.seunggyu.stitch.ui.fragment.signup.SignupAddressFragment
+import com.seunggyu.stitch.ui.fragment.signup.SignupInterestFragment
+import com.seunggyu.stitch.ui.fragment.signup.SignupSuccessFragment
 import com.seunggyu.stitch.viewModel.SignupViewModel
 import kotlinx.coroutines.*
 
@@ -39,7 +42,6 @@ class SignupActivity : BasicActivity() {
         viewPager.adapter = pagerAdapter
         // 뷰페이저 스와이프 막기 -> 다음, 이전 버튼으로만 이동 가능
         viewPager.isUserInputEnabled = false
-
     }
 
     private fun uiInit() {

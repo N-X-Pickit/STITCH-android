@@ -1,4 +1,4 @@
-package com.seunggyu.stitch.ui.fragment
+package com.seunggyu.stitch.ui.fragment.signup
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
