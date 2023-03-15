@@ -1,6 +1,7 @@
 package com.seunggyu.stitch.ui.fragment.newmatch
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,41 @@ class MatchSportFragment : Fragment() {
 
     fun init() {
         with(binding) {
-
+            layoutViewModel = viewModel
+//            cvTennis.setOnClickListener {
+//                viewModel.setSportsType("테니스")
+//                Log.e("dasdasd","clicked")
+//            }
+//            cvBadminton.setOnClickListener {
+//                viewModel.setSportsType("배드민턴")
+//            }
+//            cvPingpong.setOnClickListener {
+//                viewModel.setSportsType("탁구")
+//            }
+//            cvSoccer.setOnClickListener {
+//                viewModel.setSportsType("축구")
+//            }
+//            cvRunning.setOnClickListener {
+//                viewModel.setSportsType("런닝")
+//            }
+//            cvMountain.setOnClickListener {
+//                viewModel.setSportsType("등산")
+//            }
+//            cvHealth.setOnClickListener {
+//                viewModel.setSportsType("헬스")
+//            }
+//            cvBaseball.setOnClickListener {
+//                viewModel.setSportsType("농구")
+//            }
+//            cvBaseball.setOnClickListener {
+//                viewModel.setSportsType("야구")
+//            }
+//            cvGolf.setOnClickListener {
+//                viewModel.setSportsType("골프")
+//            }
+//            cvEtc.setOnClickListener {
+//                viewModel.setSportsType("기타")
+//            }
         }
     }
 

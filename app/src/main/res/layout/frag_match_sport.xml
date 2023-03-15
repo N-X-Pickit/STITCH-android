@@ -2,7 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <data>
+        <variable
+            name="layoutViewModel"
+            type="com.seunggyu.stitch.viewModel.CreateNewMatchViewModel" />
+    </data>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -27,6 +31,7 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_badminton"
+                android:onClick="@{() -> layoutViewModel.setSportsType(`배드민턴`)}"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
                 android:layout_marginTop="40dp"
@@ -78,6 +83,7 @@
                 android:id="@+id/cv_tennis"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
+                android:onClick="@{() -> layoutViewModel.setSportsType(`테니스`)}"
                 android:layout_marginEnd="16dp"
                 app:cardBackgroundColor="@color/black_transparent_01"
                 app:cardCornerRadius="12dp"
@@ -131,6 +137,7 @@
                 android:layout_width="88dp"
                 android:layout_height="88dp"
                 android:layout_marginStart="16dp"
+                android:onClick="@{() -> layoutViewModel.setSportsType(`탁구`)}"
                 app:cardBackgroundColor="@color/black_transparent_01"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp"
@@ -179,6 +186,7 @@
                 android:id="@+id/cv_running"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
+                android:onClick="@{() -> layoutViewModel.setSportsType(`런닝`)}"
                 android:layout_marginTop="16dp"
                 app:cardBackgroundColor="@color/black_transparent_01"
                 app:cardCornerRadius="12dp"
@@ -227,6 +235,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_soccer"
                 android:layout_width="88dp"
+                android:onClick="@{() -> layoutViewModel.setSportsType(`축구`)}"
                 android:layout_height="88dp"
                 android:layout_marginEnd="16dp"
                 app:cardBackgroundColor="@color/black_transparent_01"
@@ -281,6 +290,7 @@
                 android:layout_marginStart="16dp"
                 app:cardBackgroundColor="@color/black_transparent_01"
                 app:cardCornerRadius="12dp"
+                android:onClick="@{() -> layoutViewModel.setSportsType(`등산`)}"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="@id/cv_running"
                 app:layout_constraintStart_toEndOf="@id/cv_running"
@@ -328,6 +338,7 @@
                 android:layout_width="88dp"
                 android:layout_height="88dp"
                 android:layout_marginTop="16dp"
+                android:onClick="@{() -> layoutViewModel.setSportsType(`농구`)}"
                 app:cardBackgroundColor="@color/black_transparent_01"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp"
@@ -378,6 +389,7 @@
                 android:layout_height="88dp"
                 android:layout_marginEnd="16dp"
                 app:cardBackgroundColor="@color/black_transparent_01"
+                android:onClick="@{() -> layoutViewModel.setSportsType(`헬스`)}"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="@id/cv_basketball"
@@ -429,6 +441,7 @@
                 android:layout_marginStart="16dp"
                 app:cardBackgroundColor="@color/black_transparent_01"
                 app:cardCornerRadius="12dp"
+                android:onClick="@{() -> layoutViewModel.setSportsType(`야구`)}"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="@id/cv_basketball"
                 app:layout_constraintStart_toEndOf="@id/cv_basketball"
@@ -477,6 +490,7 @@
                 android:layout_height="88dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
+                android:onClick="@{() -> layoutViewModel.setSportsType(`골프`)}"
                 app:cardBackgroundColor="@color/black_transparent_01"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp"
@@ -526,6 +540,7 @@
                 android:id="@+id/cv_etc"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
+                android:onClick="@{() -> layoutViewModel.setSportsType(`기타`)}"
                 android:layout_marginStart="8dp"
                 app:cardBackgroundColor="@color/black_transparent_01"
                 app:cardCornerRadius="12dp"
@@ -575,10 +590,11 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@drawable/new_match_shining_background"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:src="@drawable/new_match_shining_background"/>
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

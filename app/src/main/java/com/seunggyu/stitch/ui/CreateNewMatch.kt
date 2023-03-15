@@ -18,9 +18,6 @@ import com.seunggyu.stitch.dialog.CustomAlertDialog
 import com.seunggyu.stitch.ui.fragment.newmatch.MatchDetailFragment
 import com.seunggyu.stitch.ui.fragment.newmatch.MatchSportFragment
 import com.seunggyu.stitch.ui.fragment.newmatch.MatchTypeFragment
-import com.seunggyu.stitch.ui.fragment.signup.SignupAddressFragment
-import com.seunggyu.stitch.ui.fragment.signup.SignupInterestFragment
-import com.seunggyu.stitch.ui.fragment.signup.SignupSuccessFragment
 import com.seunggyu.stitch.viewModel.CreateNewMatchViewModel
 
 class CreateNewMatch : BasicActivity() {
@@ -127,7 +124,7 @@ class CreateNewMatch : BasicActivity() {
         val fragmentList = listOf<Fragment>(
             MatchTypeFragment(),
             MatchSportFragment(),
-            MatchDetailFragment()
+            MatchDetailFragment(),
         )
 
         // 2. ViesPager2에서 노출시킬 Fragment 의 갯수 설정

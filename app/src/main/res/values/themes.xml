@@ -23,6 +23,23 @@
         <item name="android:textCursorDrawable">@drawable/cursor_drawable</item>
         <!-- progressbar 색상 지정 -->
         <item name="android:indeterminateTint">@color/primary</item>
+        <!-- BottomSheet 둥근 모서리 적용 -->
+        <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialogTheme</item>
+    </style>
+
+    <!-- 달력 안의 숫자들에 적용되는 스타일 -->
+    <style name="CalenderViewDateCustomText" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@color/gray_04</item>
+        <item name="android:weekNumberColor">@android:color/holo_red_light</item>
+        <item name="android:firstDayOfWeek">@color/error</item>
+        <item name="android:selectedWeekBackgroundColor">@drawable/calendar_selected_background</item>
+    </style>
+
+    <!-- 달력 안의 요일들에 적용되는 스타일 -->
+    <style name="CalenderViewWeekCustomText" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@color/gray_04</item>
+        <item name="android:weekNumberColor">@color/secondary</item>
+        <item name="android:firstDayOfWeek">@color/error</item>
     </style>
 
     <!-- Splash Theme -->
@@ -32,6 +49,21 @@
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
+    </style>
+
+    <!-- Bottom sheet dialog Style -->
+    <style name="CustomBottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomRoundedBackgroundBottomSheet</item>
+    </style>
+    <style name="CustomRoundedBackgroundBottomSheet" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/custom_bottom_sheet</item>
+    </style>
+    <!-- TimePicker Style -->
+    <style name="AppTheme.TimePicker" parent="Theme.STITCH">
+        <item name="android:textAppearance">@style/Body_1</item>
+        <item name="android:colorControlNormal">@android:color/transparent</item>
+        <item name="android:textColorPrimary">@color/gray_02</item>
+        <item name="android:textColor">@color/gray_11</item>
     </style>
 
     <!-- Main Theme -->

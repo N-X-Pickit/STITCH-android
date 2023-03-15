@@ -6,6 +6,7 @@ import android.util.Log
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
+import com.jakewharton.threetenabp.AndroidThreeTen
 import com.kakao.sdk.common.KakaoSdk
 import com.seunggyu.stitch.data.model.response.EventResponse
 import org.json.JSONArray
@@ -21,6 +22,7 @@ class GlobalApplication : Application() {
         super.onCreate()
         appContext = this
         KakaoSdk.init(this,getString(R.string.kakao_app_key))
+        AndroidThreeTen.init(this)
 
         initBannerData()
     }

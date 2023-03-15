@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/gray_14">
+
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -187,7 +188,7 @@
                 app:layout_constraintTop_toBottomOf="@id/et_match_description" />
 
             <TextView
-                android:id="@+id/tv_match_starttime_length"
+                android:id="@+id/tv_match_description_length"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -213,88 +214,201 @@
                 app:layout_constraintTop_toBottomOf="@id/divider_match_description"
                 tools:visibility="visible" />
 
-
-            <TextView
-                android:id="@+id/tv_match_starttime"
-                android:layout_width="wrap_content"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_starttime"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="44dp"
-                android:text="@string/newmatch_detail_starttime"
-                android:textAppearance="@style/Subhead"
-                android:textColor="@color/gray_02"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/divider_match_description" />
-
-            <EditText
-                android:id="@+id/et_match_starttime"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="15.5dp"
-                android:backgroundTint="@color/gray_14"
-                android:hint="@string/newmatch_detail_starttime_hint"
-                android:textAppearance="@style/Body_1"
-                android:textColor="@color/gray_02"
-                android:textColorHint="@color/gray_09"
-                app:layout_constraintEnd_toEndOf="@id/divider_match_name"
-                app:layout_constraintStart_toStartOf="@id/divider_match_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_match_starttime" />
-
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/divider_match_starttime"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginHorizontal="16dp"
-                android:background="@color/gray_07"
+                app:cardBackgroundColor="@android:color/transparent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_match_starttime" />
+                app:cardUseCompatPadding="false"
+                app:cardElevation="0dp"
+                app:layout_constraintTop_toBottomOf="@id/divider_match_description">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_match_starttime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="44dp"
+                        android:text="@string/newmatch_detail_starttime"
+                        android:textAppearance="@style/Subhead"
+                        android:textColor="@color/gray_02"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_match_starttime_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:layout_marginTop="15.5dp"
+                        android:backgroundTint="@color/gray_14"
+                        android:hint="@string/newmatch_detail_starttime_hint"
+                        android:textAppearance="@style/Body_1"
+                        android:textColor="@color/gray_02"
+                        android:textColorHint="@color/gray_09"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_match_starttime" />
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:id="@+id/divider_match_starttime"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@color/gray_07"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_match_starttime_value" />
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_calendar"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:elevation="1dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/divider_match_starttime">
+
+                        <TextView
+                            android:id="@+id/tv_calendar_indicator"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:lineSpacingExtra="5.6sp"
+                            android:padding="12dp"
+                            android:singleLine="true"
+                            android:textAppearance="@style/Body_1"
+                            android:textColor="@color/gray_02"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="2021년 9월" />
+
+                        <ImageButton
+                            android:id="@+id/btn_monthPrev"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:background="@null"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_arrow_left"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_calendar_indicator"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tv_calendar_indicator" />
+
+                        <ImageButton
+                            android:id="@+id/btn_monthNext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="24dp"
+                            android:background="@null"
+                            android:padding="8dp"
+                            android:src="@drawable/ic_arrow_rigth_bright"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_calendar_indicator"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tv_calendar_indicator" />
+
+                        <include
+                            android:id="@+id/legendLayout"
+                            layout="@layout/calendar_day_legend_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="26dp"
+                            android:layout_marginTop="12dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_calendar_indicator" />
+
+                        <com.kizitonwose.calendar.view.CalendarView
+                            android:id="@+id/exOneCalendar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="26dp"
+                            app:cv_dayViewResource="@layout/calendar_day"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/legendLayout" />
+
+                        <TextView
+                            android:id="@+id/btn_match_starttime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="28dp"
+                            android:padding="8dp"
+                            android:text="@string/newmatch_detail_starttime_time"
+                            android:textAppearance="@style/Body_1"
+                            android:textColor="@color/gray_02"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/exOneCalendar" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="2dp"
+                            android:src="@drawable/ic_clock"
+                            app:layout_constraintBottom_toBottomOf="@id/btn_match_starttime"
+                            app:layout_constraintEnd_toStartOf="@id/btn_match_starttime"
+                            app:layout_constraintTop_toTopOf="@id/btn_match_starttime" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_match_starttime_alert"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/divider_match_starttime"
                 android:paddingHorizontal="16dp"
-                android:paddingTop="12dp">
+                android:paddingTop="12dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cv_starttime">
+
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardBackgroundColor="@color/gray_12"
                     app:cardCornerRadius="12dp"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="gone"
-                        tools:visibility="visible"
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="13dp">
+
                         <ImageView
                             android:id="@+id/iv_match_starttime_alert"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_info"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
+                            android:id="@+id/tv_match_starttime_alert"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/tv_match_starttime_alert"
-                            android:text="@string/newmatch_detail_starttime_alert"
                             android:layout_marginStart="6.83dp"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:textColor="@color/gray_02"
+                            android:text="@string/newmatch_detail_starttime_alert"
                             android:textAppearance="@style/Caption"
-                            app:layout_constraintStart_toEndOf="@id/iv_match_starttime_alert"/>
+                            android:textColor="@color/gray_02"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/iv_match_starttime_alert"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -346,7 +460,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:padding="8dp"
-                android:onClick="@{() -> viewModel.addDuration}"
                 android:src="@drawable/ic_plus_circle"
                 app:layout_constraintBottom_toBottomOf="@id/tv_match_duration_hint"
                 app:layout_constraintEnd_toEndOf="@id/divider_match_duration"
@@ -356,9 +469,9 @@
                 android:id="@+id/tv_match_duration_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="2dp"
                 android:text="@string/newmatch_detail_duration_value"
                 android:textColor="@color/gray_02"
-                android:layout_marginEnd="2dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_match_duration_hint"
                 app:layout_constraintEnd_toStartOf="@id/btn_detail_duration_plus"
                 app:layout_constraintTop_toTopOf="@id/tv_match_duration_hint" />
@@ -369,7 +482,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2dp"
                 android:padding="8dp"
-                android:onClick="@{() -> viewModel.removeDuration()}"
                 android:src="@drawable/ic_minus_circle"
                 app:layout_constraintBottom_toBottomOf="@id/tv_match_duration_hint"
                 app:layout_constraintEnd_toStartOf="@id/tv_match_duration_value"
@@ -418,12 +530,12 @@
                 android:id="@+id/btn_detail_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:padding="8dp"
                 android:src="@drawable/ic_arrow_right"
-                app:layout_constraintEnd_toEndOf="@id/divider_match_location"
-                app:layout_constraintTop_toTopOf="@id/tv_match_location_hint"
                 app:layout_constraintBottom_toBottomOf="@id/tv_match_location_hint"
-                android:layout_marginEnd="16dp"/>
+                app:layout_constraintEnd_toEndOf="@id/divider_match_location"
+                app:layout_constraintTop_toTopOf="@id/tv_match_location_hint" />
 
 
             <TextView
@@ -443,11 +555,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginStart="2dp"
                 android:layout_marginTop="44dp"
                 android:text="@string/newmatch_detail_Participant_2"
                 android:textAppearance="@style/Body_2"
                 android:textColor="@color/gray_06"
-                android:layout_marginStart="2dp"
                 app:layout_constraintStart_toEndOf="@id/tv_match_participant"
                 app:layout_constraintTop_toBottomOf="@id/divider_match_location" />
 
@@ -483,7 +595,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:padding="8dp"
-                android:onClick="@{() -> viewModel.addParticipant}"
                 android:src="@drawable/ic_plus_circle"
                 app:layout_constraintBottom_toBottomOf="@id/tv_match_participant_hint"
                 app:layout_constraintEnd_toEndOf="@id/divider_match_participant"
@@ -493,9 +604,9 @@
                 android:id="@+id/tv_match_participant_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="2dp"
                 android:text="@string/newmatch_detail_Participant_value"
                 android:textColor="@color/gray_02"
-                android:layout_marginEnd="2dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_match_participant_hint"
                 app:layout_constraintEnd_toStartOf="@id/btn_detail_participant_plus"
                 app:layout_constraintTop_toTopOf="@id/tv_match_participant_hint" />
@@ -506,7 +617,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2dp"
                 android:padding="8dp"
-                android:onClick="@{() -> viewModel.removeParticipant()}"
                 android:src="@drawable/ic_minus_circle"
                 app:layout_constraintBottom_toBottomOf="@id/tv_match_participant_hint"
                 app:layout_constraintEnd_toStartOf="@id/tv_match_participant_value"
@@ -533,19 +643,21 @@
                 android:text="@string/newmatch_detail_fee_hint"
                 android:textAppearance="@style/Caption"
                 android:textColor="@color/gray_06"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_match_fee" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_match_fee"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginHorizontal="16dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_match_fee_hint"
+                android:layout_marginTop="16dp"
                 android:paddingBottom="16dp"
-                android:layout_marginTop="16dp">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_match_fee_hint">
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_match_fee_no"
                     android:layout_width="0dp"
@@ -555,10 +667,10 @@
                     android:text="@string/newmatch_detail_fee_no"
                     android:textAppearance="@style/Caption"
                     android:textColor="@color/gray_12"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/btn_match_fee_yes"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_match_fee_yes"
@@ -569,15 +681,71 @@
                     android:text="@string/newmatch_detail_fee_yes"
                     android:textAppearance="@style/Caption"
                     android:textColor="@color/gray_07"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/btn_match_fee_no" />
+                    app:layout_constraintStart_toEndOf="@id/btn_match_fee_no"
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_match_fee">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_match_fee_value_inner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_match_fee_value_won"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/newmatch_detail_fee_value_won"
+                        android:textAppearance="@style/Body_1"
+                        android:textColor="@color/gray_02"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@id/et_match_fee_value"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/et_match_fee_value"
+                        tools:visibility="visible" />
+
+                    <EditText
+                        android:id="@+id/et_match_fee_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:backgroundTint="@android:color/transparent"
+                        android:hint="@string/newmatch_detail_fee_value_hint"
+                        android:textAppearance="@style/Body_1"
+                        android:textColor="@color/gray_02"
+                        android:textColorHint="@color/gray_09"
+                        app:layout_constraintStart_toEndOf="@id/tv_match_fee_value_won"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/divider_match_fee"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:background="@color/gray_07"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cl_match_fee_value_inner" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </ScrollView>
 </layout>

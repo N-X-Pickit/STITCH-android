@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.seunggyu.stitch.viewModel.CreateNewMatchViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/custom_bottom_sheet"
+        android:paddingTop="10dp"
+        android:paddingBottom="40dp"
+        android:theme="@style/AppTheme.TimePicker">
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:padding="8dp"
+            android:text="@string/newmatch_detail_starttime_time_confirm"
+            android:textAppearance="@style/Subhead"
+            android:textColor="@color/primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:padding="8dp"
+            android:text="@string/newmatch_detail_starttime_time_cancel"
+            android:textAppearance="@style/Body_1"
+            android:textColor="@color/gray_04"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/view_tp_selector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/time_picker_selector"
+            android:paddingVertical="8dp"
+            android:textAppearance="@style/Body_1"
+            app:layout_constraintBottom_toBottomOf="@id/np_hour"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/np_hour" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider_timepicker"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            app:dividerColor="@color/gray_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_close" />
+
+        <NumberPicker
+            android:id="@+id/np_hour"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:descendantFocusability="blocksDescendants"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_timepicker" />
+
+        <NumberPicker
+            android:id="@+id/np_minute"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
+            app:layout_constraintStart_toEndOf="@id/np_hour"
+            app:layout_constraintTop_toTopOf="@id/np_hour" />
+
+        <NumberPicker
+            android:id="@+id/np_ampm"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
+            app:layout_constraintEnd_toStartOf="@id/np_hour"
+            app:layout_constraintTop_toTopOf="@id/np_hour" />
+
+        <!--        <TimePicker-->
+        <!--            android:id="@+id/tp_starttime"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginHorizontal="16dp"-->
+        <!--            android:layout_marginTop="16dp"-->
+        <!--            android:numbersBackgroundColor="@color/gray_04"-->
+        <!--            android:numbersTextColor="@color/gray_04"-->
+        <!--            android:theme="@style/AppTheme.TimePicker"-->
+        <!--            android:timePickerMode="spinner"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="0.0"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/divider_timepicker" />-->
+
+        <!--        <ImageView-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:scaleType="centerCrop"-->
+        <!--            android:src="@drawable/gradient_timepicker_top"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            android:visibility="gone"-->
+        <!--            app:layout_constraintTop_toTopOf="@id/tp_starttime"-->
+        <!--            app:layout_constraintBottom_toTopOf="@id/view_tp_selector"/>-->
+
+        <!--        <ImageView-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:scaleType="centerCrop"-->
+        <!--            android:visibility="gone"-->
+        <!--            android:src="@drawable/gradient_timepicker_bottom"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/view_tp_selector"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@id/tp_starttime"/>-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
