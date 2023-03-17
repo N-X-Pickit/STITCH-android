@@ -85,34 +85,37 @@ class CreateNewMatchViewModel : ViewModel() {
         val emptyDuration = duration.value?.isEmpty()
         val emptyLocation = location.value?.isEmpty()
         val emptyMaxCapacity = maxCapacity.value?.isEmpty()
-        val emptyFee = fee.value?.isEmpty()
 
-        if (emptyMaxCapacity != null) {
-            emit(emptyType == false && emptySportsType == false
+        emit(
+            emptyType == false && emptySportsType == false
                     && emptyName == false && emptyStartDate == false && emptyStartTime == false
                     && emptyDuration == false && emptyLocation == false
-                    && emptyMaxCapacity == false && emptyFee == false
-            )
-        }
-    }
+                    && emptyMaxCapacity == false
+        )
 
-    private val _timeChangedFlow = flow<String> {
-        _startTime.value =
-            if(_startAmpm.value?.toInt() == 0) "${"%02d".format(startHour)}:${"%02d".format(_startMinute)}"
-            else "${_startHour.toInt() + 12}:${"%02d".format(_startMinute)}"
-        emit(_startTime.value as String)
     }
     val allWritenFlow: Flow<Boolean>
         get() = _allWritenFlow
 
-    val timeChangedFlow: Flow<String>
-        get() = _timeChangedFlow
+    private val durationList = arrayOf(
+        "30분",
+        "1시간",
+        "1시간 30분",
+        "2시간",
+        "2시간 30분",
+        "3시간",
+        "3시간 30분",
+        "4시간",
+        "4시간 30분",
+        "5시간"
+    )
+    private var durationPointer = 0
 
     init {
         _currentPage.value = 1
         _startTime.value = ""
         _startDate.value = ""
-        _duration.value = "30"
+        _duration.value = durationList[durationPointer]
         _location.value = ""
         _maxCapacity.value = "2"
         _fee.value = ""
@@ -130,13 +133,23 @@ class CreateNewMatchViewModel : ViewModel() {
         viewModelScope.launch {
             allWritenFlow.collectLatest {
                 _isAllWriten.value = it
+                Log.e("checkAllWritenFlow", "_isAllWrite = $it")
+                Log.e("====================", "===============")
+                Log.e("emptyType", type.value?.isEmpty().toString())
+                Log.e("emptySportsType", sportsType.value?.isEmpty().toString())
+                Log.e("emptyName", name.value?.isEmpty().toString())
+                Log.e("emptyStartDate", startDate.value?.isEmpty().toString())
+                Log.e("emptyStartTIme", startTime.value?.isEmpty().toString())
+                Log.e("emptyDuration", duration.value?.isEmpty().toString())
+                Log.e("emptyLocation", location.value?.isEmpty().toString())
+                Log.e("emptyMaxCapacity", maxCapacity.value?.isEmpty().toString())
             }
         }
     }
 
     fun setSportsType(sport: String) {
         _sportsType.value = sport
-        Log.e("_sportsType",sport)
+        Log.e("_sportsType", sport)
         nextPage()
     }
 
@@ -150,30 +163,57 @@ class CreateNewMatchViewModel : ViewModel() {
         _startMinute = minute
         viewModelScope.launch {
             _startTime.value =
-                if(_startAmpm.value == "0" || _startHour.toInt() == 12) {
-                    if(_startAmpm.value == "0" && startHour.toInt() == 12){
-                        "${"%02d".format(startHour.toInt()-12)}:${"%02d".format(_startMinute.toInt() * 10)}"
+                if (_startAmpm.value == "0" || _startHour.toInt() == 12) {
+                    if (_startAmpm.value == "0" && startHour.toInt() == 12) {
+                        "${"%02d".format(startHour.toInt() - 12)}:${"%02d".format(_startMinute.toInt() * 10)}"
                         return@launch
                     }
                     "${"%02d".format(startHour.toInt())}:${"%02d".format(_startMinute.toInt() * 10)}"
-                }
-                else "${_startHour.toInt() + 12}:${"%02d".format(_startMinute.toInt() * 10)}"
+                } else "${_startHour.toInt() + 12}:${"%02d".format(_startMinute.toInt() * 10)}"
         }
     }
 
-//    fun addDuration() {
-//
-//    }
-//
-//    fun removeDuration() {
-//
-//    }
-//
-//    fun addParticipant() {
-//
-//    }
-//
-//    fun removeParticipant() {
-//
-//    }
+    fun setFee(fee: String) {
+        _fee.value = fee
+    }
+
+    fun setType(type: String) {
+        _type.value = type
+    }
+
+
+    fun setName(name: String) {
+        _name.value = name
+    }
+
+    fun setDetail(description: String) {
+        _detail.value = description
+    }
+
+    fun setDuration(duration: String) {
+        _duration.value = duration
+    }
+
+    fun addDuration() {
+        durationPointer++
+        setDuration(durationList[durationPointer])
+    }
+
+    fun removeDuration() {
+        durationPointer--
+        setDuration(durationList[durationPointer])
+    }
+
+    fun addParticipant() {
+        _maxCapacity.value = "${_maxCapacity.value?.toInt()?.plus(1)}"
+    }
+
+    fun removeParticipant() {
+        _maxCapacity.value = "${_maxCapacity.value?.toInt()?.minus(1)}"
+
+    }
+
+    fun setLocation(location: String) {
+        _location.value = location
+    }
 }

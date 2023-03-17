@@ -32,6 +32,8 @@
     <string name="address_gps_result">근처 동네</string>
     <string name="address_result_null">검색 결과가 없어요.\n주소 내용을 다시 확인해주세요!</string>
     <string name="address_result_research">주소 다시 검색하기</string>
+    <string name="address_result_name">\'%1$s\' 검색결과</string>
+    <string name="address_result_near">\'%1$s\' 근처동네</string>
     <string name="sport_badminton">배드민턴</string>
     <string name="sport_tennis">테니스</string>
     <string name="sport_pingpong">탁구</string>
@@ -45,7 +47,7 @@
     <string name="sport_etc">기타</string>
     <string name="signup_button_success">시작하기</string>
     <string name="chip_event">이벤트</string>
-    <string name="chip_class">클래스</string>
+    <string name="chip_class">Teach</string>
 
     <string name="snackbar_network_error">네트워크 상태가 좋지않아요\n연결 상태를 확인하고 다시 시도해주세요</string>
     <string name="snackbar_banner_error">네트워크 상태가 좋지않아요\n일부 기능이 제한될 수 있습니다</string>
@@ -82,7 +84,7 @@
     <string name="newmatch_detail_starttime_time_cancel">취소</string>
     <string name="newmatch_detail_duration">소요 시간</string>
     <string name="newmatch_detail_duration_hint">플레이 시간 설정</string>
-    <string name="newmatch_detail_duration_value">%1$s분</string>
+    <string name="newmatch_detail_duration_value">%1$s</string>
     <string name="newmatch_detail_location">매치 장소</string>
     <string name="newmatch_detail_location_hint">매치 장소를 선택하세요</string>
     <string name="newmatch_detail_Participant">참가인원</string>

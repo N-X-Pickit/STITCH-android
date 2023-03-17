@@ -2,21 +2,24 @@ package com.seunggyu.stitch.ui.fragment.newmatch
 
 import TimePickerBottomSheetDialog
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
+import android.content.Context
+import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.kizitonwose.calendar.core.*
@@ -27,7 +30,7 @@ import com.seunggyu.stitch.R
 import com.seunggyu.stitch.databinding.CalendarDayBinding
 import com.seunggyu.stitch.databinding.FragMatchDetailBinding
 import com.seunggyu.stitch.viewModel.CreateNewMatchViewModel
-import org.threeten.bp.DayOfWeek
+import java.text.DecimalFormat
 import java.time.LocalDate
 import java.time.Month
 import java.time.YearMonth
@@ -36,6 +39,7 @@ import java.util.*
 @Suppress("UNREACHABLE_CODE")
 class MatchDetailFragment : Fragment() {
     private val viewModel by activityViewModels<CreateNewMatchViewModel>()
+    private val decimalFormat = DecimalFormat("#,###")
 
     private val binding by lazy {
         FragMatchDetailBinding.inflate(layoutInflater)
@@ -46,6 +50,7 @@ class MatchDetailFragment : Fragment() {
     private val today = LocalDate.now()
     private lateinit var selectedDate: LocalDate
 
+    private var feeInputValue = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -58,6 +63,11 @@ class MatchDetailFragment : Fragment() {
 
     fun init() {
         with(binding) {
+
+            clMatchDetail.setOnClickListener {
+                hideKeyboard()
+            }
+
             btnMonthPrev.setOnClickListener {
                 val month = monthCalendarView.findFirstVisibleMonth()?.yearMonth
                 monthCalendarView.scrollToMonth(month!!.previousMonth)
@@ -72,6 +82,7 @@ class MatchDetailFragment : Fragment() {
             }
 
             tvMatchStarttimeValue.setOnClickListener {
+                hideKeyboard()
                 if(clCalendar.visibility == View.GONE) {
                     TransitionManager.beginDelayedTransition(binding.cvStarttime,
                         AutoTransition()
@@ -79,11 +90,142 @@ class MatchDetailFragment : Fragment() {
                     binding.clCalendar.visibility = View.VISIBLE
                 }
             }
+
+            btnMatchFeeNo.setOnClickListener {
+                hideKeyboard()
+
+                with(binding.btnMatchFeeNo) {
+                    setBackgroundResource(R.drawable.button_round)
+                    setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_12))
+                }
+                with(binding.btnMatchFeeYes) {
+                    setBackgroundResource(R.drawable.button_round_disabled)
+                    setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_07))
+                }
+                binding.clMatchFeeValueInner.visibility = View.GONE
+                binding.dividerMatchFee.visibility = View.GONE
+
+            }
+            btnMatchFeeYes.setOnClickListener {
+                hideKeyboard()
+
+                with(binding.btnMatchFeeNo) {
+                    setBackgroundResource(R.drawable.button_round_disabled)
+                    setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_07))
+                }
+                with(binding.btnMatchFeeYes) {
+                    setBackgroundResource(R.drawable.button_round)
+                    setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_12))
+                }
+                binding.clMatchFeeValueInner.visibility = View.VISIBLE
+                binding.dividerMatchFee.visibility = View.VISIBLE
+            }
+
+            btnDetailDurationMinus.setOnClickListener {
+                viewModel.removeDuration()
+                hideKeyboard()
+            }
+
+            btnDetailDurationPlus.setOnClickListener {
+                viewModel.addDuration()
+                hideKeyboard()
+            }
+
+            btnDetailLocation.setOnClickListener {
+                viewModel.setLocation("서울특별시 동작구")
+                hideKeyboard()
+            }
+
+            btnDetailParticipantPlus.setOnClickListener {
+                viewModel.addParticipant()
+                hideKeyboard()
+            }
+
+            btnDetailParticipantMinus.setOnClickListener {
+                viewModel.removeParticipant()
+                hideKeyboard()
+            }
         }
+
+        binding.etMatchName.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(s.toString().length > 30) {
+                    binding.tvMatchNameError.visibility = View.VISIBLE
+                    binding.dividerMatchName.dividerColor = ContextCompat.getColor(requireContext(), R.color.error)
+                    binding.tvMatchNameLenght.setTextColor(ContextCompat.getColor(requireContext(),R.color.error))
+                    viewModel.setName("")
+                } else {
+                    binding.tvMatchNameError.visibility = View.GONE
+                    binding.tvMatchNameLenght.visibility = View.VISIBLE
+                    binding.tvMatchNameLenght.setTextColor(ContextCompat.getColor(requireContext(),R.color.gray_09))
+                    binding.dividerMatchName.dividerColor = ContextCompat.getColor(requireContext(), R.color.gray_07)
+                    viewModel.setName(s.toString())
+                }
+
+                if(s.toString().isEmpty())  binding.tvMatchNameError.visibility = View.GONE
+
+                binding.tvMatchNameLenght.text = getString(R.string.newmatch_detail_input_length, s.toString().length.toString(), "30")
+            }
+        })
+
+        binding.etMatchDescription.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(s.toString().length > 1000) {
+                    binding.tvMatchDescriptionError.visibility = View.VISIBLE
+                    binding.dividerMatchDescription.dividerColor = ContextCompat.getColor(requireContext(), R.color.error)
+                    binding.tvMatchDescriptionLength.setTextColor(ContextCompat.getColor(requireContext(),R.color.error))
+                    viewModel.setDetail("")
+                } else {
+                    binding.tvMatchDescriptionError.visibility = View.GONE
+                    binding.tvMatchDescriptionLength.visibility = View.VISIBLE
+                    binding.tvMatchDescriptionLength.setTextColor(ContextCompat.getColor(requireContext(),R.color.gray_09))
+                    binding.dividerMatchDescription.dividerColor = ContextCompat.getColor(requireContext(), R.color.gray_07)
+                    viewModel.setDetail(s.toString())
+                }
+
+                if(s.toString().isEmpty())  binding.tvMatchDescriptionLength.visibility = View.GONE
+
+                binding.tvMatchDescriptionLength.text = getString(R.string.newmatch_detail_input_length, s.toString().length.toString(), "1000")
+            }
+        })
+
+        binding.etMatchFeeValue.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(!TextUtils.isEmpty(s.toString()) && s.toString() != feeInputValue){
+                    feeInputValue = decimalFormat.format(s.toString().replace(",","").toDouble())
+                    binding.etMatchFeeValue.setText(feeInputValue)
+                    binding.etMatchFeeValue.setSelection(feeInputValue.length)
+                    val withoutCommaValue = feeInputValue.replace(",", "").toInt()
+                    viewModel.setFee(withoutCommaValue.toString())
+                }
+            }
+        })
     }
 
     fun initObserve() {
         with(viewModel) {
+            name.observe(requireActivity()) {
+                viewModel.checkAllWritenFlow()
+            }
+
             startTime.observe(requireActivity()) {_time ->
                 if(startDate.value!!.isNotEmpty()) {
                     startTimeViewGone()
@@ -111,6 +253,8 @@ class MatchDetailFragment : Fragment() {
                 else{
                     binding.btnMatchStarttime.text = _time
                 }
+
+                viewModel.checkAllWritenFlow()
             }
 
             startDate.observe(requireActivity()) {
@@ -137,7 +281,68 @@ class MatchDetailFragment : Fragment() {
                     binding.tvMatchStarttimeValue.text = "${arrDate[1]}월 ${arrDate[2]}일 $ampm ${realTime}시 ${realMinute}"
                 }
                 if(it == "") binding.btnMatchStarttime.text = getString(R.string.newmatch_detail_starttime_time)
+                viewModel.checkAllWritenFlow()
 
+            }
+
+            // 소요시간 observer
+            duration.observe(requireActivity()) {
+                Log.e("vvv", viewModel.duration.value.toString())
+                if(viewModel.duration.value == "30분") {
+                    binding.btnDetailDurationMinus.isEnabled = false
+                    binding.btnDetailDurationMinus.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.gray_11))
+                } else {
+                    binding.btnDetailDurationMinus.isEnabled = true
+                    binding.btnDetailDurationMinus.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.gray_09))
+                }
+
+                if(viewModel.duration.value == "5시간") {
+                    binding.btnDetailDurationPlus.isEnabled = false
+                    binding.btnDetailDurationPlus.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.gray_11))
+                } else {
+                    binding.btnDetailDurationPlus.isEnabled = true
+                    binding.btnDetailDurationPlus.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.gray_09))
+                }
+                binding.tvMatchDurationValue.text = getString(R.string.newmatch_detail_duration_value, it)
+                viewModel.checkAllWritenFlow()
+            }
+
+            // 매치장소 observer
+            location.observe(requireActivity()) {
+                binding.tvMatchLocationHint.text = it
+                viewModel.checkAllWritenFlow()
+            }
+
+            // 참가인원 observer
+            maxCapacity.observe(requireActivity()) {
+                binding.tvMatchParticipantValue.text = getString(R.string.newmatch_detail_Participant_value, it)
+                viewModel.checkAllWritenFlow()
+                if(viewModel.maxCapacity.value == "1") {
+                    binding.btnDetailParticipantMinus.isEnabled = false
+                    binding.btnDetailParticipantMinus.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.gray_11))
+                } else {
+                    binding.btnDetailParticipantMinus.isEnabled = true
+                    binding.btnDetailParticipantMinus.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.gray_09))
+                }
+
+                if(viewModel.maxCapacity.value == "25") {
+                    binding.btnDetailParticipantPlus.isEnabled = false
+                    binding.btnDetailParticipantPlus.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.gray_11))
+                } else {
+                    binding.btnDetailParticipantPlus.isEnabled = true
+                    binding.btnDetailParticipantPlus.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.gray_09))
+                }
+            }
+
+            // 참가비 observer
+            fee.observe(requireActivity()) {
+                if(it == "") {
+                    binding.tvMatchFeeValueWon.visibility = View.GONE
+                } else {
+                    binding.tvMatchFeeValueWon.visibility = View.VISIBLE
+                }
+                Log.e("fee", it)
+                viewModel.checkAllWritenFlow()
             }
 
         }
@@ -355,5 +560,15 @@ class MatchDetailFragment : Fragment() {
         binding.tvCalendarIndicator.text = "$koreanMonth ${month.year}"
     }
 
-
+    private fun hideKeyboard() {
+        // 키보드 숨기기 메서드
+        if (activity != null && requireActivity().currentFocus != null) {
+            val inputManager: InputMethodManager =
+                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.hideSoftInputFromWindow(
+                requireActivity().currentFocus!!.windowToken,
+                InputMethodManager.HIDE_NOT_ALWAYS
+            )
+        }
+    }
 }

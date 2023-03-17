@@ -6,16 +6,18 @@
     <data>
 
         <variable
-            name="viewModel"
+            name="layoutViewModel"
             type="com.seunggyu.stitch.viewModel.CreateNewMatchViewModel" />
     </data>
 
     <ScrollView
+        android:id="@+id/sv_match_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:id="@+id/cl_match_detail"
             android:layout_height="0dp"
             android:background="@color/gray_14">
 
@@ -467,11 +469,12 @@
 
             <TextView
                 android:id="@+id/tv_match_duration_value"
-                android:layout_width="wrap_content"
+                android:layout_width="72dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2dp"
                 android:text="@string/newmatch_detail_duration_value"
                 android:textColor="@color/gray_02"
+                android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="@id/tv_match_duration_hint"
                 app:layout_constraintEnd_toStartOf="@id/btn_detail_duration_plus"
                 app:layout_constraintTop_toTopOf="@id/tv_match_duration_hint" />
@@ -602,10 +605,11 @@
 
             <TextView
                 android:id="@+id/tv_match_participant_value"
-                android:layout_width="wrap_content"
+                android:layout_width="34dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2dp"
                 android:text="@string/newmatch_detail_Participant_value"
+                android:gravity="center"
                 android:textColor="@color/gray_02"
                 app:layout_constraintBottom_toBottomOf="@id/tv_match_participant_hint"
                 app:layout_constraintEnd_toStartOf="@id/btn_detail_participant_plus"
@@ -701,6 +705,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -712,8 +718,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/newmatch_detail_fee_value_won"
                         android:textAppearance="@style/Body_1"
-                        android:textColor="@color/gray_02"
                         android:visibility="gone"
+                        android:textColor="@color/gray_02"
                         app:layout_constraintBottom_toBottomOf="@id/et_match_fee_value"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@id/et_match_fee_value"
@@ -724,11 +730,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
+                        android:inputType="number"
                         android:backgroundTint="@android:color/transparent"
                         android:hint="@string/newmatch_detail_fee_value_hint"
                         android:textAppearance="@style/Body_1"
+                        android:maxLength="7"
                         android:textColor="@color/gray_02"
                         android:textColorHint="@color/gray_09"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_match_fee_value_won"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -738,6 +747,7 @@
                     android:id="@+id/divider_match_fee"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
+                    android:visibility="gone"
                     android:layout_marginHorizontal="16dp"
                     android:background="@color/gray_07"
                     app:layout_constraintEnd_toEndOf="parent"
