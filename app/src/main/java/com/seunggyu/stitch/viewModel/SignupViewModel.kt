@@ -16,9 +16,19 @@ class SignupViewModel : ViewModel() {
     private val _nextButtonAvailable = MutableLiveData<Boolean>()
     private var _inputName = ""
     private val _inputHome = MutableLiveData<String>()
+    private val _location = MutableLiveData<String>()
     private val _profileSelectedItem = MutableLiveData<Int>()
     private val _interestingSelectedItem = MutableLiveData<ArrayList<String>>()
     private var _interestingItems = ArrayList<String>()
+    private var _loginId = ""
+    val loginId: String
+        get() = _loginId
+    private var _loginNickName = ""
+    val loginNickName: String
+        get() = _loginNickName
+    private var _loginImageUrl = ""
+    val loginImageUrl: String
+        get() = _loginImageUrl
 
     val currentPage: LiveData<Int>
         get() = _currentPage
@@ -34,6 +44,9 @@ class SignupViewModel : ViewModel() {
 
     val inputHome: LiveData<String>
         get() = _inputHome
+
+    val location: LiveData<String>
+        get() = _location
 
     val profileSelectedItem: LiveData<Int>
         get() = _profileSelectedItem
@@ -120,6 +133,7 @@ class SignupViewModel : ViewModel() {
         _interestingSelectedItem.value = _interestingItems
         Log.e("_interestingItems.size", _interestingItems.size.toString())
         Log.e("_interestingSelectedItem.value!!.size", _interestingSelectedItem.value!!.size.toString())
+        Log.e("_interestingSelectedItem.value!!", _interestingSelectedItem.value!!.toString())
     }
 
     fun deleteInterestingSelectedItem(item: String) {
@@ -131,5 +145,15 @@ class SignupViewModel : ViewModel() {
         Log.e("_interestingSelectedItem.value?.contains($item)",_interestingSelectedItem.value?.contains(item).toString())
 
         return _interestingSelectedItem.value?.contains(item)
+    }
+
+    fun setLoginId(id: String) {
+        _loginId = id
+    }
+    fun setLoginNickName(name: String) {
+        _loginNickName = name
+    }
+    fun setLoginImageUrl(url: String) {
+        _loginImageUrl = url
     }
 }

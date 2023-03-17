@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -15,6 +16,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.seunggyu.stitch.BasicActivity
 import com.seunggyu.stitch.R
+import com.seunggyu.stitch.Util.SnackBarCustom
+import com.seunggyu.stitch.data.RetrofitApi
+import com.seunggyu.stitch.data.model.request.SignupRequest
 import com.seunggyu.stitch.databinding.ActivitySignupBinding
 import com.seunggyu.stitch.ui.fragment.*
 import com.seunggyu.stitch.ui.fragment.signup.SignupAddressFragment
@@ -51,6 +55,7 @@ class SignupActivity : BasicActivity() {
     @SuppressLint("ClickableViewAccessibility")
     private fun init() {
 
+
         with(binding) {
             viewPager = vpSignup
             btnSignupNext.setOnClickListener {
@@ -61,6 +66,11 @@ class SignupActivity : BasicActivity() {
                     viewPager.currentItem = currentItem + 1
                     viewModel.nextPage()
 //                    viewModel.currentPage.value?.plus(1)
+                }
+                if(currentItem == 2) {
+                    binding.progressLoadingSignup.isVisible = true
+                    signupRequest()
+                    binding.btnSignupNext.isEnabled = false
                 }
             }
 
@@ -112,6 +122,17 @@ class SignupActivity : BasicActivity() {
 //                    }
 //                }
 //            }
+            val loginId = intent.getStringExtra("LOGIN_ID").toString()
+            val loginNickName = intent.getStringExtra("LOGIN_NICKNAME").toString()
+            val loginImageUrl = intent.getStringExtra("LOGIN_IMAGEURL").toString()
+            Log.e("LOGIN_ID", loginId)
+            Log.e("LOGIN_NICKNAME", loginNickName)
+            Log.e("LOGIN_IMAGEURL", loginImageUrl)
+            intent.getStringExtra("LOGIN_ID")?.let { setLoginId(it) }
+            intent.getStringExtra("LOGIN_NICKNAME")?.let { setLoginNickName(it) }
+            intent.getStringExtra("LOGIN_IMAGEURL")?.let { setLoginImageUrl(it) }
+
+
 
             currentPage.observe(this@SignupActivity) {
                 it?.let {
@@ -252,4 +273,32 @@ class SignupActivity : BasicActivity() {
         }
     }
 
+    private fun signupRequest() {
+        val service = RetrofitApi.retrofitService
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.signup(SignupRequest(id = viewModel.loginId,
+                location = viewModel.location.value!!.toString(),
+                imageUrl = viewModel.loginImageUrl,
+                name = viewModel.loginNickName,
+                sports = viewModel.interestingSelectedItem.value!!.toList(),
+                intro = "안녕하세요 함께 스포츠를 즐겨보아요~\uD83D\uDE00"
+            ))
+
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    result?.let {
+                        Log.e("result>>>>>>>", result.toString())
+                        binding.progressLoadingSignup.isVisible = false
+                    }
+                } else {
+                    Log.e("TAG", response.code().toString())
+                    SnackBarCustom.make(binding.vpSignup, getString(R.string.snackbar_network_error))
+                        .show()
+                    binding.btnSignupNext.isEnabled = true
+                }
+            }
+        }
+    }
 }

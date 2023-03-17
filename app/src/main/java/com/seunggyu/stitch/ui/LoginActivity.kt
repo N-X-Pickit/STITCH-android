@@ -116,19 +116,12 @@ class LoginActivity : AppCompatActivity() {
     fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-            viewModel.setGoogleEmail(account?.email.toString())
-            viewModel.setGoogleToken(account?.idToken.toString())
-            viewModel.setGoogleTokenAuth(account?.serverAuthCode.toString())
-            viewModel.setGoogleNickName(account?.displayName.toString())
-            viewModel.setGooglePhotoUrl(account?.photoUrl.toString())
-            viewModel.setGoogleId(account?.id.toString())
+            viewModel.setLoginEmail(account?.email.toString())
+            viewModel.setLoginNickName(account?.displayName.toString())
+            viewModel.setLoginImageUrl(account?.photoUrl.toString())
+            viewModel.setLoginId(account?.id.toString())
 
-            Log.e("Google account Email",viewModel.getGoogleEmail())
-            Log.e("Google account Token",viewModel.getGoogleToken())
-            Log.e("Google account TokenAuth", viewModel.getGoogleTokenAuth())
-            Log.e("Google account NickName", viewModel.getGoogleNickName())
-            Log.e("Google account PhotoUrl", viewModel.getGooglePhotoUrl())
-            Log.e("Google account Id", viewModel.getGoogleId())
+            startSignupProcess()
         } catch (e: ApiException){
             Log.e("Google account","signInResult:failed Code = " + e.statusCode)
         }
@@ -144,42 +137,25 @@ class LoginActivity : AppCompatActivity() {
                     Log.e(TAG, "사용자 정보 요청 실패 $error")
                 } else if (user != null) {
                     Log.e(TAG, "사용자 정보 요청 성공 : $user")
-                    viewModel.setKakaoNickName(user.kakaoAccount?.profile?.nickname.toString())
-                    viewModel.setKakaoId(user.id.toString())
-                    viewModel.setKakaoPhotoUrl(user.kakaoAccount?.profile?.profileImageUrl.toString())
+                    viewModel.setLoginNickName(user.kakaoAccount?.profile?.nickname.toString())
+                    viewModel.setLoginId(user.id.toString())
+                    viewModel.setLoginImageUrl(user.kakaoAccount?.profile?.profileImageUrl.toString())
 
-                    retrofitWork()
-                    Log.e("kakaoId", viewModel.getKakaoId())
-                    Log.e("kakaoNickName", viewModel.getKakaoNickName())
-                    Log.e("kakaoPhotoUrl", viewModel.getKakaoPhotoUrl())
+                    startSignupProcess()
                 }
             }
-            val intent = Intent(this@LoginActivity, SignupActivity::class.java)
-            startActivity(intent)
+
         }
     }
 
-    private fun retrofitWork() {
-        val service = RetrofitApi.retrofitService
+    fun startSignupProcess() {
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = service.signup(SignupRequest(id = "1121127211", type = "member", location = "서울시 대한구 민국동", imageUrl = "www.abcd.com", name = "홍길동", sports = listOf("야구", "축구", "등산")))
-
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-                    val result = response.body()
-                    result?.let {
-                        Log.e("result id", result.id.toString())
-                        Log.e("result type", result.type.toString())
-                        Log.e("result location", result.location.toString())
-                        Log.e("result imageUrl", result.imageUrl.toString())
-                        Log.e("result name", result.name.toString())
-                        Log.e("result sports", result.sports.toString())
-                    }
-                } else {
-                    Log.e("TAG", response.code().toString())
-                }
-            }
-        }
+        val intent = Intent(this@LoginActivity, SignupActivity::class.java)
+        intent.putExtra("LOGIN_ID", viewModel.loginId.value.toString())
+        intent.putExtra("LOGIN_NICKNAME", viewModel.loginNickName.value.toString())
+        intent.putExtra("LOGIN_IMAGEURL", viewModel.loginImageUrl.value.toString())
+        startActivity(intent)
     }
+
+
 }

@@ -59,6 +59,9 @@ dependencies {
     // 구글 로그인
     implementation 'com.google.android.gms:play-services-auth:20.4.1'
 
+    // 네이버 지도 SDK
+    implementation 'com.naver.maps:map-sdk:3.16.0'
+
     // ViewModel
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
 

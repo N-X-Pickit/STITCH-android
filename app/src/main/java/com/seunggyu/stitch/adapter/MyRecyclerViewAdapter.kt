@@ -16,13 +16,26 @@ import com.seunggyu.stitch.databinding.ItemMatchBinding
 import com.seunggyu.stitch.databinding.ItemRecommendMatchBinding
 import com.seunggyu.stitch.diff.MyDiffCallback
 
-class MyRecyclerViewAdapter(private val recyclerView: RecyclerView) : ListAdapter<NetworkResponse, RecyclerView.ViewHolder>(MyDiffCallback()) {
+class MyRecyclerViewAdapter(private val recyclerView: RecyclerView) :
+    ListAdapter<NetworkResponse, RecyclerView.ViewHolder>(MyDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(recyclerView.id) {
+        return when (recyclerView.id) {
             R.id.rv_main_contents_recommend ->
-                RecommendViewHolder(ItemRecommendMatchBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+                RecommendViewHolder(
+                    ItemRecommendMatchBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                )
             R.id.rv_main_contents_newmatch ->
-                MatchViewHolder(ItemMatchBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+                MatchViewHolder(
+                    ItemMatchBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                )
             else -> throw IllegalArgumentException("확인되지 않은 RecyclerView ID")
         }
     }
@@ -45,7 +58,7 @@ class MyRecyclerViewAdapter(private val recyclerView: RecyclerView) : ListAdapte
                 Glide.with(root).load(data.imageUrl.toString()).into(ivMatchImage)
 
                 // 매치 종목 설정
-                when(data.sports?.get(0)) {
+                when (data.sports?.get(0)) {
                     "테니스" -> chipTennis.root.isVisible = true
                     "배드민턴" -> chipBadminton.root.isVisible = true
                     "탁구" -> chipPingpong.root.isVisible = true
@@ -72,7 +85,11 @@ class MyRecyclerViewAdapter(private val recyclerView: RecyclerView) : ListAdapte
                 tvMatchTime.text = data.startTime.toString()
 
                 // 최대 인원
-                tvParticipant.text = root.context.getString(R.string.participant, data.duration.toString(), data.fee.toString())
+                tvParticipant.text = root.context.getString(
+                    R.string.participant,
+                    data.duration.toString(),
+                    data.fee.toString()
+                )
             }
         }
     }
@@ -86,20 +103,26 @@ class MyRecyclerViewAdapter(private val recyclerView: RecyclerView) : ListAdapte
                 Glide.with(root).load(data.imageUrl.toString()).into(ivRecommendItemBackground)
 
                 // 개설자 프로필 이미지 설정
-                Glide.with(root).load(data.email.toString()).into(object : CustomTarget<Drawable>() {
-                    override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-                        cvRecommendItemProfileImage.background = resource
-                    }
-                    override fun onLoadCleared(placeholder: Drawable?) {
-                        cvRecommendItemProfileImage.background = ContextCompat.getDrawable(root.context, R.drawable.ic_person)
-                    }
-                })
+                Glide.with(root).load(data.email.toString())
+                    .into(object : CustomTarget<Drawable>() {
+                        override fun onResourceReady(
+                            resource: Drawable,
+                            transition: Transition<in Drawable>?
+                        ) {
+                            cvRecommendItemProfileImage.background = resource
+                        }
+
+                        override fun onLoadCleared(placeholder: Drawable?) {
+                            cvRecommendItemProfileImage.background =
+                                ContextCompat.getDrawable(root.context, R.drawable.ic_person)
+                        }
+                    })
 
                 // 개설 닉네임 설정
                 tvRecommendItemNickname.text = data.name.toString()
 
                 // 매치 종목 설정
-                when(data.sports?.get(0)) {
+                when (data.sports?.get(0)) {
                     "테니스" -> chipTennis.root.isVisible = true
                     "배드민턴" -> chipBadminton.root.isVisible = true
                     "탁구" -> chipPingpong.root.isVisible = true
@@ -126,7 +149,11 @@ class MyRecyclerViewAdapter(private val recyclerView: RecyclerView) : ListAdapte
                 tvRecommendItemTime.text = data.startTime.toString()
 
                 // 최대 인원
-                tvRecommendParticipant.text = root.context.getString(R.string.participant, data.duration.toString(), data.fee.toString())
+                tvRecommendParticipant.text = root.context.getString(
+                    R.string.participant,
+                    data.duration.toString(),
+                    data.fee.toString()
+                )
             }
         }
     }

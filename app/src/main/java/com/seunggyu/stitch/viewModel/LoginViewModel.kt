@@ -11,123 +11,42 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
-    private var _googleEmail = MutableLiveData<String>()
-    private var _googleToken = MutableLiveData<String>()
-    private var _googleTokenAuth = MutableLiveData<String>()
-    private var _googleNickName = MutableLiveData<String>()
-    private var _googlePhotoUrl = MutableLiveData<String>()
-    private var _googleId = MutableLiveData<String>()
-    private var _kakaoId = MutableLiveData<String>()
-    private var _kakaoNickName = MutableLiveData<String>()
-    private var _kakaoPhotoUrl = MutableLiveData<String>()
+    private var _loginEmail = MutableLiveData<String>()
+//    private var _googleToken = MutableLiveData<String>()
+//    private var _googleTokenAuth = MutableLiveData<String>()
+    private var _loginNickName = MutableLiveData<String>()
+    private var _loginImageUrl = MutableLiveData<String>()
+    private var _loginId = MutableLiveData<String>()
 
-    val googleEmail: LiveData<String>
-        get() = _googleEmail
+    val loginEmail: LiveData<String>
+        get() = _loginEmail
 
-    val googleToken: LiveData<String>
-        get() = _googleToken
+    val loginNickName: LiveData<String>
+        get() = _loginNickName
 
-    val googleTokenAuth: LiveData<String>
-        get() = _googleTokenAuth
+    val loginImageUrl: LiveData<String>
+        get() = _loginImageUrl
 
-    val googleNickName: LiveData<String>
-        get() = _googleNickName
-
-    val googlePhotoUrl: LiveData<String>
-        get() = _googlePhotoUrl
-
-    val googleId: LiveData<String>
-        get() = _googleId
-
-    val kakaoId: LiveData<String>
-        get() = _kakaoId
-
-    val kakaoNickName: LiveData<String>
-        get() = _kakaoNickName
-
-    val kakaoPhotoUrl: LiveData<String>
-        get() = _kakaoPhotoUrl
+    val loginId: LiveData<String>
+        get() = _loginId
 
     init {
-        _googleEmail.value = ""
-        _googleToken.value = ""
-        _googleTokenAuth.value = ""
-        _googleNickName.value = ""
-        _googlePhotoUrl.value = ""
-        _googleId.value = ""
-        _kakaoId.value = ""
-        _kakaoNickName.value = ""
-        _kakaoPhotoUrl.value = ""
+        _loginEmail.value = ""
+        _loginId.value = ""
+        _loginImageUrl.value = ""
+        _loginNickName.value = ""
     }
 
-    fun setGoogleEmail(email: String) {
-        _googleEmail.value = email
+    fun setLoginEmail(email: String) {
+        _loginEmail.value = email
     }
-
-    fun getGoogleEmail() : String {
-        return _googleEmail.value.toString()
+    fun setLoginId(id: String) {
+        _loginId.value = id
     }
-
-    fun setGoogleToken(token: String) {
-        _googleToken.value = token
+    fun setLoginImageUrl(imageUrl: String) {
+        _loginImageUrl.value = imageUrl
     }
-
-    fun getGoogleToken() : String {
-        return _googleToken.value.toString()
-    }
-
-    fun setGoogleTokenAuth(tokenAuth: String) {
-        _googleTokenAuth.value = tokenAuth
-    }
-
-    fun getGoogleTokenAuth() : String {
-        return _googleTokenAuth.value.toString()
-    }
-
-    fun setGoogleNickName(name: String) {
-        _googleNickName.value = name
-    }
-
-    fun getGoogleNickName() : String {
-        return _googleNickName.value.toString()
-    }
-
-    fun setGooglePhotoUrl(photoUrl: String) {
-        _googlePhotoUrl.value = photoUrl
-    }
-
-    fun getGooglePhotoUrl() : String {
-        return _googlePhotoUrl.value.toString()
-    }
-
-    fun setGoogleId(id: String) {
-        _googleId.value = id
-    }
-
-    fun getGoogleId() : String {
-        return _googleId.value.toString()
-    }
-    fun setKakaoId(email: String) {
-        _kakaoId.value = email
-    }
-
-    fun getKakaoId() : String {
-        return _kakaoId.value.toString()
-    }
-
-    fun setKakaoNickName(name: String) {
-        _kakaoNickName.value = name
-    }
-
-    fun getKakaoNickName() : String {
-        return _kakaoNickName.value.toString()
-    }
-
-    fun setKakaoPhotoUrl(photoUrl: String) {
-        _kakaoPhotoUrl.value = photoUrl
-    }
-
-    fun getKakaoPhotoUrl() : String {
-        return _kakaoPhotoUrl.value.toString()
+    fun setLoginNickName(name: String) {
+        _loginNickName.value = name
     }
 }
