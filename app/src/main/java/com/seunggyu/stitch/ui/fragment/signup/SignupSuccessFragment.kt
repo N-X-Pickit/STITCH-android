@@ -51,8 +51,7 @@ class SignupSuccessFragment : Fragment() {
         // TextView에 SpannableString을 설정합니다.
         binding.tvSignupSuccessTop.text = spannableString
 
-        Glide.with(this)
-            .load(R.drawable.fireworks)
-            .into(binding.ivFireworks)
+
+
     }
 }

@@ -23,6 +23,13 @@ class SignupViewModel : ViewModel() {
     private var _loginId = ""
     val loginId: String
         get() = _loginId
+
+    private var _token = ""
+    val token: String
+        get() = _token
+    private var _type = ""
+    val type: String
+        get() = _type
     private var _loginNickName = ""
     val loginNickName: String
         get() = _loginNickName
@@ -155,5 +162,16 @@ class SignupViewModel : ViewModel() {
     }
     fun setLoginImageUrl(url: String) {
         _loginImageUrl = url
+    }
+    fun setLocation(address: String) {
+        _location.value = address
+    }
+
+    fun setToken(token: String) {
+        _token = token
+    }
+
+    fun setType(type: String) {
+        _type = type
     }
 }

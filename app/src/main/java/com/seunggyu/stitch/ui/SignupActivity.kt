@@ -1,6 +1,7 @@
 package com.seunggyu.stitch.ui
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
@@ -15,6 +16,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.seunggyu.stitch.BasicActivity
+import com.seunggyu.stitch.GlobalApplication
+import com.seunggyu.stitch.MainActivity
 import com.seunggyu.stitch.R
 import com.seunggyu.stitch.Util.SnackBarCustom
 import com.seunggyu.stitch.data.RetrofitApi
@@ -61,15 +64,19 @@ class SignupActivity : BasicActivity() {
             btnSignupNext.setOnClickListener {
 //                viewModel.nextPage()
                 viewModel.disableButton()
-                val currentItem = viewPager.currentItem
-                if (currentItem < 2) {
-                    viewPager.currentItem = currentItem + 1
+                if (viewPager.currentItem < 1) {
+                    Log.e("viewPager.currentItem111", viewPager.currentItem.toString())
+
+                    viewPager.currentItem = viewPager.currentItem + 1
                     viewModel.nextPage()
+                    Log.e("viewPager.currentItem2222", viewPager.currentItem.toString())
 //                    viewModel.currentPage.value?.plus(1)
                 }
-                if(currentItem == 2) {
+                else if(viewPager.currentItem == 1) {
+                    Log.e("viewPager.currentItem", viewPager.currentItem.toString())
                     binding.progressLoadingSignup.isVisible = true
                     signupRequest()
+                    Log.e("signupRequest","in progress")
                     binding.btnSignupNext.isEnabled = false
                 }
             }
@@ -97,7 +104,10 @@ class SignupActivity : BasicActivity() {
                     MotionEvent.ACTION_UP -> {
                         // 버튼을 떼면 drawable 변경하고 기능 실행
                         view.isPressed = false
-                        Toast.makeText(this@SignupActivity, "터치 떼짐", Toast.LENGTH_SHORT).show()
+
+
+                        startActivity(Intent(this@SignupActivity, MainActivity::class.java))
+                        finishAffinity()
                         true
                     }
                     else -> false
@@ -106,22 +116,7 @@ class SignupActivity : BasicActivity() {
         }
 
         with(viewModel) {
-            // 프로그레스바 상태
-//            progress.observe(this@SignupActivity) {
-//                it?.let {
-//                    binding.progress = it
-//                }
-//            }
 
-//            profileSelectedItem.observe(this@SignupActivity) {
-//                Log.e("adasdasdasdasd","##############")
-//                it?.let {
-//                    Log.e("adasdasdasdasd","##############")
-//                    if(it != -1) {
-//                        checkButtonAvailable(1)
-//                    }
-//                }
-//            }
             val loginId = intent.getStringExtra("LOGIN_ID").toString()
             val loginNickName = intent.getStringExtra("LOGIN_NICKNAME").toString()
             val loginImageUrl = intent.getStringExtra("LOGIN_IMAGEURL").toString()
@@ -136,6 +131,7 @@ class SignupActivity : BasicActivity() {
 
             currentPage.observe(this@SignupActivity) {
                 it?.let {
+                    Log.e("CurrentPage", currentPage.value.toString())
                     binding.btnSignupNext.visibility = View.VISIBLE
                     binding.btnSignupSuccess.visibility = View.GONE
                     checkButtonAvailable(it-1) // page = currentPage -1
@@ -282,7 +278,8 @@ class SignupActivity : BasicActivity() {
                 imageUrl = viewModel.loginImageUrl,
                 name = viewModel.loginNickName,
                 sports = viewModel.interestingSelectedItem.value!!.toList(),
-                intro = "안녕하세요 함께 스포츠를 즐겨보아요~\uD83D\uDE00"
+                introduce = getString(R.string.signup_first_introduce),
+                type = "member",
             ))
 
             withContext(Dispatchers.Main) {
@@ -290,7 +287,14 @@ class SignupActivity : BasicActivity() {
                     val result = response.body()
                     result?.let {
                         Log.e("result>>>>>>>", result.toString())
+                        viewModel.setToken(it.token.toString())
+                        viewModel.setType(it.type.toString())
+
                         binding.progressLoadingSignup.isVisible = false
+                        viewModel.nextPage()
+                        viewPager.currentItem = viewPager.currentItem + 1
+
+                        setPreferences()
                     }
                 } else {
                     Log.e("TAG", response.code().toString())
@@ -301,4 +305,16 @@ class SignupActivity : BasicActivity() {
             }
         }
     }
+
+    private fun setPreferences() {
+        GlobalApplication.prefs.setString("userId", viewModel.loginId)
+        GlobalApplication.prefs.setString("name", viewModel.loginNickName)
+        GlobalApplication.prefs.setString("imageUrl", viewModel.loginImageUrl)
+        GlobalApplication.prefs.setString("location", viewModel.location.value.toString())
+        GlobalApplication.prefs.setStringList("sports", viewModel.interestingSelectedItem.value!!.toList())
+        GlobalApplication.prefs.setString("token", viewModel.token)
+        GlobalApplication.prefs.setString("introduce", getString(R.string.signup_first_introduce))
+        GlobalApplication.prefs.setString("type", viewModel.type)
+    }
+
 }
