@@ -10,17 +10,20 @@ import org.json.JSONArray
 
 
 class AddressSearchViewModel : ViewModel() {
-    private val _address = MutableLiveData<String>()
+    private val _locationAddress = MutableLiveData<String>()
     private val _addressList = MutableLiveData<List<String>?>()
     private val _addressNearList = MutableLiveData<List<String>?>()
     private val _addressNear = MutableLiveData<String>()
+    private val _selectedAddrress = MutableLiveData<String>()
 
-    val address: LiveData<String>
-        get() = _address
+    val locationAddress: LiveData<String>
+        get() = _locationAddress
     val addressList: LiveData<List<String>?>
         get() = _addressList
     val addressNearList: LiveData<List<String>?>
         get() = _addressNearList
+    val selectedAddress: LiveData<String>
+        get() = _selectedAddrress
     var inputAddress = ""
     val addressNear: LiveData<String>
         get() = _addressNear
@@ -29,7 +32,8 @@ class AddressSearchViewModel : ViewModel() {
         val service = NaverMapApi.retrofitService
 
         CoroutineScope(Dispatchers.IO).launch {
-            val response = service.geocoding("gnz3irqyja", "xty1BKFlN34aAJVUm66PB65Hyc2cXzPA1FLe7hs3",
+            val response = service.geocoding(
+                "gnz3irqyja", "xty1BKFlN34aAJVUm66PB65Hyc2cXzPA1FLe7hs3",
                 inputAddress
             )
 
@@ -48,7 +52,7 @@ class AddressSearchViewModel : ViewModel() {
                                 }
                             }
                             _addressList.value = newList
-                            Log.e("asdasd",_addressList.value.toString())
+                            Log.e("asdasd", _addressList.value.toString())
                         }
 
 
@@ -60,15 +64,20 @@ class AddressSearchViewModel : ViewModel() {
         }
     }
 
-    fun getNearAddress(_address: String) {
+    private fun getNearAddress(_address: String) {
         val service = RetrofitApi.retrofitService
-
+        Log.e("getNearAddress", "1")
         CoroutineScope(Dispatchers.IO).launch {
+            Log.e("getNearAddress", "1.25")
+            Log.e("_address", _address)
             val response = service.getNearAddress(_address)
+            Log.e("getNearAddress", "1.5")
 
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     val result = response.body()
+                    Log.e("getNearAddress", "2")
+
                     result?.let {
                         Log.e("result>>>>>>>", result.toString())
                         _addressNearList.value = it.value
@@ -79,5 +88,38 @@ class AddressSearchViewModel : ViewModel() {
                 }
             }
         }
+    }
+
+    fun reverseGeocoding(lat: String, lng: String) {
+        val service = NaverMapApi.retrofitService
+        Log.e("실행","ㅁㄴㅇㅁㄴㅇ")
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.reverseGeocoding(
+                "gnz3irqyja", "xty1BKFlN34aAJVUm66PB65Hyc2cXzPA1FLe7hs3",
+                "coordsToaddr",
+                "$lat,$lng",
+            "json",
+                "legalcode,admcode"
+            )
+            Log.e("reverseGeocoding","inprocess")
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    result?.let {
+                        Log.e("result>>>>>>>", result.toString())
+                        val area1 = it.results?.get(0)?.region?.area1?.name.toString()
+                        val area2 = it.results?.get(0)?.region?.area2?.name.toString()
+                        Log.e("area1 + area2 ", "$area1 $area2")
+                        getNearAddress("$area1 $area2")
+                    }
+                } else {
+                    Log.e("TAG", response.code().toString())
+                }
+            }
+        }
+    }
+
+    fun setSelectedAddress(address: String) {
+        _selectedAddrress.value = address
     }
 }

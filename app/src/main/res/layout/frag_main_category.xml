@@ -5,8 +5,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
+        android:id="@+id/sv_category"
         android:layout_height="wrap_content">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cl_category">
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

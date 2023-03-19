@@ -16,11 +16,13 @@
     <string name="signup_frag4_top">관심있는 운동 종목을\n3개 이상 선택하세요</string>
     <string name="signup_success_top">가입이 완료되었습니다!\nSTITCH를 통해 새로운 사람들과\n매칭을 즐겨보세요</string>
     <string name="signup_button_next">다음</string>
+    <string name="signup_first_introduce">안녕하세요 함께 스포츠를 즐겨보아요~\uD83D\uDE00</string>
 
     <string name="signup">회원가입</string>
     <string name="signup_success">회원가입 완료</string>
     <string name="address_input">주소입력</string>
     <string name="address_input_hint">동명(읍, 면)으로 검색 (ex. 서초동)</string>
+    <string name="location_input_hint">동명, 장소명 검색 (ex. 서초동, 종합운동장)</string>
     <string name="address_gps">현재위치로 찾기</string>
     <string name="address_tip">검색 TIP</string>
     <string name="address_tip_1">•  도로명 + 건물기호</string>
@@ -97,6 +99,8 @@
     <string name="newmatch_detail_fee_no">없음</string>
     <string name="newmatch_detail_fee_value_won">₩ </string>
     <string name="newmatch_detail_fee_value_hint">금액을 입력해주세요</string>
+
+    <string name="newmatch_detail_location_header">장소 설정</string>
 
 
     <!-- ex: 3/4명 , 참여인원/최대인원 표시할 때 사용됨 -->

@@ -1,9 +1,13 @@
 package com.seunggyu.stitch.ui.fragment.mymenu
 
+import android.content.res.Resources
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 
@@ -22,6 +26,7 @@ class MymenuFragment : Fragment() {
         initClickListener()
         initView()
         initGroup()
+        initInsetMargin()
         initObserver()
         return binding.root
     }
@@ -40,5 +45,25 @@ class MymenuFragment : Fragment() {
 
     private fun initClickListener() {
 
+    }
+
+    private fun initInsetMargin() = with(binding) {
+        ViewCompat.setOnApplyWindowInsetsListener(svMymenu) { v: View, insets: WindowInsetsCompat ->
+            val params = v.layoutParams as ViewGroup.MarginLayoutParams
+            params.bottomMargin = insets.systemWindowInsetBottom
+            clMymenu.layoutParams =
+                (clMymenu.layoutParams as ViewGroup.MarginLayoutParams).apply {
+                    setMargins(16.dpToPx(), insets.systemWindowInsetTop, 16.dpToPx(), 0)
+                }
+
+
+            insets.consumeSystemWindowInsets()
+        }
+    }
+    fun Int.dpToPx(): Int {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, this.toFloat(),
+            Resources.getSystem().displayMetrics
+        ).toInt()
     }
 }

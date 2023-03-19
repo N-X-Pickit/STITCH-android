@@ -82,7 +82,7 @@
             app:layout_constraintTop_toTopOf="@id/iv_address_search" />
 
         <ImageView
-            android:id="@+id/iv_signup_nickname_close"
+            android:id="@+id/iv_address_clear"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginEnd="25dp"

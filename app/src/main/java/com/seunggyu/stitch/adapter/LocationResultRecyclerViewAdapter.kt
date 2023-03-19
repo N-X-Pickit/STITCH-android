@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.seunggyu.stitch.data.model.Location
 import com.seunggyu.stitch.databinding.ItemGpsResultBinding
 
-class GpsResultRecyclerViewAdapter(private val recyclerView: RecyclerView,
-private val clickListener: (String) -> Unit) :
-    ListAdapter<String, RecyclerView.ViewHolder>(GpsResultDiffCallback()) {
+class LocationResultRecyclerViewAdapter(private val recyclerView: RecyclerView,
+                                        private val clickListener: (Location) -> Unit) :
+    ListAdapter<Location, RecyclerView.ViewHolder>(GpsResultDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return GpsResultViewHolder(
             ItemGpsResultBinding.inflate(
@@ -36,20 +37,22 @@ private val clickListener: (String) -> Unit) :
 
     inner class GpsResultViewHolder(private val binding: ItemGpsResultBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: String) {
+        fun bind(data: Location) {
             with(binding) {
-                tvAddressResultItem.text = data
-                Log.e("data", data)
+                tvAddressResultItem.text = data.title
+                Log.e("data", data.title)
+                Log.e("katech X", data.katechX)
+                Log.e("katech Y", data.katechY)
             }
         }
     }
 
-    class GpsResultDiffCallback : DiffUtil.ItemCallback<String>() {
-        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+    class GpsResultDiffCallback : DiffUtil.ItemCallback<Location>() {
+        override fun areItemsTheSame(oldItem: Location, newItem: Location): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+        override fun areContentsTheSame(oldItem: Location, newItem: Location): Boolean {
             return oldItem == newItem
         }
     }

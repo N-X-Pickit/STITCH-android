@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_address_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/custom_bottom_sheet_location"
+        android:paddingTop="10dp"
+        android:paddingBottom="40dp"
+        android:theme="@style/AppTheme.TimePicker">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            app:cardBackgroundColor="@color/gray_07"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="12dp"/>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider_address"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="10dp"
+            app:dividerColor="@color/gray_09"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_address_search" />
+
+        <ImageView
+            android:id="@+id/iv_address_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_search"
+            app:layout_constraintTop_toTopOf="@id/et_address_search"
+            app:layout_constraintBottom_toBottomOf="@id/et_address_search"
+            app:layout_constraintStart_toStartOf="@id/divider_address" />
+
+        <EditText
+            android:id="@+id/et_address_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="24dp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:backgroundTint="@color/gray_12"
+            android:hint="@string/location_input_hint"
+            android:textAppearance="@style/Body_1"
+            android:textColor="@color/gray_02"
+            android:layout_marginTop="38dp"
+            android:textColorHint="@color/gray_09"
+            app:layout_constraintEnd_toEndOf="@id/divider_address"
+            app:layout_constraintStart_toEndOf="@id/iv_address_search"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_match_address_clear"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="25dp"
+            android:scaleType="center"
+            android:src="@drawable/ic_close"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/iv_address_search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_address_search"
+            tools:visibility="visible" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_address_result"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:paddingTop="100dp"
+            android:visibility="invisible"
+            tools:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_address">
+
+            <TextView
+                android:id="@+id/tv_address_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/address_result_name"
+                android:textAppearance="@style/Subhead"
+                android:textColor="@color/gray_02"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_gps_result"
+                android:layout_width="0dp"
+                android:layout_height="400dp"
+                android:layout_marginTop="22dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_address_result" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_location_result"
+                android:layout_width="0dp"
+                android:layout_height="400dp"
+                android:layout_marginTop="22dp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_address_result" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_address_null"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="48dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider_address">
+
+            <TextView
+                android:id="@+id/tv_address_null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/address_result_null"
+                android:textAlignment="center"
+                android:textAppearance="@style/Body_1"
+                android:textColor="@color/gray_02"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/btn_address_research"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/address_result_research"
+                android:textAppearance="@style/Subhead"
+                android:textColor="@color/primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_address_null" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

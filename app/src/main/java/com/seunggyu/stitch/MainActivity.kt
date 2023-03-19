@@ -34,6 +34,7 @@ class MainActivity : BasicActivity() {
     }
 
     fun init() {
+        printLogCurrentUser()
         with(binding) {
             navigationView.run {
                 setOnItemSelectedListener {
@@ -48,7 +49,7 @@ class MainActivity : BasicActivity() {
                             Log.e("NaviFrag", "actionHome")
                         }
                         R.id.action_category -> {
-                            clearStatusBarTransParent()
+//                            clearStatusBarTransParent()
 
                             supportFragmentManager
                                 .beginTransaction()
@@ -57,7 +58,7 @@ class MainActivity : BasicActivity() {
                             Log.e("NaviFrag", "actionCategory")
                         }
                         R.id.action_mymatch -> {
-                            clearStatusBarTransParent()
+//                            clearStatusBarTransParent()
 
                             supportFragmentManager
                                 .beginTransaction()
@@ -66,7 +67,7 @@ class MainActivity : BasicActivity() {
                             Log.e("NaviFrag", "actionMymatch")
                         }
                         R.id.action_mymenu -> {
-                            clearStatusBarTransParent()
+//                            clearStatusBarTransParent()
 
                             supportFragmentManager
                                 .beginTransaction()
@@ -106,4 +107,16 @@ class MainActivity : BasicActivity() {
         }
     }
 
+    private fun printLogCurrentUser() {
+        val user = GlobalApplication.prefs.getCurrentUser()
+
+        Log.e("userId", user.id)
+        Log.e("name", user.name)
+        Log.e("imageUrl", user.imageUrl)
+        Log.e("location", user.location)
+        Log.e("sports", user.sports.toString())
+        Log.e("token", user.token)
+        Log.e("introduce", user.introduce)
+        Log.e("type", user.type)
+    }
 }

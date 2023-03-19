@@ -15,7 +15,7 @@ data class NetworkResponse(
     val imageUrl: String?,
     @field:Json(name = "location")
     val location: String?,
-    @field:Json(name = "hostId")
+    @field:Json(name = "indroiduce")
     val hostId: String?,
     @field:Json(name = "fee")
     val fee: Int?,
