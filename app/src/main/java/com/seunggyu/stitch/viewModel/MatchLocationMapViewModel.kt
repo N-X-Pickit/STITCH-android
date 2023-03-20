@@ -2,13 +2,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.seunggyu.stitch.Util.GeoTrans
+import com.seunggyu.stitch.Util.GeoTransPoint
 import com.seunggyu.stitch.data.NaverMapApi
 import com.seunggyu.stitch.data.NaverMapSearchApi
-import com.seunggyu.stitch.data.RetrofitApi
-import com.seunggyu.stitch.data.RetrofitService
 import com.seunggyu.stitch.data.model.Location
 import kotlinx.coroutines.*
-import org.json.JSONArray
 
 
 class MatchLocationMapViewModel : ViewModel() {
@@ -20,8 +19,9 @@ class MatchLocationMapViewModel : ViewModel() {
     private val _selectedAddrress = MutableLiveData<String>()
     private val _selectedLocation = MutableLiveData<Location>()
     private val _topAddress = MutableLiveData<String>()
-    private var _latitude = ""
-    private var _longitude = ""
+    private var _latitude = "" // 최종 latitude
+    private var _longitude = "" // 최종 longitude
+    private var _address = "" // 최종 주소
 
     val locationAddress: LiveData<String>
         get() = _locationAddress
@@ -41,6 +41,8 @@ class MatchLocationMapViewModel : ViewModel() {
         get() = _latitude
     val longitude
         get() = _longitude
+    val address
+        get() = _address
     val addressNear: LiveData<String>
         get() = _addressNear
     val topAddress: LiveData<String>
@@ -61,16 +63,16 @@ class MatchLocationMapViewModel : ViewModel() {
                     result?.let {
                         Log.e("result>>>>>>>", result.toString())
                         val addressesList = it.addresses
-                        val newList = mutableListOf<String>()
+                        val newList = mutableListOf<Location>()
                         addressesList?.let {
                             for (address in addressesList) {
                                 val jibunAddress = address?.jibunAddress
                                 if (jibunAddress != null) {
-                                    newList.add(jibunAddress)
+                                    newList.add(Location(address.jibunAddress, address.y.toString(), address.x.toString()))
                                 }
                             }
-                            _addressList.value = newList
-                            Log.e("asdasd", _addressList.value.toString())
+                            _locationList.value = newList
+                            Log.e("asdasd", _locationList.value.toString())
                         } ?: run {
 
                         }
@@ -118,8 +120,10 @@ class MatchLocationMapViewModel : ViewModel() {
                             if(buildingName.isNotEmpty() && buildingName != "null") append("\n$buildingName")
                         }
                         setTopAddress(address.toString())
-                        Log.e("address============", address.toString())
-
+                        setAddress(address.toString())
+                        setLatitude(lat)
+                        setLongitude(lng)
+                        Log.e("Final Address============", "$address x: $latitude y: $longitude ")
                     }
                 } else {
                     Log.e("TAG", response.code().toString())
@@ -148,7 +152,19 @@ class MatchLocationMapViewModel : ViewModel() {
                                 val title = address?.title?.replace("<b>", "")
                                     ?.replace("</b>", "")
                                 if (title != null) {
-                                    newList.add(Location(title, address.mapx!!, address.mapy!!))
+                                    val coorX = address.mapx?.toDouble()
+                                    val coorY = address.mapy?.toDouble()
+                                    //int coorX = Integer.parseInt(mapX);
+                                    //int coorY = Integer.parseInt(mapY);
+
+                                    //System.out.println("X좌표: "+ coorX + " Y좌표: " + coorY);
+                                    val naver_pt = GeoTransPoint(coorX!!, coorY!!)
+                                    //System.out.println("naver : x="  + naver_pt.getX() + ", y=" + naver_pt.getY());
+                                    val gg_pt: GeoTransPoint =
+                                        GeoTrans.convert(GeoTrans.KATEC, GeoTrans.GEO, naver_pt) // 네이버 좌표계에서 구글(줄여서 gg)좌표계로 변환
+                                    val lat: Double = gg_pt.y
+                                    val lng: Double = gg_pt.x
+                                    newList.add(Location(title, lat.toString(), lng.toString()))
                                 }
                             }
                             _locationList.value = newList
@@ -174,6 +190,9 @@ class MatchLocationMapViewModel : ViewModel() {
     fun setLongitude(lng: String) {
         _longitude = lng
     }
+    fun setAddress(address: String) {
+        _address = address
+    }
 
     fun setSelectedAddress(address: String) {
         _selectedAddrress.value = address
@@ -181,4 +200,6 @@ class MatchLocationMapViewModel : ViewModel() {
     fun setSelectedLocation(location: Location) {
         _selectedLocation.value = location
     }
+
+
 }

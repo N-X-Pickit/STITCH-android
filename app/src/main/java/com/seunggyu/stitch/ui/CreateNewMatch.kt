@@ -1,5 +1,7 @@
 package com.seunggyu.stitch.ui
 
+import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -11,14 +13,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import com.seunggyu.stitch.BasicActivity
+import com.seunggyu.stitch.MainActivity
 import com.seunggyu.stitch.R
+import com.seunggyu.stitch.Util.SnackBarCustom
 import com.seunggyu.stitch.databinding.ActivityCreateNewMatchBinding
 import com.seunggyu.stitch.dialog.CustomAlertDialog
 import com.seunggyu.stitch.ui.fragment.newmatch.MatchDetailFragment
 import com.seunggyu.stitch.ui.fragment.newmatch.MatchSportFragment
 import com.seunggyu.stitch.ui.fragment.newmatch.MatchTypeFragment
 import com.seunggyu.stitch.viewModel.CreateNewMatchViewModel
+import java.io.ByteArrayOutputStream
 
 class CreateNewMatch : BasicActivity() {
     private lateinit var binding: ActivityCreateNewMatchBinding
@@ -43,11 +51,65 @@ class CreateNewMatch : BasicActivity() {
             viewPager.adapter = pagerAdapter
             // 뷰페이저 스와이프 막기 -> 다음, 이전 버튼으로만 이동 가능
             viewPager.isUserInputEnabled = false
+
+            btnNewmatchComplete.setOnClickListener {
+                btnNewmatchComplete.isEnabled = true
+                btnNewmatchComplete.setTextColor(getColor(R.color.gray_10))
+                viewModel.uploadImage?.let {
+                    val imageName = System.currentTimeMillis().toString()
+                    val imagesRef = Firebase.storage.reference.child("images/$imageName.jpg")
+                    val baos = ByteArrayOutputStream()
+                    viewModel.uploadImage.value?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                    val data = baos.toByteArray()
+
+                    val uploadTask = imagesRef.putBytes(data)
+                    uploadTask.addOnSuccessListener {
+                        val storageRef = FirebaseStorage.getInstance().getReference("images/$imageName.jpg")
+                        storageRef.downloadUrl.addOnSuccessListener { uri ->
+                            val imageUrl = uri.toString()
+                            viewModel.setImageUrl(imageUrl)
+
+                            createMatchProcess()
+                        }.addOnFailureListener { exception ->
+                            SnackBarCustom.make(binding.root,getString(R.string.snackbar_network_error)).show()
+                            btnNewmatchComplete.isEnabled = true
+                            btnNewmatchComplete.setTextColor(getColor(R.color.primary))
+                        }
+                    }.addOnFailureListener {
+                        SnackBarCustom.make(binding.root,getString(R.string.snackbar_network_error)).show()
+                        btnNewmatchComplete.isEnabled = true
+                        btnNewmatchComplete.setTextColor(getColor(R.color.primary))
+                    }
+                }
+
+            }
         }
+    }
+
+    private fun createMatchProcess() {
+        viewModel.createNewMatch()
+        binding.progressLoadingCreateNewMatch.isVisible = true
     }
 
     private fun initObserver() {
         with(viewModel) {
+
+            createSuccessListener.observe(this@CreateNewMatch) {
+                if(it) {
+                    binding.progressLoadingCreateNewMatch.isVisible = false
+                    finish()
+                }
+            }
+            createFailedListener.observe(this@CreateNewMatch) {
+                if(it) {
+                    binding.progressLoadingCreateNewMatch.isVisible = false
+                    SnackBarCustom.make(binding.clCreateNewMatchRoot, getString(R.string.snackbar_network_error)).show()
+                    binding.btnNewmatchComplete.isEnabled = true
+                    binding.btnNewmatchComplete.setTextColor(getColor(R.color.primary))
+                    Log.e("[Error] createNewMatchFailedListener", "Observed!!!")
+                }
+            }
+
             currentPage.observe(this@CreateNewMatch) {
                 when (it) {
                     2 -> {
@@ -86,10 +148,6 @@ class CreateNewMatch : BasicActivity() {
         with(binding) {
             btnNewmatchBack.setOnClickListener {
                 showCloseDialog()
-            }
-
-            btnNewmatchComplete.setOnClickListener {
-                /** TODO: 완료 버튼 서버 통신 구현 **/
             }
         }
     }

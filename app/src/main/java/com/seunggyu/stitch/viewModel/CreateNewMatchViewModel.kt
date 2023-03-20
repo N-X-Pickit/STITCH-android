@@ -1,24 +1,38 @@
 package com.seunggyu.stitch.viewModel
 
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.viewpager2.widget.ViewPager2
+import com.google.firebase.storage.StorageReference
+import com.seunggyu.stitch.GlobalApplication
+import com.seunggyu.stitch.Util.SnackBarCustom
+import com.seunggyu.stitch.data.NaverMapApi
+import com.seunggyu.stitch.data.RetrofitApi
+import com.seunggyu.stitch.data.RetrofitService
+import com.seunggyu.stitch.data.model.Location
+import com.seunggyu.stitch.data.model.request.CreateNewMatchRequest
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CreateNewMatchViewModel : ViewModel() {
+    private lateinit var createNewMatchRequest: CreateNewMatchRequest
+
     private val _currentPage = MutableLiveData<Int>(1)
     val currentPage: LiveData<Int>
         get() = _currentPage
 
-    private val _type = MutableLiveData<String>()
-    val type: LiveData<String>
-        get() = _type
+    private val _isTeach = MutableLiveData<Boolean>()
+    val isTeach: LiveData<Boolean>
+        get() = _isTeach
 
     private val _sportsType = MutableLiveData<String>()
     val sportsType: LiveData<String>
@@ -56,8 +70,8 @@ class CreateNewMatchViewModel : ViewModel() {
     val maxCapacity: LiveData<String>
         get() = _maxCapacity
 
-    private val _fee = MutableLiveData<String>()
-    val fee: LiveData<String>
+    private val _fee = MutableLiveData<Int>()
+    val fee: LiveData<Int>
         get() = _fee
 
     private var _startAmpm = MutableLiveData<String>()
@@ -76,8 +90,36 @@ class CreateNewMatchViewModel : ViewModel() {
     val isAllWriten: LiveData<Boolean>
         get() = _isAllWriten
 
+    private val _latitude = MutableLiveData<String>()
+    val latitude: LiveData<String>
+        get() = _latitude
+
+    private val _longitude = MutableLiveData<String>()
+    val longitude: LiveData<String>
+        get() = _longitude
+
+    private val _uploadImage = MutableLiveData<Bitmap>()
+    val uploadImage: LiveData<Bitmap>
+        get() = _uploadImage
+
+    private val _createSuccessListener = MutableLiveData<Boolean>(false)
+    val createSuccessListener: LiveData<Boolean>
+        get() = _createSuccessListener
+
+    private val _createFailedListener = MutableLiveData<Boolean>(false)
+    val createFailedListener: LiveData<Boolean>
+        get() = _createFailedListener
+
+    private var _numberDuration = 0
+    val numberDuration: Int
+        get() = _numberDuration
+
+    private var _teach = false
+    val teach: Boolean
+        get() = _teach
+
+
     private val _allWritenFlow = flow<Boolean> {
-        val emptyType = type.value?.isEmpty()
         val emptySportsType = sportsType.value?.isEmpty()
         val emptyName = name.value?.isEmpty()
         val emptyStartDate = startDate.value?.isEmpty()
@@ -87,7 +129,7 @@ class CreateNewMatchViewModel : ViewModel() {
         val emptyMaxCapacity = maxCapacity.value?.isEmpty()
 
         emit(
-            emptyType == false && emptySportsType == false
+            emptySportsType == false
                     && emptyName == false && emptyStartDate == false && emptyStartTime == false
                     && emptyDuration == false && emptyLocation == false
                     && emptyMaxCapacity == false
@@ -118,7 +160,7 @@ class CreateNewMatchViewModel : ViewModel() {
         _duration.value = durationList[durationPointer]
         _location.value = ""
         _maxCapacity.value = "2"
-        _fee.value = ""
+        _fee.value = 0
     }
 
     fun nextPage() {
@@ -135,7 +177,6 @@ class CreateNewMatchViewModel : ViewModel() {
                 _isAllWriten.value = it
                 Log.e("checkAllWritenFlow", "_isAllWrite = $it")
                 Log.e("====================", "===============")
-                Log.e("emptyType", type.value?.isEmpty().toString())
                 Log.e("emptySportsType", sportsType.value?.isEmpty().toString())
                 Log.e("emptyName", name.value?.isEmpty().toString())
                 Log.e("emptyStartDate", startDate.value?.isEmpty().toString())
@@ -173,12 +214,12 @@ class CreateNewMatchViewModel : ViewModel() {
         }
     }
 
-    fun setFee(fee: String) {
+    fun setFee(fee: Int) {
         _fee.value = fee
     }
 
-    fun setType(type: String) {
-        _type.value = type
+    fun setTeach(isTeach: Boolean) {
+        _isTeach.value = isTeach
     }
 
 
@@ -215,5 +256,74 @@ class CreateNewMatchViewModel : ViewModel() {
 
     fun setLocation(location: String) {
         _location.value = location
+    }
+
+    fun setLatitude(latitude: String) {
+        _latitude.value = latitude
+    }
+
+    fun setLongitude(longitude: String) {
+        _longitude.value = longitude
+    }
+
+    fun setUploadImage(image: Bitmap) {
+        _uploadImage.value = image
+    }
+
+    fun setImageUrl(url: String) {
+        _imageUrl.value = url
+    }
+
+    fun setCreateSuccessListener(success: Boolean) {
+        _createSuccessListener.value = success
+    }
+
+    fun setCreateFailedListener(failed: Boolean) {
+        _createFailedListener.value = failed
+    }
+
+    fun createNewMatch() {
+        val service = RetrofitApi.retrofitService
+        val matchId = System.currentTimeMillis().toString()
+        createNewMatchRequest = CreateNewMatchRequest(
+            id = matchId,
+            imageUrl = imageUrl.value,
+            detail = detail.value,
+            duration = numberDuration,
+            eventType = sportsType.value,
+            fee = fee.value?.toInt(),
+            hostId = GlobalApplication.prefs.getString("userId"),
+            location = location.value!!.split("\n")[0],
+            maxCapacity = maxCapacity.value?.toInt(),//
+            name = name.value,
+            latitude = latitude.value,
+            longitude = longitude.value,
+            numOfMembsers = 1,
+            startTime = "${startDate.value} ${startTime.value}",
+            isTeach = isTeach.value,
+        )
+
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.createMatch(createNewMatchRequest)
+
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    result?.let {
+                        Log.e("result>>>>>>>", result.toString())
+                        setCreateSuccessListener(true)
+                        }
+                    }
+                else {
+                    Log.e("TAG", response.code().toString())
+                    setCreateFailedListener(true)
+                }
+            }
+        }
+    }
+
+    fun setNumberDuration(duration: Int) {
+        _numberDuration = duration
     }
 }

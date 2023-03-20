@@ -17,6 +17,7 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
@@ -25,6 +26,7 @@ import com.google.android.gms.location.LocationRequest
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.seunggyu.stitch.R
+import com.seunggyu.stitch.Util.Constants.RESULT_LOCATION
 import com.seunggyu.stitch.Util.SnackBarCustom
 import com.seunggyu.stitch.databinding.ActivityMatchLocationBinding
 import com.seunggyu.stitch.ui.fragment.newmatch.AddressSearchBottomFragment
@@ -60,7 +62,6 @@ class MatchLocationMapActivity : FragmentActivity(), OnMapReadyCallback {
 
         uiInit(savedInstanceState)
         init()
-        initRecyclerView()
         initObserver()
     }
 
@@ -100,6 +101,8 @@ class MatchLocationMapActivity : FragmentActivity(), OnMapReadyCallback {
                 setTextColor(getColor(R.color.gray_11))
                 isEnabled = false
             }
+            binding.cvMatchLocationGuide.isVisible = false
+
         }
         // 카메라의 움직임 종료에 대한 이벤트 리스너 인터페이스.
         naverMap.addOnCameraIdleListener {
@@ -108,9 +111,8 @@ class MatchLocationMapActivity : FragmentActivity(), OnMapReadyCallback {
                 naverMap.cameraPosition.target.latitude,
                 naverMap.cameraPosition.target.longitude
             )
+            binding.cvMatchLocationGuide.isVisible = true
 
-            viewModel.setLatitude(naverMap.cameraPosition.target.latitude.toString())
-            viewModel.setLongitude(naverMap.cameraPosition.target.longitude.toString())
             Log.e("카메라 이동 완료 좌표" , "\nLatitude : ${viewModel.latitude}\nLongitude : ${viewModel.longitude}")
         }
 
@@ -144,6 +146,14 @@ class MatchLocationMapActivity : FragmentActivity(), OnMapReadyCallback {
 
     private fun init() {
         with(binding) {
+            btnMatchLocationComplete.setOnClickListener {
+                val intent = Intent()
+                intent.putExtra("address", viewModel.address)
+                intent.putExtra("latitude", viewModel.latitude)
+                intent.putExtra("longitude", viewModel.longitude)
+                setResult(RESULT_LOCATION, intent)
+                finish()
+            }
 
             btnMatchLocationCurrentGps.setOnClickListener {
                 // 위치 관리자 객체 참조하기
@@ -200,9 +210,8 @@ class MatchLocationMapActivity : FragmentActivity(), OnMapReadyCallback {
 
     private fun initObserver() {
         // 리사이클러뷰에서 선택한 동네
-        viewModel.selectedAddress.observe(this) {
-            Log.e("selectedAddress",it.toString())
-
+        viewModel.selectedLocation.observe(this) {
+            moveCamera(it.latitude.toDouble(), it.longitude.toDouble())
         }
 
         // 상단에 표시되는 주소가 변경되면 동작
@@ -218,67 +227,8 @@ class MatchLocationMapActivity : FragmentActivity(), OnMapReadyCallback {
             }
         }
 
-        // 주소 조회 리스트
-//        viewModel.addressList.observe(this) {
-//            it?.let {
-//                if (it.isNotEmpty()) {
-//                    Log.e("isDetailAddress", "true")
-//                    gpsRecyclerViewAdapter.submitList(it)
-//                    Log.e("it.size", it.size.toString())
-//                    binding.clAddressResult.isVisible = true
-//                    binding.clAddressNull.isVisible = false
-//                    binding.tvAddressResult.text = getString(
-//                        R.string.address_result_name,
-//                        binding.etAddressSearch.text
-//                    )
-//                } else {
-//                    Log.e("clAddressResult", "#1")
-//                    binding.clAddressResult.isVisible = false
-//                    binding.clAddressNull.isVisible = true
-//                }
-//            } ?: run {
-//                SnackBarCustom.make(
-//                    binding.clAddressParent,
-//                    getString(R.string.snackbar_network_error)
-//                )
-//                    .show()
-//            }
-//        }
 
     }
-
-    private fun initRecyclerView() {
-//        gpsRecyclerViewAdapter
-//        binding.rvGpsResult.apply {
-//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-//            adapter = gpsRecyclerViewAdapter
-//            Log.e("RecyclerView init", "successed")
-//        }
-    }
-
-    private fun checkLocationPermission(onSucces: () -> Unit) {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-            && ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            onSucces()
-        } else {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                ),
-                1
-            )
-        }
-    }
-
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
