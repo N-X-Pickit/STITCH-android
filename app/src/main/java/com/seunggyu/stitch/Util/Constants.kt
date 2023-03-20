@@ -9,4 +9,6 @@ object Constants {
     const val KAKAO_REST_API_KEY = BuildConfig.KAKAO_REST_API_KEY
     const val GOOGLE_CLIENT_ID = BuildConfig.GOOGLE_CLIENT_ID
     const val GOOGLE_CLIENT_SECRET = BuildConfig.GOOGLE_CLIENT_SECRET
+    const val RESULT_LOCATION = 10041004
+    const val RESULT_DETAIL_IMAGE = 77777777
 }

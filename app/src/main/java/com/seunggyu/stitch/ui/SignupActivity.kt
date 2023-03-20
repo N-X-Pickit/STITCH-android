@@ -280,6 +280,7 @@ class SignupActivity : BasicActivity() {
                 sports = viewModel.interestingSelectedItem.value!!.toList(),
                 introduce = getString(R.string.signup_first_introduce),
                 type = "member",
+                token = ""
             ))
 
             withContext(Dispatchers.Main) {

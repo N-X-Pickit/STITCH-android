@@ -3,6 +3,7 @@ package com.seunggyu.stitch
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import android.util.TypedValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
@@ -31,6 +32,13 @@ class GlobalApplication : Application() {
         NaverMapSdk.getInstance(this).client =
             NaverMapSdk.NaverCloudPlatformClient(getString(R.string.naver_client_id))
 
+    }
+
+    fun dpToPx(dp: Float): Int {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP, dp,
+            resources.displayMetrics
+        ).toInt()
     }
 
 }

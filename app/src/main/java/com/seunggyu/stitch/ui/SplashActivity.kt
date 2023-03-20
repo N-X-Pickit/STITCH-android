@@ -97,7 +97,7 @@ class SplashActivity : AppCompatActivity() {
             GlobalApplication.prefs.setString("introduce", it.introduce)
             GlobalApplication.prefs.setString("type", it.type)
 
-            val intent = Intent(this@SplashActivity, MatchLocationMapActivity::class.java)
+            val intent = Intent(this@SplashActivity, MainActivity::class.java)
             startActivity(intent)
 
             finish()

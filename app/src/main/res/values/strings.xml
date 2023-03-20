@@ -58,6 +58,9 @@
     <string name="main_contents_recommend">추천하는 Teach 매치</string>
     <string name="main_contents_newmatch">새롭게 열린 매치</string>
 
+    <string name="home_match_participant">%1$s/%2$s명</string>
+
+
     <string name="newmatch_toptext_1">매치 개설하기</string>
     <string name="newmatch_toptext_2">운동종목 선택</string>
     <string name="newmatch_complete">완료</string>
@@ -101,6 +104,15 @@
     <string name="newmatch_detail_fee_value_hint">금액을 입력해주세요</string>
 
     <string name="newmatch_detail_location_header">장소 설정</string>
+    <string name="newmatch_detail_location_guide">지도를 움직여 위치를 설정하세요</string>
+
+
+    <string name="match_detail_page_detail_info">Detail info</string>
+    <string name="match_detail_page_about_host">About host</string>
+    <string name="match_detail_page_detail_location_guide">매치의 자세한 위치를 알려드려요</string>
+    <string name="match_detail_page_detail_introduce_host">매치 호스트를 소개합니다.</string>
+    <string name="match_detail_page_detail_join">매치 참여하기</string>
+    <string name="match_detail_page_detail_participant">%1$s/%2$s명</string>
 
 
     <!-- ex: 3/4명 , 참여인원/최대인원 표시할 때 사용됨 -->

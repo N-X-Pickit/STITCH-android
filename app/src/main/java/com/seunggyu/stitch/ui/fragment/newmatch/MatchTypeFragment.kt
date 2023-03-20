@@ -42,7 +42,7 @@ class MatchTypeFragment : Fragment() {
                 tvNewmatchTypeTeachTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_09))
                 tvNewmatchTypeTeachDescription.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_09))
 
-                viewModel.setType("match")
+                viewModel.setTeach(false)
                 // 버튼 변경
                 nextButtonEnable()
             }
@@ -58,7 +58,7 @@ class MatchTypeFragment : Fragment() {
                 tvNewmatchTypeTeachTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_02))
                 tvNewmatchTypeTeachDescription.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_02))
 
-                viewModel.setType("teach")
+                viewModel.setTeach(true)
                 // 버튼 변경
                 nextButtonEnable()
             }

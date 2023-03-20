@@ -16,8 +16,8 @@
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
             android:id="@+id/cl_match_detail"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/gray_14">
 
@@ -49,6 +49,7 @@
                 android:layout_height="96dp"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="32dp"
+                android:elevation="0dp"
                 app:cardBackgroundColor="@color/gray_12"
                 app:cardCornerRadius="24dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_newmatch_type_top"
@@ -81,9 +82,30 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 
-
+                    <ImageView
+                        android:id="@+id/iv_match_detail_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <ImageView
+                android:id="@+id/iv_match_image_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:elevation="5dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_close"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/cv_match_image"
+                app:layout_constraintTop_toTopOf="@id/cv_match_image" />
 
             <TextView
                 android:id="@+id/tv_match_name"
@@ -222,10 +244,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp"
+                app:cardUseCompatPadding="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:cardUseCompatPadding="false"
-                app:cardElevation="0dp"
                 app:layout_constraintTop_toBottomOf="@id/divider_match_description">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -472,9 +494,9 @@
                 android:layout_width="72dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2dp"
+                android:gravity="center"
                 android:text="@string/newmatch_detail_duration_value"
                 android:textColor="@color/gray_02"
-                android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="@id/tv_match_duration_hint"
                 app:layout_constraintEnd_toStartOf="@id/btn_detail_duration_plus"
                 app:layout_constraintTop_toTopOf="@id/tv_match_duration_hint" />
@@ -608,8 +630,8 @@
                 android:layout_width="34dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2dp"
-                android:text="@string/newmatch_detail_Participant_value"
                 android:gravity="center"
+                android:text="@string/newmatch_detail_Participant_value"
                 android:textColor="@color/gray_02"
                 app:layout_constraintBottom_toBottomOf="@id/tv_match_participant_hint"
                 app:layout_constraintEnd_toStartOf="@id/btn_detail_participant_plus"
@@ -718,8 +740,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/newmatch_detail_fee_value_won"
                         android:textAppearance="@style/Body_1"
-                        android:visibility="gone"
                         android:textColor="@color/gray_02"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="@id/et_match_fee_value"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@id/et_match_fee_value"
@@ -730,11 +752,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        android:inputType="number"
                         android:backgroundTint="@android:color/transparent"
                         android:hint="@string/newmatch_detail_fee_value_hint"
-                        android:textAppearance="@style/Body_1"
+                        android:inputType="number"
                         android:maxLength="7"
+                        android:textAppearance="@style/Body_1"
                         android:textColor="@color/gray_02"
                         android:textColorHint="@color/gray_09"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -747,9 +769,9 @@
                     android:id="@+id/divider_match_fee"
                     android:layout_width="0dp"
                     android:layout_height="1dp"
-                    android:visibility="gone"
                     android:layout_marginHorizontal="16dp"
                     android:background="@color/gray_07"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cl_match_fee_value_inner" />

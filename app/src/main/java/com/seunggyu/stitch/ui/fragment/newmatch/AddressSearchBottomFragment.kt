@@ -44,12 +44,10 @@ class AddressSearchBottomFragment :
     private val runnableLocation = kotlinx.coroutines.Runnable {
         viewModel.locationSearch()
     }
-    private val gpsRecyclerViewAdapter: GpsResultRecyclerViewAdapter by lazy {
-        GpsResultRecyclerViewAdapter(expandBinding.rvGpsResult){viewModel.setSelectedAddress(it)}
-    }
     private val locationResultRecyclerViewAdapter: LocationResultRecyclerViewAdapter by lazy {
         LocationResultRecyclerViewAdapter(expandBinding.rvGpsResult){
             viewModel.setSelectedLocation(it)
+            hideKeyBoard()
         }
     }
 
@@ -75,6 +73,12 @@ class AddressSearchBottomFragment :
             collapseBinding.etAddressSearch.text = ""
         }
 
+        expandBinding.btnAddressResearch.setOnClickListener {
+            expandBinding.etAddressSearch.setText("")
+            showKeyboard()
+            expandBinding.etAddressSearch.requestFocus()
+        }
+
         expandBinding.etAddressSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -92,12 +96,14 @@ class AddressSearchBottomFragment :
                         viewModel.inputAddress = afterText
                         if((afterText.last() == '동' || afterText.last() == '시' ||
                                 afterText.last() == '읍' || afterText.last() == '면')) {
+                            handler.removeCallbacks(runnableLocation)
                             handler.removeCallbacks(runnable)
                             handler.postDelayed(runnable, 500)
 
                             Log.e("onTextChanged", afterText)
                         }
                         else {
+                            handler.removeCallbacks(runnable)
                             handler.removeCallbacks(runnableLocation)
                             handler.postDelayed(runnableLocation, 500)
 
@@ -118,39 +124,41 @@ class AddressSearchBottomFragment :
     private fun initObserver() {
 
         // 선택한 주소 반영
-        viewModel.selectedAddress.observe(requireActivity()) {
-            Log.e("selectedAddress",it.toString())
-            collapseBinding.etAddressSearch.text = it.toString()
+        viewModel.selectedLocation.observe(requireActivity()) {
+            Log.e("selectedLocation title",it.title)
+            Log.e("selectedLocation Latitude",it.latitude)
+            Log.e("selectedLocation Longitude",it.longitude)
+            collapseBinding.etAddressSearch.text = it.title
             collapse()
         }
 
         // 주소 조회 리스트
-        viewModel.addressList.observe(requireActivity()) {
-            it?.let {
-                if (it.isNotEmpty()) {
-                    Log.e("isDetailAddress", "true")
-                    gpsRecyclerViewAdapter.submitList(it)
-                    Log.e("it.size", it.size.toString())
-                    expandBinding.clAddressResult.isVisible = true
-                    expandBinding.clAddressNull.visibility = View.INVISIBLE
-                    expandBinding.tvAddressResult.text = getString(
-                        R.string.address_result_name,
-                        expandBinding.etAddressSearch.text
-                    )
-                    expandBinding.rvGpsResult.isVisible = true
-                    expandBinding.rvLocationResult.visibility = View.INVISIBLE
-                } else {
-                    Log.e("clAddressResult", "#1")
-                    expandBinding.clAddressResult.visibility = View.INVISIBLE
-                    expandBinding.clAddressNull.isVisible = true
-                }
-            } ?: run {
-                SnackBarCustom.make(
-                    expandBinding.clAddressParent,
-                    getString(R.string.snackbar_network_error)
-                ).show()
-            }
-        }
+//        viewModel.addressList.observe(requireActivity()) {
+//            it?.let {
+//                if (it.isNotEmpty()) {
+//                    Log.e("isDetailAddress", "true")
+//                    gpsRecyclerViewAdapter.submitList(it)
+//                    Log.e("it.size", it.size.toString())
+//                    expandBinding.clAddressResult.isVisible = true
+//                    expandBinding.clAddressNull.visibility = View.INVISIBLE
+//                    expandBinding.tvAddressResult.text = getString(
+//                        R.string.address_result_name,
+//                        expandBinding.etAddressSearch.text
+//                    )
+//                    expandBinding.rvGpsResult.isVisible = true
+//                    expandBinding.rvLocationResult.visibility = View.INVISIBLE
+//                } else {
+//                    Log.e("clAddressResult", "#1")
+//                    expandBinding.clAddressResult.visibility = View.INVISIBLE
+//                    expandBinding.clAddressNull.isVisible = true
+//                }
+//            } ?: run {
+//                SnackBarCustom.make(
+//                    expandBinding.clAddressParent,
+//                    getString(R.string.snackbar_network_error)
+//                ).show()
+//            }
+//        }
 
         // 장소 검색 결과 리스트
         viewModel.locationList.observe(requireActivity()) {
@@ -181,10 +189,9 @@ class AddressSearchBottomFragment :
     }
 
     private fun initRecyclerView() {
-        gpsRecyclerViewAdapter
         expandBinding.rvGpsResult.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = gpsRecyclerViewAdapter
+            adapter = locationResultRecyclerViewAdapter
             Log.e("RecyclerView init", "successed")
         }
         expandBinding.rvLocationResult.apply {

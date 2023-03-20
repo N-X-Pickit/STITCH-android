@@ -2,6 +2,7 @@ package com.seunggyu.stitch.Util
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.seunggyu.stitch.data.model.User
 
 class MySharedPreference(context: Context) {

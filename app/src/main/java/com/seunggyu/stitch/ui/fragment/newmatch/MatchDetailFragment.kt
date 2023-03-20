@@ -1,11 +1,17 @@
 package com.seunggyu.stitch.ui.fragment.newmatch
 
 import TimePickerBottomSheetDialog
+import android.R.attr.bitmap
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -17,24 +23,35 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils.rotateImage
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.kizitonwose.calendar.core.*
 import com.kizitonwose.calendar.view.CalendarView
 import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.ViewContainer
 import com.seunggyu.stitch.R
+import com.seunggyu.stitch.Util.Constants.RESULT_DETAIL_IMAGE
+import com.seunggyu.stitch.Util.Constants.RESULT_LOCATION
 import com.seunggyu.stitch.databinding.CalendarDayBinding
 import com.seunggyu.stitch.databinding.FragMatchDetailBinding
+import com.seunggyu.stitch.ui.MatchLocationMapActivity
 import com.seunggyu.stitch.viewModel.CreateNewMatchViewModel
+import java.io.FileNotFoundException
+import java.io.IOException
 import java.text.DecimalFormat
 import java.time.LocalDate
 import java.time.Month
 import java.time.YearMonth
 import java.util.*
+
 
 @Suppress("UNREACHABLE_CODE")
 class MatchDetailFragment : Fragment() {
@@ -43,6 +60,10 @@ class MatchDetailFragment : Fragment() {
 
     private val binding by lazy {
         FragMatchDetailBinding.inflate(layoutInflater)
+    }
+
+    private val storageRef by lazy {
+        Firebase.storage.reference
     }
     private val monthCalendarView: CalendarView get() = binding.exOneCalendar
 
@@ -60,6 +81,7 @@ class MatchDetailFragment : Fragment() {
 
         return binding.root
     }
+
 
     fun init() {
         with(binding) {
@@ -93,6 +115,7 @@ class MatchDetailFragment : Fragment() {
 
             btnMatchFeeNo.setOnClickListener {
                 hideKeyboard()
+                viewModel.setFee(0)
 
                 with(binding.btnMatchFeeNo) {
                     setBackgroundResource(R.drawable.button_round)
@@ -131,10 +154,6 @@ class MatchDetailFragment : Fragment() {
                 hideKeyboard()
             }
 
-            btnDetailLocation.setOnClickListener {
-                viewModel.setLocation("서울특별시 동작구")
-                hideKeyboard()
-            }
 
             btnDetailParticipantPlus.setOnClickListener {
                 viewModel.addParticipant()
@@ -214,7 +233,7 @@ class MatchDetailFragment : Fragment() {
                     binding.etMatchFeeValue.setText(feeInputValue)
                     binding.etMatchFeeValue.setSelection(feeInputValue.length)
                     val withoutCommaValue = feeInputValue.replace(",", "").toInt()
-                    viewModel.setFee(withoutCommaValue.toString())
+                    viewModel.setFee(withoutCommaValue)
                 }
             }
         })
@@ -304,6 +323,20 @@ class MatchDetailFragment : Fragment() {
                     binding.btnDetailDurationPlus.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.gray_09))
                 }
                 binding.tvMatchDurationValue.text = getString(R.string.newmatch_detail_duration_value, it)
+
+                when(it) {
+                    "30분" -> viewModel.setNumberDuration(30)
+                    "1시간" -> viewModel.setNumberDuration(60)
+                    "1시간 30분" -> viewModel.setNumberDuration(90)
+                    "2시간" -> viewModel.setNumberDuration(120)
+                    "2시간 30분" -> viewModel.setNumberDuration(150)
+                    "3시간" -> viewModel.setNumberDuration(180)
+                    "3시간 30분" -> viewModel.setNumberDuration(210)
+                    "4시간" -> viewModel.setNumberDuration(240)
+                    "4시간 30분" -> viewModel.setNumberDuration(270)
+                    "5시간" -> viewModel.setNumberDuration(300)
+                }
+
                 viewModel.checkAllWritenFlow()
             }
 
@@ -336,15 +369,20 @@ class MatchDetailFragment : Fragment() {
 
             // 참가비 observer
             fee.observe(requireActivity()) {
-                if(it == "") {
+                if(it == 0) {
                     binding.tvMatchFeeValueWon.visibility = View.GONE
                 } else {
                     binding.tvMatchFeeValueWon.visibility = View.VISIBLE
                 }
-                Log.e("fee", it)
+                Log.e("fee", it.toString())
                 viewModel.checkAllWritenFlow()
             }
 
+            // 업로드 이미지
+            uploadImage.observe(requireActivity()) {
+                binding.ivMatchDetailImage.setImageBitmap(it)
+                binding.ivMatchImageClear.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -356,11 +394,63 @@ class MatchDetailFragment : Fragment() {
 
         Log.e("매치 날짜/시간","${viewModel.startDate.value} ${viewModel.startTime.value}")
     }
+    // 이미지 선택 후 결과를 처리하는 함수
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
+        if (requestCode == RESULT_DETAIL_IMAGE && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+            val imageUri = data.data!!
+            // 선택한 이미지를 사용하는 함수 호출
+            try {
+                val inputStream = activity?.contentResolver?.openInputStream(imageUri)
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                // 이미지 처리를 위한 코드 작성
+                viewModel.setUploadImage(bitmap)
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
+            }
+        }
+    }
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val daysOfWeek = daysOfWeek()
+        val activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            when(result.resultCode) {
+                RESULT_LOCATION -> {
+                    val data = result.data
+                    val address = data!!.getStringExtra("address")
+                    val latitude = data.getStringExtra("latitude")
+                    val longitude = data.getStringExtra("longitude")
+                    Log.e("주소 입력", "$address, lat: $latitude, lng: $longitude")
+                    viewModel.setLocation(address.toString())
+                    viewModel.setLatitude(latitude.toString())
+                    viewModel.setLongitude(longitude.toString())
+                }
+
+            }
+        }
+
+        binding.ivMatchDetailImage.setOnClickListener {
+            Log.e("image첨부 영역", "clicked")
+            val intent = Intent()
+            intent.type = "image/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(intent, RESULT_DETAIL_IMAGE)
+        }
+
+        binding.ivMatchImageClear.setOnClickListener {
+            binding.ivMatchDetailImage.setImageBitmap(null)
+            binding.ivMatchImageClear.visibility = View.GONE
+            viewModel.setImageUrl("")
+        }
+
+        binding.btnDetailLocation.setOnClickListener {
+            hideKeyboard()
+
+            activityResultLauncher.launch(Intent(requireActivity(), MatchLocationMapActivity::class.java))
+        }
+
         binding.legendLayout.root.children
             .map { it as TextView }
             .forEachIndexed { index, textView ->
@@ -491,11 +581,6 @@ class MatchDetailFragment : Fragment() {
             return
         }
 
-//        if(::selectedDate.isInitialized && selectedDate != date) {
-//            textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_04))
-//            textView.background = null
-//            Log.e("asdasd","asdasdasdas")
-//        }
         if (date < today) {
             textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_10))
             textView.background = null

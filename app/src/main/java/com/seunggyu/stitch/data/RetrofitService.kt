@@ -1,18 +1,40 @@
 package com.seunggyu.stitch.data
 
 import com.seunggyu.stitch.data.model.User
-import com.seunggyu.stitch.data.model.request.AddressSearchRequest
+import com.seunggyu.stitch.data.model.request.CreateNewMatchRequest
 import com.seunggyu.stitch.data.model.request.SignupRequest
 import com.seunggyu.stitch.data.model.response.*
 import retrofit2.Response
 import retrofit2.http.*
 
 interface RetrofitService {
-    //    @FormUrlEncoded
+    // @FormUrlEncoded
     @POST("member")
     suspend fun signup(
         @Body signupRequest: SignupRequest,
     ): Response<SignupResponse>
+
+    @PUT("member/update")
+    suspend fun update(
+        @Body signupRequest: SignupRequest,
+    ): Response<SignupResponse>
+
+
+    @POST("match/create")
+    suspend fun createMatch(
+        @Body createMatchRequest: CreateNewMatchRequest,
+    ): Response<CreateNewMatchResponse>
+
+    // 홈화면 매치 가져오기
+    @GET("match/home")
+    suspend fun getHomeData(): Response<HomeDataResponse>
+
+    // 매치 상세 정보 가져오기
+    @GET("match/info/id={id}")
+    suspend fun getMatchDetail(
+        @Path("id") id: String?,
+    ): Response<MatchDetailResponse>
+
 
     // 지역검색 : 장소이름 -> 장소검색
     @GET("search/local.json")
