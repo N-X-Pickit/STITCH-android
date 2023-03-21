@@ -6,6 +6,6 @@ import kotlinx.parcelize.Parcelize
 
 data class Location(
     val title: String,
-    val katechX: String,
-    val katechY: String,
+    val latitude: String,
+    val longitude: String,
 )

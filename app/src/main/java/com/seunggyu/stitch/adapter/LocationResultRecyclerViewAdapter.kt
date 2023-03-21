@@ -41,8 +41,8 @@ class LocationResultRecyclerViewAdapter(private val recyclerView: RecyclerView,
             with(binding) {
                 tvAddressResultItem.text = data.title
                 Log.e("data", data.title)
-                Log.e("katech X", data.katechX)
-                Log.e("katech Y", data.katechY)
+                Log.e("Latitude", data.latitude)
+                Log.e("Longitude", data.longitude)
             }
         }
     }
