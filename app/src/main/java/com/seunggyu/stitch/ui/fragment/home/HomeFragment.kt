@@ -1,5 +1,6 @@
 package com.seunggyu.stitch.ui.fragment.home
 
+import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Rect
 import android.os.Bundle
@@ -11,9 +12,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -21,16 +24,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import com.seunggyu.stitch.BasicActivity
 import com.seunggyu.stitch.GlobalApplication
+import com.seunggyu.stitch.GlobalApplication.Companion.prefs
 import com.seunggyu.stitch.R
 import com.seunggyu.stitch.Util.SnackBarCustom
 import com.seunggyu.stitch.adapter.BannerPagerAdapter
-import com.seunggyu.stitch.adapter.MyRecyclerViewAdapter
-import com.seunggyu.stitch.data.model.response.NetworkResponse
+import com.seunggyu.stitch.adapter.NewMatchRecyclerViewAdapter
+import com.seunggyu.stitch.adapter.RecommendMatchRecyclerViewAdapter
+import com.seunggyu.stitch.data.RetrofitApi
+import com.seunggyu.stitch.data.model.request.SignupRequest
 import com.seunggyu.stitch.databinding.FragMainHomeBinding
+import com.seunggyu.stitch.ui.AddressSearchActivity
 import com.seunggyu.stitch.viewModel.MainViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 import kotlin.math.abs
 
@@ -47,12 +57,12 @@ class HomeFragment : Fragment() {
     private val PERIOD_MS: Long = 5000 // 5초 주기로 배너 이동
 
 
-    private val recommendRecyclerViewAdapter: MyRecyclerViewAdapter by lazy {
-        MyRecyclerViewAdapter(binding.rvMainContentsRecommend)
+    private val recommendRecyclerViewAdapter: RecommendMatchRecyclerViewAdapter by lazy {
+        RecommendMatchRecyclerViewAdapter(binding.rvMainContentsRecommend)
     }
 
-    private val matchRecyclerViewAdapter: MyRecyclerViewAdapter by lazy {
-        MyRecyclerViewAdapter(binding.rvMainContentsNewmatch)
+    private val matchRecyclerViewAdapter: NewMatchRecyclerViewAdapter by lazy {
+        NewMatchRecyclerViewAdapter(binding.rvMainContentsNewmatch)
     }
 
     override fun onCreateView(
@@ -61,7 +71,6 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.frag_main_home, container, false)
 
-        initClickListener()
         initInsetMargin()
         initData()
         initRecyclerView()
@@ -78,6 +87,7 @@ class HomeFragment : Fragment() {
         val toolbar = binding.toolbar
         (activity as BasicActivity).setSupportActionBar(toolbar)
     }
+
     private fun initRecyclerView() {
 
         binding.rvMainContentsRecommend.apply {
@@ -155,24 +165,78 @@ class HomeFragment : Fragment() {
         with(viewModel) {
             recommendMatchDataSet.observe(requireActivity()) {
                 it?.let {
-                    recommendRecyclerViewAdapter.submitList(it)
+                    recommendRecyclerViewAdapter.submitList(it.recommendedMatches)
                 }
             }
 
             newMatchDataSet.observe(requireActivity()) {
                 it?.let {
-                    matchRecyclerViewAdapter.submitList(it)
+                    matchRecyclerViewAdapter.submitList(it.newMatches)
                 }
             }
         }
     }
 
-    private fun initClickListener() {
+    private fun initData() {
+        val lastLocation = prefs.getString("location")!!.split(" ")[2]
+        binding.tvHeaderLocation.text = lastLocation
 
+        val activityResultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == AppCompatActivity.RESULT_OK) {
+                    val data = result.data
+                    val address = data!!.getStringExtra("key")
+                    if (address != null) {
+                        binding.tvHeaderLocation.text = address.split(" ")[2]
+                        prefs.setString("location", address)
+
+                        updateUser()
+                    }
+                }
+            }
+
+        binding.clToolbarAddress.setOnClickListener {
+            activityResultLauncher.launch(
+                Intent(
+                    requireActivity(),
+                    AddressSearchActivity::class.java
+                )
+            )
+        }
     }
 
-    private fun initData() {
+    private fun updateUser() {
 
+        val user = prefs.getCurrentUser()
+
+        val service = RetrofitApi.retrofitService
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = service.update(
+                SignupRequest(id = user.id,
+                location = user.location,
+                imageUrl = user.imageUrl,
+                name = user.name,
+                sports = user.sports,
+                introduce = user.introduce,
+                type = user.type,
+                token = user.token)
+            )
+
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    result?.let {
+                        Log.e("result>>>>>>>", result.toString())
+                        binding.tvHeaderLocation.text = it.location!!.split(" ")[2]
+                    }
+                } else {
+                    Log.e("TAG", response.code().toString())
+                    SnackBarCustom.make(binding.clHomeview, getString(R.string.snackbar_network_error))
+                        .show()
+                }
+            }
+        }
     }
 
     // viewpager의 indicator를 업데이트 하는 함수
@@ -306,7 +370,8 @@ class HomeFragment : Fragment() {
             } else {
                 // 가로 스크롤 리사이클러뷰
                 val position = parent.getChildAdapterPosition(view)
-                if(position == 0) outRect.left = horizontalSpaceWidth.dpToPx() // 첫번째 아이템에도 시작 마진을 준다.
+                if (position == 0) outRect.left =
+                    horizontalSpaceWidth.dpToPx() // 첫번째 아이템에도 시작 마진을 준다.
                 outRect.right = horizontalSpaceWidth.dpToPx()
             }
         }
