@@ -60,11 +60,14 @@ class MatchTypeFragment : Fragment() {
 
                 viewModel.setTeach(true)
                 // 버튼 변경
+
+                Log.e("isTeach", viewModel.isTeach.value.toString())
                 nextButtonEnable()
             }
 
             btnNewmatchTypeNext.setOnClickListener {
                 viewModel.nextPage()
+                Log.e("isTeach", viewModel.isTeach.value.toString())
             }
         }
     }

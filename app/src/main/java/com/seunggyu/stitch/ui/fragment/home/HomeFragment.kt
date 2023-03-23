@@ -1,5 +1,6 @@
 package com.seunggyu.stitch.ui.fragment.home
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Rect
@@ -34,8 +35,10 @@ import com.seunggyu.stitch.adapter.NewMatchRecyclerViewAdapter
 import com.seunggyu.stitch.adapter.RecommendMatchRecyclerViewAdapter
 import com.seunggyu.stitch.data.RetrofitApi
 import com.seunggyu.stitch.data.model.request.SignupRequest
+import com.seunggyu.stitch.data.model.response.Match
 import com.seunggyu.stitch.databinding.FragMainHomeBinding
 import com.seunggyu.stitch.ui.AddressSearchActivity
+import com.seunggyu.stitch.ui.MatchDetailPageActivity
 import com.seunggyu.stitch.viewModel.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -45,6 +48,8 @@ import java.util.*
 import kotlin.math.abs
 
 class HomeFragment : Fragment() {
+    private var mContext: Context? = null
+
     private lateinit var binding: FragMainHomeBinding
 
     private lateinit var adapter: BannerPagerAdapter
@@ -55,10 +60,30 @@ class HomeFragment : Fragment() {
     private var timer: Timer? = null
     private val DELAY_MS: Long = 5000 // (초기 웨이팅 타임) ex) 앱 로딩 후 5초 뒤 플립됨.
     private val PERIOD_MS: Long = 5000 // 5초 주기로 배너 이동
-
+//    private lateinit var selectedMatch: Match
 
     private val recommendRecyclerViewAdapter: RecommendMatchRecyclerViewAdapter by lazy {
-        RecommendMatchRecyclerViewAdapter(binding.rvMainContentsRecommend)
+        RecommendMatchRecyclerViewAdapter(binding.rvMainContentsRecommend) {
+            val intent = Intent(mContext, MatchDetailPageActivity::class.java)
+            intent.putExtra("id", it.id)
+            intent.putExtra("type", it.type)
+            intent.putExtra("location", it.location)
+            intent.putExtra("imageUrl", it.imageUrl)
+            intent.putExtra("name", it.name)
+            intent.putExtra("detail", it.detail)
+            intent.putExtra("startTime", it.startTime)
+            intent.putExtra("duration", it.duration)
+            intent.putExtra("eventType", it.eventType)
+            intent.putExtra("hostId", it.hostId)
+            intent.putExtra("maxCapacity", it.maxCapacity)
+            intent.putExtra("fee", it.fee)
+            intent.putExtra("latitude", it.latitude)
+            intent.putExtra("longitude", it.longitude)
+            intent.putExtra("teach", it.teach)
+            intent.putExtra("numOfMembers", it.numOfMembers)
+
+            startActivity(intent)
+        }
     }
 
     private val matchRecyclerViewAdapter: NewMatchRecyclerViewAdapter by lazy {
@@ -86,6 +111,17 @@ class HomeFragment : Fragment() {
 
         val toolbar = binding.toolbar
         (activity as BasicActivity).setSupportActionBar(toolbar)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mContext = context
+        Log.e("Attach","attach")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        mContext = null
     }
 
     private fun initRecyclerView() {
@@ -140,19 +176,8 @@ class HomeFragment : Fragment() {
                             timer = null
                             timerStart()
                         }
-
-
-                        // 페이지가 스크롤(자동스크롤, 사용자 직접 스크롤 모두 포함)될 때마다 페이지 번호를 갱신
-//                    eventPageDescript = getString(
-//                        R.string.EventViewPagerDescript,
-//                        position % listSize + 1,
-//                        listSize
-//                    )
-//                    binding.tvPagenum.setText(eventPageDescript)
                     }
                 })
-//                binding.dotsIndicator.attachTo(binding.vpBanner)
-
             } else {
                 SnackBarCustom.make(binding.clHomeview, getString(R.string.snackbar_banner_error))
                     .show()
@@ -213,14 +238,16 @@ class HomeFragment : Fragment() {
 
         CoroutineScope(Dispatchers.IO).launch {
             val response = service.update(
-                SignupRequest(id = user.id,
-                location = user.location,
-                imageUrl = user.imageUrl,
-                name = user.name,
-                sports = user.sports,
-                introduce = user.introduce,
-                type = user.type,
-                token = user.token)
+                SignupRequest(
+                    id = user.id,
+                    location = user.location,
+                    imageUrl = user.imageUrl,
+                    name = user.name,
+                    sports = user.sports,
+                    introduce = user.introduce,
+                    type = user.type,
+                    token = user.token
+                )
             )
 
             withContext(Dispatchers.Main) {
@@ -232,7 +259,10 @@ class HomeFragment : Fragment() {
                     }
                 } else {
                     Log.e("TAG", response.code().toString())
-                    SnackBarCustom.make(binding.clHomeview, getString(R.string.snackbar_network_error))
+                    SnackBarCustom.make(
+                        binding.clHomeview,
+                        getString(R.string.snackbar_network_error)
+                    )
                         .show()
                 }
             }

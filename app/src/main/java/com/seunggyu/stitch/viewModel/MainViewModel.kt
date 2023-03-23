@@ -8,10 +8,7 @@ import com.seunggyu.stitch.Util.SnackBarCustom
 import com.seunggyu.stitch.data.NaverMapApi
 import com.seunggyu.stitch.data.RetrofitApi
 import com.seunggyu.stitch.data.model.Location
-import com.seunggyu.stitch.data.model.response.HomeDataResponse
-import com.seunggyu.stitch.data.model.response.NetworkResponse
-import com.seunggyu.stitch.data.model.response.NewMatch
-import com.seunggyu.stitch.data.model.response.RecommendedMatch
+import com.seunggyu.stitch.data.model.response.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,6 +35,11 @@ class MainViewModel : ViewModel() {
     private var _newMatchDataSetAvailable = MutableLiveData<Boolean>()
     val newMatchDataSetAvailable: LiveData<Boolean>
         get() = _newMatchDataSetAvailable
+
+    // 매치 클릭시 화면 이동
+    private var _selectedMatch = MutableLiveData<Match>()
+    val selectedMatch: LiveData<Match>
+        get() = _selectedMatch
 
     init {
         getHomeData()
@@ -77,5 +79,9 @@ class MainViewModel : ViewModel() {
     }
     fun setNewMatchAvailable(boolean: Boolean) {
         _newMatchDataSetAvailable.value = boolean
+    }
+
+    fun setSelectedMatch(match: Match) {
+        _selectedMatch.value = match
     }
 }

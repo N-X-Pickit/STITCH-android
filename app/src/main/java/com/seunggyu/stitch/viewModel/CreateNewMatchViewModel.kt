@@ -1,6 +1,7 @@
 package com.seunggyu.stitch.viewModel
 
 import android.graphics.Bitmap
+import android.service.autofill.FieldClassification.Match
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,6 +16,7 @@ import com.seunggyu.stitch.data.RetrofitApi
 import com.seunggyu.stitch.data.RetrofitService
 import com.seunggyu.stitch.data.model.Location
 import com.seunggyu.stitch.data.model.request.CreateNewMatchRequest
+import com.seunggyu.stitch.data.model.response.CreateNewMatchResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -118,6 +120,11 @@ class CreateNewMatchViewModel : ViewModel() {
     val teach: Boolean
         get() = _teach
 
+    private var _imageUploaded = false
+    val imageUploaded: Boolean
+        get() = _imageUploaded
+
+    lateinit var _match: CreateNewMatchResponse
 
     private val _allWritenFlow = flow<Boolean> {
         val emptySportsType = sportsType.value?.isEmpty()
@@ -274,7 +281,9 @@ class CreateNewMatchViewModel : ViewModel() {
         _imageUrl.value = url
     }
 
-    fun setCreateSuccessListener(success: Boolean) {
+    fun setCreateSuccessListener(success: Boolean, match: CreateNewMatchResponse) {
+        _match = match
+
         _createSuccessListener.value = success
     }
 
@@ -300,7 +309,7 @@ class CreateNewMatchViewModel : ViewModel() {
             longitude = longitude.value,
             numOfMembsers = 1,
             startTime = "${startDate.value} ${startTime.value}",
-            isTeach = isTeach.value,
+            teach = isTeach.value,
         )
 
 
@@ -312,7 +321,7 @@ class CreateNewMatchViewModel : ViewModel() {
                     val result = response.body()
                     result?.let {
                         Log.e("result>>>>>>>", result.toString())
-                        setCreateSuccessListener(true)
+                        setCreateSuccessListener(true, result)
                         }
                     }
                 else {

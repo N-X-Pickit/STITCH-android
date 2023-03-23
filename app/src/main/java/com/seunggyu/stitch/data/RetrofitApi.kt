@@ -1,8 +1,6 @@
 package com.seunggyu.stitch.data
 
-import com.seunggyu.stitch.BuildConfig
 import com.seunggyu.stitch.Util.Constants.SERVER_ADDRESS
-import com.seunggyu.stitch.data.RetrofitService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -13,9 +11,11 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 object RetrofitApi {
     private const val BASE_URL = SERVER_ADDRESS
 
-    private val moshi: Moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
+    private val moshi: Moshi by lazy {
+        Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
+    }
 
     private val okHttpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
@@ -27,9 +27,9 @@ object RetrofitApi {
 
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
+            .baseUrl(BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(okHttpClient)
-            .baseUrl(BASE_URL)
             .build()
     }
 

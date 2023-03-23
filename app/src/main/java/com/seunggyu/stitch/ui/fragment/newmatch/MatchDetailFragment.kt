@@ -350,6 +350,8 @@ class MatchDetailFragment : Fragment() {
             maxCapacity.observe(requireActivity()) {
                 binding.tvMatchParticipantValue.text = getString(R.string.newmatch_detail_Participant_value, it)
                 viewModel.checkAllWritenFlow()
+                Log.e("티치여부 ////////" ,viewModel.isTeach.value.toString())
+
                 if(viewModel.maxCapacity.value == "1") {
                     binding.btnDetailParticipantMinus.isEnabled = false
                     binding.btnDetailParticipantMinus.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.gray_11))
@@ -379,9 +381,11 @@ class MatchDetailFragment : Fragment() {
             }
 
             // 업로드 이미지
-            uploadImage.observe(requireActivity()) {
-                binding.ivMatchDetailImage.setImageBitmap(it)
-                binding.ivMatchImageClear.visibility = View.VISIBLE
+            uploadImage.observe(requireActivity()) {it1 ->
+                uploadImage.let {
+                    binding.ivMatchDetailImage.setImageBitmap(it1)
+                    binding.ivMatchImageClear.visibility = View.VISIBLE
+                }
             }
         }
     }

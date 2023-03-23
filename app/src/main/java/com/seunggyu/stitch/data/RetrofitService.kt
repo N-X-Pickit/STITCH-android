@@ -2,6 +2,8 @@ package com.seunggyu.stitch.data
 
 import com.seunggyu.stitch.data.model.User
 import com.seunggyu.stitch.data.model.request.CreateNewMatchRequest
+import com.seunggyu.stitch.data.model.request.JoinMatchRequest
+import com.seunggyu.stitch.data.model.request.ReportRequest
 import com.seunggyu.stitch.data.model.request.SignupRequest
 import com.seunggyu.stitch.data.model.response.*
 import retrofit2.Response
@@ -24,6 +26,23 @@ interface RetrofitService {
     suspend fun createMatch(
         @Body createMatchRequest: CreateNewMatchRequest,
     ): Response<CreateNewMatchResponse>
+
+    @POST("report")
+    suspend fun report(
+        @Body reportRequest: ReportRequest,
+    ): Response<ReportResponse>
+
+    @DELETE("match/leave")
+    suspend fun quitMatch(
+        @Query("memberId") memberId: String,
+        @Query("matchId") matchId: String,
+    ): Response<Object>
+
+    @PUT("match/join/id={id}")
+    suspend fun joinMatch(
+        @Path("id") id: String,
+        @Body joinMatchRequest: JoinMatchRequest,
+    ): Response<String>
 
     // 홈화면 매치 가져오기
     @GET("match/home")

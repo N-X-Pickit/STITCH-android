@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.service.autofill.FieldClassification.Match
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -55,30 +56,41 @@ class CreateNewMatch : BasicActivity() {
             btnNewmatchComplete.setOnClickListener {
                 btnNewmatchComplete.isEnabled = true
                 btnNewmatchComplete.setTextColor(getColor(R.color.gray_10))
-                viewModel.uploadImage?.let {
-                    val imageName = System.currentTimeMillis().toString()
-                    val imagesRef = Firebase.storage.reference.child("images/$imageName.jpg")
-                    val baos = ByteArrayOutputStream()
-                    viewModel.uploadImage.value?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-                    val data = baos.toByteArray()
+                viewModel.uploadImage.let {
+                    if (viewModel.imageUploaded) {
+                        val imageName = System.currentTimeMillis().toString()
+                        val imagesRef = Firebase.storage.reference.child("images/$imageName.jpg")
+                        val baos = ByteArrayOutputStream()
+                        viewModel.uploadImage.value?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                        val data = baos.toByteArray()
 
-                    val uploadTask = imagesRef.putBytes(data)
-                    uploadTask.addOnSuccessListener {
-                        val storageRef = FirebaseStorage.getInstance().getReference("images/$imageName.jpg")
-                        storageRef.downloadUrl.addOnSuccessListener { uri ->
-                            val imageUrl = uri.toString()
-                            viewModel.setImageUrl(imageUrl)
+                        val uploadTask = imagesRef.putBytes(data)
+                        uploadTask.addOnSuccessListener {
+                            val storageRef =
+                                FirebaseStorage.getInstance().getReference("images/$imageName.jpg")
+                            storageRef.downloadUrl.addOnSuccessListener { uri ->
+                                val imageUrl = uri.toString()
+                                viewModel.setImageUrl(imageUrl)
 
-                            createMatchProcess()
-                        }.addOnFailureListener { exception ->
-                            SnackBarCustom.make(binding.root,getString(R.string.snackbar_network_error)).show()
+                                createMatchProcess()
+                            }.addOnFailureListener { exception ->
+                                SnackBarCustom.make(
+                                    binding.root,
+                                    getString(R.string.snackbar_network_error)
+                                ).show()
+                                btnNewmatchComplete.isEnabled = true
+                                btnNewmatchComplete.setTextColor(getColor(R.color.primary))
+                            }
+                        }.addOnFailureListener {
+                            SnackBarCustom.make(
+                                binding.root,
+                                getString(R.string.snackbar_network_error)
+                            ).show()
                             btnNewmatchComplete.isEnabled = true
                             btnNewmatchComplete.setTextColor(getColor(R.color.primary))
                         }
-                    }.addOnFailureListener {
-                        SnackBarCustom.make(binding.root,getString(R.string.snackbar_network_error)).show()
-                        btnNewmatchComplete.isEnabled = true
-                        btnNewmatchComplete.setTextColor(getColor(R.color.primary))
+                    } else {
+                        createMatchProcess()
                     }
                 }
 
@@ -87,6 +99,7 @@ class CreateNewMatch : BasicActivity() {
     }
 
     private fun createMatchProcess() {
+        Log.e("티치여부 ////////" ,viewModel.isTeach.value.toString())
         viewModel.createNewMatch()
         binding.progressLoadingCreateNewMatch.isVisible = true
     }
@@ -95,15 +108,38 @@ class CreateNewMatch : BasicActivity() {
         with(viewModel) {
 
             createSuccessListener.observe(this@CreateNewMatch) {
-                if(it) {
+                if (it) {
                     binding.progressLoadingCreateNewMatch.isVisible = false
+                    val intent = Intent(this@CreateNewMatch, MatchDetailPageActivity::class.java)
+                    viewModel._match.apply {
+                        intent.putExtra("id", this.id)
+                        intent.putExtra("type", this.type)
+                        intent.putExtra("location", this.location)
+                        intent.putExtra("imageUrl", this.imageUrl)
+                        intent.putExtra("name", this.name)
+                        intent.putExtra("detail", this.detail)
+                        intent.putExtra("startTime", this.startTime)
+                        intent.putExtra("duration", this.duration)
+                        intent.putExtra("eventType", this.eventType)
+                        intent.putExtra("hostId", this.hostId)
+                        intent.putExtra("maxCapacity", this.maxCapacity)
+                        intent.putExtra("fee", this.fee)
+                        intent.putExtra("latitude", this.latitude)
+                        intent.putExtra("longitude", this.longitude)
+                        intent.putExtra("teach", this.teach)
+                        intent.putExtra("numOfMembers", this.numOfMembers)
+                    }
+                    startActivity(intent)
                     finish()
                 }
             }
             createFailedListener.observe(this@CreateNewMatch) {
-                if(it) {
+                if (it) {
                     binding.progressLoadingCreateNewMatch.isVisible = false
-                    SnackBarCustom.make(binding.clCreateNewMatchRoot, getString(R.string.snackbar_network_error)).show()
+                    SnackBarCustom.make(
+                        binding.clCreateNewMatchRoot,
+                        getString(R.string.snackbar_network_error)
+                    ).show()
                     binding.btnNewmatchComplete.isEnabled = true
                     binding.btnNewmatchComplete.setTextColor(getColor(R.color.primary))
                     Log.e("[Error] createNewMatchFailedListener", "Observed!!!")
@@ -157,12 +193,14 @@ class CreateNewMatch : BasicActivity() {
         val description = getString(R.string.alert_newmatch_clear_description)
         val negativeText = getString(R.string.alert_quit)
         val positiveText = getString(R.string.alert_continue)
+        val color = "primary"
         val dialog = CustomAlertDialog(
             this@CreateNewMatch,
             title,
             description,
             negativeText,
-            positiveText
+            positiveText,
+            color
         )
         dialog.setDialogListener { okClicked ->
             if (!okClicked) {

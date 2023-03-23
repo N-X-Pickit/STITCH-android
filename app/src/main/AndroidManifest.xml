@@ -69,6 +69,14 @@
             android:name=".ui.MatchLocationMapActivity"
             android:windowSoftInputMode="adjustNothing"
             android:exported="true" />
+        <activity
+            android:name=".ui.MatchDetailPageActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true" />
+        <activity
+            android:name=".ui.ReportMatchActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true" />
     </application>
 
 </manifest>

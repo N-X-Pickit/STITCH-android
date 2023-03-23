@@ -32,6 +32,6 @@ data class CreateNewMatchRequest(
     val numOfMembsers: Int?,
     @Json(name = "startTime")
     val startTime: String?,
-    @Json(name = "isTeach")
-    val isTeach: Boolean?,
+    @Json(name = "teach")
+    val teach: Boolean?,
 )

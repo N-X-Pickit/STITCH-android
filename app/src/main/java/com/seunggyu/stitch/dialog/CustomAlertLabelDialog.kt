@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import com.seunggyu.stitch.R
 import com.seunggyu.stitch.databinding.DialogCustomAlertBinding
 
-class CustomAlertDialog(
+class CustomAlertLabelDialog(
     context: Context,
     private val _title: String,
     private val _description: String,
