@@ -9,8 +9,7 @@ STITCH는 스포츠 메이트 매칭 플랫폼 애플리케이션 입니다.
 ## 배포 링크
 
 > STITCH를 다운로드할 수 있는 링크입니다.
-
-<a href="https://apps.apple.com/us/app/stitch/id6446614318">
+<a href="https://play.google.com/store/apps/details?id=com.seunggyu.stitch&pli=1">
   <img width="188" alt="image" src="https://user-images.githubusercontent.com/74666576/230870514-240794f8-fc71-44b2-b714-da83dfac157a.png">
 </a>
 
